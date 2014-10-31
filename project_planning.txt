@@ -6,7 +6,7 @@ Define MVP (minimum viable product)
 
 Project Description and Goals:
 
-Location tracking app for public to report where specific "moving" San Francisco attractions are (think "Bushman," food trucks, the sf parrots, etc.), and show this dynamically on a map, with some interactive features.
+	Location tracking app for public to report where specific "moving" San Francisco attractions are (think "Bushman," food trucks, sf parrots, etc.), and show this dynamically on a map, with some interactive features.
 
 The map:
 	- Shows the locations of most recent check-ins
@@ -31,7 +31,7 @@ Users can:
 
 Technologies: 
 
-Databases, Google Maps API, machine learning (rating location check-ins and using those ratings to rate users and predict the validity of their future check-ins), javascript, maybe login with Twitter/Facebook, etc.  Maybe Twilio - text an attraction name, get a message back with a google map link -> map shows its most recent check-in.
+	Databases, Google Maps API, machine learning (rating location check-ins and using those ratings to rate users and predict the validity of their future check-ins), javascript, maybe login with Twitter/Facebook, etc.  Maybe Twilio - text an attraction name, get a message back with a google map link -> map shows its most recent check-in.
 
 
 ********** MVP **********
@@ -113,9 +113,12 @@ Twilio
 ********** END EXTRAS **********
 
 
-Notes:
 
-User rating algorithms:
+
+
+
+
+********** RATING ALGORITHMS **********
 
 - http://possiblywrong.wordpress.com/2011/06/05/reddits-comment-ranking-algorithm/ 
 	- tested in python interpreter
@@ -138,7 +141,36 @@ User rating algorithms:
 - http://www.evanmiller.org/how-not-to-sort-by-average-rating.html
 	- talks about why just comparing positive and negative ratings directly is bad - like the way amazon does it, where an item with 1 positive rating is reddits-comment-ranking-algorithmed above an item with 500 4.5 star ratings
 
+
+
+
+********** GOOGLE MAPS **********
+
 Google Maps API:
 
-https://developers.google.com/maps/web/
+	https://developers.google.com/maps/web/
+
+	- Find the latitude/longitude coordinates for a given address (geocoding), or convert the latitude/longitude coordinates of a geographic location to an address (reverse geocoding). 	
+		- Geocoding service in the Google Maps JavaScript API (examples)
+    	- Google Geocoding API (a web service)
+	- Convert the latitude/longitude coordinates of a geographic location to an address (reverse geocoding). 	
+		- Google Places API (a web service)
+
+Google Maps JavaScript API v3:
+
+	https://developers.google.com/maps/documentation/javascript/tutorial
+
+	- Usage Limits: non-issue. Only applies to 25k map loads per day, for more than 90 days
+
+
+
+
+
+
+
+
+
+
+
+
 
