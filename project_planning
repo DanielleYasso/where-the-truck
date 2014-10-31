@@ -1,0 +1,144 @@
+Project Description and Goals
+Wireframes
+ERD Diagrams
+Review with instructors / mentors
+Define MVP (minimum viable product)
+
+Project Description and Goals:
+
+Location tracking app for public to report where specific "moving" San Francisco attractions are (think "Bushman," food trucks, the sf parrots, etc.), and show this dynamically on a map, with some interactive features.
+
+The map:
+	- Shows the locations of most recent check-ins
+	- Shows the locations of previous 2 most recent check-ins for the same attraction
+	- Shows “near me”
+	- Provides routing and times/distances to attraction check-ins
+
+Users can:
+	- Sign in/sign up (create an account)
+	- Sign in with Twitter or Facebook
+	- Check-in the location of an attraction/thing
+	- See recent check-ins made by other users
+	- Select which things they want to see on the map (individually or by group, e.g. food, tourists
+	- Save their preferences
+	- Get distances/times/routes to the nearest attractions
+	- Rate check-ins made by other users
+	- See check-ins even if they have bad ratings (or predicted bad ratings)
+	- Remove their check-in
+	- Edit their check-in (did they say food truck when they meant bushman?)
+	- Change their ratings of other user check-ins
+	- Create custom attractions that are important to them (careful with trolls!)
+
+Technologies: 
+
+Databases, Google Maps API, machine learning (rating location check-ins and using those ratings to rate users and predict the validity of their future check-ins), javascript, maybe login with Twitter/Facebook, etc.  Maybe Twilio - text an attraction name, get a message back with a google map link -> map shows its most recent check-in.
+
+
+********** MVP **********
+
+Steps:
+
+Showing attractions on a map:
+	- Show a map on a website
+	- Give map one geolocation and have it display that
+	- Give map several geolocations to display
+	- Give map geolocations from a database to display
+		1) Create a simple database with geolocation data
+		2) Create databases for each attraction to hold most recent geolocations
+	- Get geolocation from a browser and give to map to display
+	- Store geolocation from browser in the database
+		1) Simple database with just 1 geolocation for each attraction
+		2) Data modeling: Use multiple databases to store geolocation data per attraction, etc.
+
+Updating attraction locations on a map:
+	- Update geolocation and have map update with it
+	- Update geolocation of a single attraction from web application via a button
+	- Update geolocation of a specified attraction from web application
+
+********** END MVP **********
+
+
+********** EXTRAS **********
+
+User features:
+	- Allow a user to signup/login
+	- Allow a user to logout
+	- Allow a user to check-in an attraction
+	- Create tables to associate users, their check-ins, and the attractions
+	- Allow a user to edit a check-in
+	- Delete check-in
+	- Edit attraction name
+
+Ratings:
+	- Allow a user to rate a check-in up or down
+	- Associate ratings with check-ins in database
+	- Allow a user to change their rating
+	- Display ratings next to a check-in (up votes and down votes)
+	- Hide check-ins with bad ratings
+	- Allow a user to reveal hidden (bad) check-ins (show/hide)
+
+User Ratings:
+	- Use check-in ratings to create user ratings
+	- Apply a user’s ratings to that user’s new check-in (predict whether their check-in will be good)
+
+Complicated User Ratings (for rating predictions):
+Up votes based on check-ins:
+	- For a new attraction check-in within X minutes of a previous user’s check-in, within X distance of that previous check-in, apply an up-vote to the previous user’s check-in
+	- For all previous check-ins within X min and X distance of current check-in, apply an up vote 
+Down votes based on check-ins:
+	- For a new attraction check-in within X minutes, and outside of Y distance, apply a down-vote
+		- Y distance: greater than X distance (within X is an up vote).  Some no-man’s land in between where previous check-ins get neither an up vote or down vote 
+
+Display Options:
+Timeouts:
+	- Display check-in time stamps along with check-in (on hover)
+	- Time out check-ins (check-ins disappear after X minutes/hours)
+Change appearance of attraction icon as check-in times out
+	- Selecting what to display:
+	- Create in-browser options to display or not display locations for specific attractions
+	- Option to only display check-ins with ratings above X
+	- Option to display all ratings, even bad ratings (normally hidden)
+Map specific:
+	- Limit map to show only San Francisco
+	- Get distances/times/routes to attractions based on current location
+
+Advanced User Features:
+	- Save a user’s preferences - only show certain attractions, only show certain ratings
+	- Allow a user to create a new attraction to check-in
+		- Natural language processing… otherwise could have one attraction with several different names…
+
+Twilio
+	- Allow a person to text the name of an attraction and get a message back with a google map link showing the most recent check-in for that
+
+********** END EXTRAS **********
+
+
+Notes:
+
+User rating algorithms:
+
+- http://possiblywrong.wordpress.com/2011/06/05/reddits-comment-ranking-algorithm/ 
+	- tested in python interpreter
+	- may make sense to start each user or post with a 10 ups, 10 downs, or (5,5) for greater impact of individual ratings, as default starting point
+		- small enough that single votes have an impact, large enough to create a good starting confidence #
+		- or could just start at 0,0… negative ratings only give you a negative number, once pos ratings are introduced, the numbers start changing
+		- user ratings aren’t 1 each in calculation, but added based on their own rating? so that users with crappy ratings don’t impact other ratings as much
+
+	# From /r2/r2/lib/db/_sorts.pyx
+	from math import sqrt
+	 
+	def confidence_fixed(ups, downs):
+	    if ups == 0:
+	        return -downs
+	    n = ups + downs
+	    z = 1.64485 #1.0 = 85%, 1.6 = 95%
+	    phat = float(ups) / n
+	    return (phat+z*z/(2*n)-z*sqrt((phat*(1-phat)+z*z/(4*n))/n))/(1+z*z/n)
+
+- http://www.evanmiller.org/how-not-to-sort-by-average-rating.html
+	- talks about why just comparing positive and negative ratings directly is bad - like the way amazon does it, where an item with 1 positive rating is reddits-comment-ranking-algorithmed above an item with 500 4.5 star ratings
+
+Google Maps API:
+
+https://developers.google.com/maps/web/
+
