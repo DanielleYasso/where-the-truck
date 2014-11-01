@@ -1,0 +1,17 @@
+/* GOOGLE MAPS */
+html, body {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	color: red;
+}
+
+#map-canvas {
+	height: 100%;
+	/*width: 400px;*/
+	/*height: 400px;*/
+	margin: 0;
+	padding: 0;
+}
+
+
