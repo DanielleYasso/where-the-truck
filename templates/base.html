@@ -11,22 +11,43 @@
 
 	<script>
 		function initialize() {
+			// var mapOptions = {
+			// 	// start on San Francisco
+			// 	center: { lat: 37.7833, lng: -122.4167 },
+			// 	zoom: 14
+			// };
+			// set LatLng to center of SF
+			var myLatLng = new google.maps.LatLng(37.7833, -122.4167);
 			var mapOptions = {
-				// start on San Francisco
-				center: { lat: 37.7833, lng: -122.4167 },
-				zoom: 14
-			};
+				zoom: 13,
+				center: myLatLng
+			}
+
+			// create the map object
 			var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+
+			// add marker to the map
+			var marker = new google.maps.Marker({
+			position: myLatLng,
+			map: map,
+			title:"Hello world!"
+		});
+
+		marker.setMap(map);
 		}
+
+		// load the map
 		google.maps.event.addDomListener(window, "load", initialize);
+
+		
 	</script>
+
 
 </head>
 <body>
 
 <div>Header</div>
-	<div id="map-canvas"></div>
-<div>Footer</div>
+<div id="map-canvas"></div>
 
 
 </body>

@@ -40,8 +40,8 @@ Steps:
 
 Showing attractions on a map:
 [X]	- Show a map on a website
-[ ]	- Give map one geolocation and have it display that
-	- Give map several geolocations to display
+[X]	- Give map one geolocation and have it display that marker
+[ ]	- Give map several geolocations to display
 	- Give map geolocations from a database to display
 		1) Create a simple database with geolocation data
 		2) Create databases for each attraction to hold most recent geolocations
