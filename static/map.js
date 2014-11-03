@@ -1,3 +1,9 @@
+function getMarker() {
+	var Lat, Lng, name, timestamp; // get from database
+	details = [Lat, Lng, name];
+	return details
+}
+
 // Creates markers and puts them on the map
 function addMarkers(map) {
 	// add a marker to the map
@@ -19,6 +25,21 @@ function addMarkers(map) {
 	});
 
 	marker.setMap(map);
+
+	// Loop to add each marker to the map
+	// var markerDetails = getMarker();
+	// var Lat = markerDetails[0];
+	// var Lng = markerDetails[1];
+	// var name = markerDetails[2]
+	// 
+	// var myLatLng = new google.maps.LatLng(Lat, Lng);
+	// var marker = new google.maps.Marker({
+	// 	position: myLatLng,
+	// 	map: map,
+	// 	title: name
+	// });
+	// 
+	// marker.setMap(map);
 }
 
 // Creates the map to show on the page
@@ -37,3 +58,5 @@ function initialize() {
 
 // load the map
 google.maps.event.addDomListener(window, "load", initialize);
+
+
