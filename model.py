@@ -29,14 +29,20 @@ class Checkin(Base):
 	# user_id will change to nullable = False when user data is created (not MVP)
 	user_id = Column(Integer, ForeignKey("users.id"), nullable = True)
 
+	# geolocation
 	lat = Column(Float, nullable = False)
 	lng = Column(Float, nullable = False)
 	timestamp = Column(DateTime, nullable = False)
 
+	# ratings data
 	upvotes = Column(Integer, nullable = True)
 	downvotes = Column(Integer, nullable = True)
 	calculated_rating = Column(Integer, nullable = True)
 	users_who_rated = Column(PickleType, nullable = True)
+
+	# define relationships
+	attraction = relationship("Attraction", backref=backref("checkins", order_by=id))
+	user = relationship("User", backref=backref("users", order_by=id))
 
 class User(Base):
 	__tablename__ = "users"
