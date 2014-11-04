@@ -2,7 +2,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import create_engine
 from sqlalchemy import Column, Integer, Float, String, DateTime, PickleType
 from sqlalchemy import ForeignKey 
-from sqlalchemy import sessionmaker, relationship, backref, scoped_session
+from sqlalchemy.orm import sessionmaker, relationship, backref, scoped_session
 
 from math import sqrt # for calculated_rating
 
@@ -50,16 +50,15 @@ class Checkin(Base):
 	def calculate_rating(self):
 		"""Calculates the rating based on an algorithm using votes"""
 
-		# adapted from
-		# http://possiblywrong.wordpress.com/2011/06/05/reddits-comment-ranking-algorithm/ 
+		# adapted from possiblywrong.wordpress.com
 		if self.upvotes == 0:
-	        self.calculated_rating =  -self.downvotes
-	        
-	    n = upvotes + downvotes
-	    z = 1.64485 #1.0 = 85%, 1.6 = 95%
-	    phat = float(upvotes) / n
+			self.calculated_rating =  -self.downvotes
 
-	    self.calculated_rating = (phat+z*z/(2*n)-z*sqrt((phat*(1-phat)+z*z/(4*n))/n))/(1+z*z/n)
+		n = upvotes + downvotes
+		z = 1.64485 #1.0 = 85%, 1.6 = 95%
+		phat = float(upvotes) / n
+
+		self.calculated_rating = (phat+z*z/(2*n)-z*sqrt((phat*(1-phat)+z*z/(4*n))/n))/(1+z*z/n)
 
 
 class User(Base):
