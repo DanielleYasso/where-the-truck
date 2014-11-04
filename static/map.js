@@ -1,12 +1,13 @@
+// load the map
+google.maps.event.addDomListener(window, "load", initialize);
+
 $(document).ready(function() {
 
-	// load the map
-	google.maps.event.addDomListener(window, "load", initialize);
+	
 
 	// on click, get user's geolocation
 	$("#checkinButton").click(
 		function(evt) {
-			alert("clicked");
 			getGeolocation();
 		});
 
@@ -15,18 +16,21 @@ $(document).ready(function() {
 function getGeolocation() {
 	var checkinLocation = [];
 	var browserSupportFlag = new Boolean();
-	alert("in getGeolocation");
 
 	// Try W3C Geolocation (Preferred)
 	if(navigator.geolocation) {
 		browserSupportFlag = true;
 		navigator.geolocation.getCurrentPosition(function(position) {
-			alert("yay");
 	  		var lat = position.coords.latitude;
 	  		var lng = position.coords.longitude;
+
+	  		// set checkin location with lat and lng
 	  		checkinLocation = [lat, lng];
+
 	  		alert("checkinLocation " + checkinLocation);
+
 		}, function() {
+	  		// error: no position returned
 	  		handleNoGeolocation(browserSupportFlag);
 		});
 	}
@@ -38,15 +42,13 @@ function getGeolocation() {
 
 	function handleNoGeolocation(errorFlag) {
 		if (errorFlag) {
-			alert("Geolocation service failed.");
-			checkinLocation = false;
+			alert("Error: Geolocation service failed.");
 		} else {
-			alert("Your browser doesn't support geolocation.");
-			checkinLocation = false;
+			alert("Error: Your browser doesn't support geolocation.");
 		}
 	}
 
-	
+
 }
 
 function getMarker() {
@@ -55,7 +57,7 @@ function getMarker() {
 	return details
 }
 
-// Creates markers and puts them on the map
+// Gets all current checkin markers and puts them on the map
 function addMarkers(map) {
 	// add a marker to the map
 	var myLatLng = new google.maps.LatLng(37.7833, -122.4167);
