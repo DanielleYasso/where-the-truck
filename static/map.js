@@ -65,47 +65,50 @@ function setCheckin(lat, lng) {
 
 //////// MAP MANIPULATION ////////
 
-function getMarker() {
-	var Lat, Lng, name, timestamp; // get from database
-	details = [Lat, Lng, name];
-	return details
+function getMarkers(map) {
+	$.get(
+		"/get_markers",
+		function(result) {
+			console.log("getMarkers:" + result);
+			
+			addMarkers(map, result)
+		});
 }
 
 // Gets all current checkin markers and puts them on the map
-function addMarkers(map) {
-	// add a marker to the map
-	var myLatLng = new google.maps.LatLng(37.7833, -122.4167);
-	var marker = new google.maps.Marker({
-		position: myLatLng,
-		map: map,
-		title:"Hello world!"
-	});
+function addMarkers(map, markers) {
+	// loop to add each marker to the map
+	for (var i = 0; i < markers.length; i++) {
+		markerObject = markers[i];
+		var myLatLng = new google.maps.LatLng(markerObject["lat"], markerObject["lng"]);
+		console.log(myLatLng);
+		
+		var marker = new google.maps.Marker({
+			position: myLatLng,
+			map: map,
+			title: markerObject["name"]
+		});
+		marker.setMap(map);
+	}
 
-	marker.setMap(map);
-
-	// add another marker to the map
-	myLatLng = new google.maps.LatLng(37.7777, -122.4167);
-	marker = new google.maps.Marker({
-		position: myLatLng,
-		map: map,
-		title:"Second marker!"
-	});
-
-	marker.setMap(map);
-
-	// Loop to add each marker to the map
-	// var markerDetails = getMarker();
-	// var Lat = markerDetails[0];
-	// var Lng = markerDetails[1];
-	// var name = markerDetails[2]
-	// 
-	// var myLatLng = new google.maps.LatLng(Lat, Lng);
+	// // add a marker to the map
+	// var myLatLng = new google.maps.LatLng(37.7833, -122.4167);
 	// var marker = new google.maps.Marker({
 	// 	position: myLatLng,
 	// 	map: map,
-	// 	title: name
+	// 	title:"Hello world!"
 	// });
-	// 
+
+	// marker.setMap(map);
+
+	// // add another marker to the map
+	// myLatLng = new google.maps.LatLng(37.7777, -122.4167);
+	// marker = new google.maps.Marker({
+	// 	position: myLatLng,
+	// 	map: map,
+	// 	title:"Second marker!"
+	// });
+
 	// marker.setMap(map);
 }
 
@@ -133,7 +136,7 @@ function initialize() {
 	// create the map object
 	var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
 
-	addMarkers(map);
+	getMarkers(map);
 }
 
 

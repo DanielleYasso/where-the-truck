@@ -1,6 +1,7 @@
-from flask import Flask, render_template, redirect, request, session, g
+from flask import Flask, render_template, redirect, request, session, g, make_response
 import os
 import model
+import json
 
 app = Flask(__name__)
 
@@ -9,6 +10,44 @@ API_KEY = os.environ.get('API_KEY')
 @app.route("/")
 def home():
 	return render_template("base.html", API_KEY=API_KEY)
+
+
+###### JSON ######
+def convert_to_JSON(result):
+	"""Convert result object to a JSON web request."""
+	response = make_response(json.dumps(result))
+	response.mimetype = "application/json"
+	print "***************CALLED*************"
+	return response
+
+def dump_datetime(value):
+    """Deserialize datetime object into string form for JSON processing."""
+    if value is None:
+        return None
+    return [value.strftime("%Y-%m-%d"), value.strftime("%H:%M:%S")]
+
+###### END JSON ######
+
+
+@app.route("/get_markers")
+def get_markers():
+	"""Get's all of the attractions with checkins to be displayed as markers"""
+	# get all attractions that have checkins
+	checked_in_attractions = model.session.query(model.Attraction).filter(model.Attraction.checkin_id != None).all()
+	
+	if not checked_in_attractions:
+		return None
+
+	attraction_list = []
+	for attraction in checked_in_attractions:
+		checkin = model.session.query(model.Checkin).get(attraction.checkin_id)
+		attraction_list.append({"id": attraction.id, 
+								"name": attraction.name,
+								"lat": checkin.lat,
+								"lng": checkin.lng,
+								"timestamp": dump_datetime(checkin.timestamp)
+								})
+	return convert_to_JSON(attraction_list)
 
 @app.route("/checkin", methods=["POST"])
 def checkin():
