@@ -56,7 +56,9 @@ function setCheckin(lat, lng) {
 			"attraction_id": attraction_id,
 			"latitude": lat,
 			"longitude": lng
-		}
+		}, 
+		// reload the map
+		initialize()
 
 	);
 }
@@ -82,7 +84,7 @@ function addMarkers(map, markers) {
 		markerObject = markers[i];
 		var myLatLng = new google.maps.LatLng(markerObject["lat"], markerObject["lng"]);
 		console.log(myLatLng);
-		
+
 		var marker = new google.maps.Marker({
 			position: myLatLng,
 			map: map,
