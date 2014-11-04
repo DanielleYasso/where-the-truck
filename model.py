@@ -14,7 +14,11 @@ Base.query = session.query_property()
 ######################
 
 class Attraction(Base):
-	pass
+	__tablename__ = "attractions"
+
+	id = Column(Integer, primary_key = True)
+	name = Column(String(50), nullable = False)
+	checkin_id = Column(Integer, nullable = True)
 
 class Checkin(Base):
 	pass
