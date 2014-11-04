@@ -29,7 +29,12 @@ def checkin():
 								lng=lng)
 	model.session.add(new_checkin)
 	model.session.commit()
- 	
+
+	# Use checkin record to update attraction's checkin_id
+	attraction_rec = new_checkin.attraction
+	attraction_rec.checkin_id = new_checkin.id
+	model.session.commit()
+
  	return redirect("/")
 
 
