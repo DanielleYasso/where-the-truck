@@ -23,7 +23,12 @@ def checkin():
 
 	print "Attraction %r, lat %r, lng %r" % (attraction_id, lat, lng)
 
-	
+	# Add checkin to database checkins table
+	new_checkin = model.Checkin(attraction_id=attraction_id, 
+								lat=lat, 
+								lng=lng)
+	model.session.add(new_checkin)
+	model.session.commit()
  	
  	return redirect("/")
 
