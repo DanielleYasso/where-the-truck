@@ -28,7 +28,7 @@ class Checkin(Base):
 	attraction_id = Column(Integer, ForeignKey("attractions.id"), nullable = False)
 	# user_id will change to nullable = False when user data is created (not MVP)
 	user_id = Column(Integer, ForeignKey("users.id"), nullable = True)
-	
+
 	lat = Column(Float, nullable = False)
 	lng = Column(Float, nullable = False)
 	timestamp = Column(DateTime, nullable = False)
@@ -39,7 +39,13 @@ class Checkin(Base):
 	users_who_rated = Column(PickleType, nullable = True)
 
 class User(Base):
-	pass
+	__tablename__ = "users"
+
+	id = Column(Integer, primary_key = True)
+	username = Column(String(50), nullable = True)
+	email = Column(String(75), nullable = False)
+	password = Column(String(75), nullable = False)
+	average_rating = Column(Float, nullable = True)
 
 # END CLASS DECLARATIONS #
 ##########################
