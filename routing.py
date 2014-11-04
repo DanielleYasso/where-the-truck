@@ -16,11 +16,14 @@ def checkin():
 
 	# get attraction id
 	attraction_id = request.form.get("attraction_id")
-	lat = request.form.get("latitude")
-	lng = request.form.get("longitude")
-	print "Attraction %r, lat %r, lng %r" % (attraction_id, lat, lng)
 
 	# get geolocation data from user
+	lat = request.form.get("latitude")
+	lng = request.form.get("longitude")
+
+	print "Attraction %r, lat %r, lng %r" % (attraction_id, lat, lng)
+
+	
  	
  	return redirect("/")
 

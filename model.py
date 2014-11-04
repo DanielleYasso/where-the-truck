@@ -3,6 +3,7 @@ from sqlalchemy import create_engine
 from sqlalchemy import Column, Integer, Float, String, DateTime, PickleType
 from sqlalchemy import ForeignKey 
 from sqlalchemy.orm import sessionmaker, relationship, backref, scoped_session
+from datetime import datetime
 
 from math import sqrt # for calculated_rating
 
@@ -36,14 +37,14 @@ class Checkin(Base):
 
 	id = Column(Integer, primary_key = True)
 	attraction_id = Column(Integer, ForeignKey("attractions.id"), nullable = False)
-	
+
 	# user_id will change to nullable = False when user data is created (not MVP)
 	user_id = Column(Integer, ForeignKey("users.id"), nullable = True)
 
 	# geolocation data with timestamp
 	lat = Column(Float, nullable = False)
 	lng = Column(Float, nullable = False)
-	timestamp = Column(DateTime, nullable = False)
+	timestamp = Column(DateTime, default=datetime.now, nullable = False)
 
 	# ratings data
 	upvotes = Column(Integer, nullable = True)
