@@ -6,18 +6,29 @@
 
 	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
 
-	<script src="https://maps.googleapis.com/maps/api/js?key={{API_KEY}}">
-	</script>
-
-	<script src="static/map.js">	
-	</script>
+	
 
 </head>
 <body>
 
-<div>Header</div>
+<div id="header">Header</div>
+<div id="checkinBox">
+	<form id="checkinForm" role="form">
+		<select name="attraction_name" id="attraction_name">
+			<option value="1">Truck1</option>
+			<option value="2">Truck2</option>
+			<option value="3">Truck3</option>
+		</select>
+		<button id="checkinButton" type="button">Checkin Location</button>
+	</form>
+</div>
 <div id="map-canvas"></div>
 
+
+<script src="static/jquery-1.11.0.min.js"></script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key={{API_KEY}}"></script>
+<script src="static/map.js"></script>
 
 </body>
 </html>

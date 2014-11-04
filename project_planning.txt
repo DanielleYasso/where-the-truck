@@ -44,7 +44,7 @@ Showing attractions on a map:
 [X]	- Give map several geolocations to display
 	- Give map geolocations from a database to display
 		1) Create a simple database with geolocation data
-		2) Create databases for attractions, checkins and users
+[X]		2) Create databases for attractions, checkins and users
 	- Get geolocation from a browser and give to map to display
 	- Store geolocation from browser in the database
 		1) Simple database with just 1 geolocation for each attraction

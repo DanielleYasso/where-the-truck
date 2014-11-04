@@ -1,3 +1,54 @@
+$(document).ready(function() {
+
+	// load the map
+	google.maps.event.addDomListener(window, "load", initialize);
+
+	// on click, get user's geolocation
+	$("#checkinButton").click(
+		function(evt) {
+			alert("clicked");
+			getGeolocation();
+		});
+
+});
+
+function getGeolocation() {
+	var checkinLocation = [];
+	var browserSupportFlag = new Boolean();
+	alert("in getGeolocation");
+
+	// Try W3C Geolocation (Preferred)
+	if(navigator.geolocation) {
+		browserSupportFlag = true;
+		navigator.geolocation.getCurrentPosition(function(position) {
+			alert("yay");
+	  		var lat = position.coords.latitude;
+	  		var lng = position.coords.longitude;
+	  		checkinLocation = [lat, lng];
+	  		alert("checkinLocation " + checkinLocation);
+		}, function() {
+	  		handleNoGeolocation(browserSupportFlag);
+		});
+	}
+	// Browser doesn't support Geolocation
+	else {
+		browserSupportFlag = false;
+		handleNoGeolocation(browserSupportFlag);
+	}
+
+	function handleNoGeolocation(errorFlag) {
+		if (errorFlag) {
+			alert("Geolocation service failed.");
+			checkinLocation = false;
+		} else {
+			alert("Your browser doesn't support geolocation.");
+			checkinLocation = false;
+		}
+	}
+
+	
+}
+
 function getMarker() {
 	var Lat, Lng, name, timestamp; // get from database
 	details = [Lat, Lng, name];
@@ -53,10 +104,9 @@ function initialize() {
 	// create the map object
 	var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
 
-	addMarkers(map);	
+	addMarkers(map);
 }
 
-// load the map
-google.maps.event.addDomListener(window, "load", initialize);
+
 
 
