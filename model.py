@@ -42,7 +42,7 @@ class Checkin(Base):
 
 	# define relationships
 	attraction = relationship("Attraction", backref=backref("checkins", order_by=id))
-	user = relationship("User", backref=backref("users", order_by=id))
+	user = relationship("User", backref=backref("checkins", order_by=id))
 
 class User(Base):
 	__tablename__ = "users"
@@ -52,6 +52,21 @@ class User(Base):
 	email = Column(String(75), nullable = False)
 	password = Column(String(75), nullable = False)
 	average_rating = Column(Float, nullable = True)
+
+	# Get average rating
+	def get_average_rating(self):
+		"""Calculates a user's average_rating"""
+		
+		total = 0
+		count = 0
+		# loop through user's check-ins for calculated_ratings
+		for checkin in self.checkins:
+			# is there a calculated_rating?
+			if checkin.calculated_rating:
+				total += checkin.calculated_rating
+				count += 1
+
+		self.average_rating = total/count
 
 # END CLASS DECLARATIONS #
 ##########################
