@@ -39,7 +39,7 @@ class Checkin(Base):
 	# user_id will change to nullable = False when user data is created (not MVP)
 	user_id = Column(Integer, ForeignKey("users.id"), nullable = True)
 
-	# geolocation
+	# geolocation data with timestamp
 	lat = Column(Float, nullable = False)
 	lng = Column(Float, nullable = False)
 	timestamp = Column(DateTime, nullable = False)
@@ -60,7 +60,7 @@ class Checkin(Base):
 
 		# adapted from possiblywrong.wordpress.com
 		if self.upvotes == 0:
-			self.calculated_rating =  -self.downvotes
+			self.calculated_rating = -self.downvotes
 		else:
 			n = upvotes + downvotes
 			z = 1.64485 #1.0 = 85%, 1.6 = 95%
