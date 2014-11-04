@@ -12,9 +12,13 @@ session = scoped_session(sessionmaker(bind=ENGINE, autocommit = False, autoflush
 Base = declarative_base()
 Base.query = session.query_property()
 
+
 ######################
 # CLASS DECLARATIONS #
 ######################
+
+####################
+# ATTRACTION CLASS #
 
 class Attraction(Base):
 	__tablename__ = "attractions"
@@ -22,6 +26,10 @@ class Attraction(Base):
 	id = Column(Integer, primary_key = True)
 	name = Column(String(50), nullable = False)
 	checkin_id = Column(Integer, nullable = True)
+
+
+#################
+# CHECKIN CLASS #
 
 class Checkin(Base):
 	__tablename__ = "checkins"
@@ -53,13 +61,16 @@ class Checkin(Base):
 		# adapted from possiblywrong.wordpress.com
 		if self.upvotes == 0:
 			self.calculated_rating =  -self.downvotes
+		else:
+			n = upvotes + downvotes
+			z = 1.64485 #1.0 = 85%, 1.6 = 95%
+			phat = float(upvotes) / n
 
-		n = upvotes + downvotes
-		z = 1.64485 #1.0 = 85%, 1.6 = 95%
-		phat = float(upvotes) / n
+			self.calculated_rating = (phat+z*z/(2*n)-z*sqrt((phat*(1-phat)+z*z/(4*n))/n))/(1+z*z/n)
 
-		self.calculated_rating = (phat+z*z/(2*n)-z*sqrt((phat*(1-phat)+z*z/(4*n))/n))/(1+z*z/n)
 
+##############
+# USER CLASS #
 
 class User(Base):
 	__tablename__ = "users"
