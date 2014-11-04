@@ -3,8 +3,6 @@ google.maps.event.addDomListener(window, "load", initialize);
 
 $(document).ready(function() {
 
-	
-
 	// on click, get user's geolocation
 	$("#checkinButton").click(
 		function(evt) {
@@ -102,12 +100,26 @@ function initialize() {
 		center: { lat: 37.7833, lng: -122.4167 },
 		zoom: 14
 	};
-	
+
+	// detect browser type
+ 	var useragent = navigator.userAgent;
+	var mapdiv = document.getElementById("map-canvas");
+
+	// set map size for mobile vs desktop
+	if (useragent.indexOf('iPhone') != -1 || useragent.indexOf('Android') != -1 ) {
+		mapdiv.style.width = '100%';
+		mapdiv.style.height = '100%';
+	} else {
+		mapdiv.style.width = '600px';
+		mapdiv.style.height = '800px';
+	}
+
 	// create the map object
 	var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
 
 	addMarkers(map);
 }
+
 
 
 
