@@ -15,10 +15,14 @@ def checkin():
 	"""Checkin user's current location as location of selected item"""
 
 	# get attraction id
-	attraction = request.form.get("attraction_name")
+	attraction_id = request.form.get("attraction_id")
+	lat = request.form.get("latitude")
+	lng = request.form.get("longitude")
+	print "Attraction %r, lat %r, lng %r" % (attraction_id, lat, lng)
 
 	# get geolocation data from user
-	
+ 	
+ 	return redirect("/")
 
 
 if __name__=="__main__":

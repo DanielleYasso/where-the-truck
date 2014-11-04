@@ -11,8 +11,9 @@ $(document).ready(function() {
 
 });
 
+//////// HANDLE CHECKINS ////////
+
 function getGeolocation() {
-	var checkinLocation = [];
 	var browserSupportFlag = new Boolean();
 
 	// Try W3C Geolocation (Preferred)
@@ -22,10 +23,8 @@ function getGeolocation() {
 	  		var lat = position.coords.latitude;
 	  		var lng = position.coords.longitude;
 
-	  		// set checkin location with lat and lng
-	  		checkinLocation = [lat, lng];
-
-	  		alert("checkinLocation " + checkinLocation);
+	  		// set the checkin location for the selected attraction
+	  		setCheckin(lat, lng);
 
 		}, function() {
 	  		// error: no position returned
@@ -45,9 +44,26 @@ function getGeolocation() {
 			alert("Error: Your browser doesn't support geolocation.");
 		}
 	}
-
-
 }
+
+function setCheckin(lat, lng) {
+
+	var attraction_id = $("#attraction_id").val();
+
+	$.post(
+		"/checkin",
+		{
+			"attraction_id": attraction_id,
+			"latitude": lat,
+			"longitude": lng
+		}
+
+	);
+}
+
+
+
+//////// MAP MANIPULATION ////////
 
 function getMarker() {
 	var Lat, Lng, name, timestamp; // get from database
