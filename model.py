@@ -36,6 +36,7 @@ class Checkin(Base):
 
 	id = Column(Integer, primary_key = True)
 	attraction_id = Column(Integer, ForeignKey("attractions.id"), nullable = False)
+	
 	# user_id will change to nullable = False when user data is created (not MVP)
 	user_id = Column(Integer, ForeignKey("users.id"), nullable = True)
 
