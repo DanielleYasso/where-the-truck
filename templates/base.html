@@ -14,9 +14,9 @@
 <div id="checkinBox">
 	<form id="checkinForm" role="form">
 		<select name="attraction_id" id="attraction_id">
-			<option value="1">Truck1</option>
-			<option value="2">Truck2</option>
-			<option value="3">Truck3</option>
+			{% for attraction in attractions %}
+			<option value="{{ attraction.id }}">{{ attraction.name }}</option>
+			{% endfor %}
 		</select>
 		<button id="checkinButton" type="button">Checkin Location</button>
 	</form>

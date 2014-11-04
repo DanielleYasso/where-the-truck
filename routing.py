@@ -9,7 +9,10 @@ API_KEY = os.environ.get('API_KEY')
 
 @app.route("/")
 def home():
-	return render_template("base.html", API_KEY=API_KEY)
+
+	attractions = model.session.query(model.Attraction).all()
+	
+	return render_template("base.html", API_KEY=API_KEY, attractions=attractions)
 
 
 ###### JSON ######
