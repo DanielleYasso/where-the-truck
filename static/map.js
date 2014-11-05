@@ -6,9 +6,9 @@ $(document).ready(function() {
 	// on click, get user's geolocation
 	$("#checkinButton").click(
 		function(evt) {
-			getGeolocation();
+			var attraction_id = $("#attraction_id").val();
+			getGeolocation(attraction_id);
 		});
-
 });
 
 //////// HANDLE CHECKINS ////////
@@ -24,7 +24,7 @@ function getGeolocation() {
 	  		var lng = position.coords.longitude;
 
 	  		// set the checkin location for the selected attraction
-	  		setCheckin(lat, lng);
+	  		setCheckin(attraction_id, lat, lng);
 
 		}, function() {
 	  		// error: no position returned
@@ -46,9 +46,9 @@ function getGeolocation() {
 	}
 }
 
-function setCheckin(lat, lng) {
+function setCheckin(attraction_id, lat, lng) {
 
-	var attraction_id = $("#attraction_id").val();
+	
 
 	$.post(
 		"/checkin",
@@ -88,10 +88,32 @@ function addMarkers(map, markers) {
 		var marker = new google.maps.Marker({
 			position: myLatLng,
 			map: map,
-			title: markerObject["name"]
+			title: markerObject["name"],
+			draggable: true,
+			// animation: google.maps.Animation.DROP
 		});
+
+		marker.set("id", markerObject["id"]);
+
 		marker.setMap(map);
+
+		google.maps.event.addListener(
+			marker,
+			"dragend",
+			function(evt) {
+				console.log(this.title);
+
+				// get new lat and lng
+				var lat = evt.latLng.lat();
+				var lng = evt.latLng.lng();
+
+				var attraction_id = this.get("id");
+
+				// update the database with a new checkin
+				setCheckin(attraction_id, lat, lng);
+		});
 	}
+
 }
 
 // Creates the map to show on the page
@@ -99,7 +121,7 @@ function initialize() {
 	var mapOptions = {
 		// start on San Francisco
 		center: { lat: 37.7833, lng: -122.4167 },
-		zoom: 14
+		zoom: 13
 	};
 
 	// detect browser type
@@ -119,6 +141,7 @@ function initialize() {
 	var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
 
 	getMarkers(map);
+
 }
 
 
