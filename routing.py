@@ -76,8 +76,8 @@ def checkin():
 	attraction_rec.checkin_id = new_checkin.id
 	model.session.commit()
 
- 	return redirect("/")
-
+ 	# return redirect("/")
+ 	return ""
 
 if __name__=="__main__":
 	app.run(debug=True)

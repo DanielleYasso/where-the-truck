@@ -46,23 +46,22 @@ function getGeolocation(attraction_id) {
 }
 
 function setCheckin(attraction_id, lat, lng) {
-
+	console.log("setCheckin");
 	$.post(
 		"/checkin",
 		{
 			"attraction_id": attraction_id,
 			"latitude": lat,
 			"longitude": lng
-		}, 
+		},
 		
 		// reload the map
-		initialize()
-		
-	
+		function(result) {
+			initialize();
+		}
 
 	);
 }
-
 
 
 //////// MAP MANIPULATION ////////
@@ -73,7 +72,7 @@ function getMarkers(map) {
 		function(result) {
 			console.log("getMarkers:" + result);
 			
-			addMarkers(map, result)
+			addMarkers(map, result);
 		});
 }
 

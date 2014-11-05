@@ -8,20 +8,23 @@
 
 	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
 
+	
+
 </head>
 <body>
-
-	<div id="checkinBox">
-		<form id="checkinForm" role="form">
-			<select name="attraction_id" id="attraction_id">
-				{% for attraction in attractions %}
-				<option value="{{ attraction.id }}">{{ attraction.name }}</option>
-				{% endfor %}
-			</select>
-			<button id="checkinButton" type="button">Checkin Location</button>
-		</form>
-	</div>
-	<div id="map-canvas"></div>
+<div id="wrapper" data-role="page">
+		<div id="checkinBox">
+			<form id="checkinForm" role="form">
+				<select name="attraction_id" id="attraction_id">
+					{% for attraction in attractions %}
+					<option value="{{ attraction.id }}">{{ attraction.name }}</option>
+					{% endfor %}
+				</select>
+				<button id="checkinButton" type="button">Checkin Location</button>
+			</form>
+		</div>
+		<div id="map-canvas"></div>
+</div>
 
 
 	<script src="static/jquery-1.11.0.min.js"></script>
