@@ -114,14 +114,27 @@ function addMarkers(map, markers) {
 		});
 
 		// Info Window
+		var infoWindow;
 		google.maps.event.addListener(
 			marker,
 			"click",
 			function(evt) {
+				if (infoWindow) {
+					infoWindow.close();
+				}
 				var time_info = this.get("time");
 				time = time_info[0] + " " + time_info[1];
-				var content = "<div><p style='margin: 0 5px 5px 0'><strong>" + this.title + "</strong><br>" + jQuery.timeago(time) + "</p></div>";
-				var infoWindow = new google.maps.InfoWindow({
+				var content = "<table style='text-align: left; padding-bottom: 5px'><tr><th>"
+							+ this.title + "</th>"
+							+ "<td>" 
+							+ "\u2B06"
+							+ "</td></tr>"
+							+ "<tr><td style='padding-right: 5px'>"
+							+ jQuery.timeago(time) 
+							+ "</td><td>"
+							+ "\u2B07"
+							+ "</td></tr></table>";
+				infoWindow = new google.maps.InfoWindow({
 					content: content
 				});
 				infoWindow.open(map, this);
