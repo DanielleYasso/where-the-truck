@@ -1,7 +1,7 @@
 // load the map
 google.maps.event.addDomListener(window, "load", initialize);
 
-$(document).ready(function() {
+$(document).bind('pageinit', function(event) {
 
 	// on click, get user's geolocation
 	$("#checkinButton").click(
@@ -55,8 +55,11 @@ function setCheckin(attraction_id, lat, lng) {
 			"latitude": lat,
 			"longitude": lng
 		}, 
+		
 		// reload the map
 		initialize()
+		
+	
 
 	);
 }
