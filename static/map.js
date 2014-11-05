@@ -46,7 +46,6 @@ function getGeolocation(attraction_id) {
 }
 
 function setCheckin(attraction_id, lat, lng) {
-	console.log("setCheckin");
 	$.post(
 		"/checkin",
 		{
