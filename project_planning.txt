@@ -42,18 +42,17 @@ Showing attractions on a map:
 [X]	- Show a map on a website
 [X]	- Give map one geolocation and have it display that marker
 [X]	- Give map several geolocations to display
-	- Give map geolocations from a database to display
-		1) Create a simple database with geolocation data
-[X]		2) Create databases for attractions, checkins and users
-	- Get geolocation from a browser and give to map to display
-	- Store geolocation from browser in the database
-		1) Simple database with just 1 geolocation for each attraction
-		2) Data modeling: Use multiple databases to store geolocation data per attraction, etc.
+[X]	- Give map geolocations from a database to display
+[X]		Create databases for attractions, checkins and users
+[X]	- Get geolocation from a browser and give to map to display
+[X]	- Store geolocation from browser in the database
+[X]		Data modeling: Use multiple databases to store geolocation data per attraction, etc.
 
 Updating attraction locations on a map:
-	- Update geolocation and have map update with it
-	- Update geolocation of a single attraction from web application via a button
-	- Update geolocation of a specified attraction from web application
+[X]	- Update geolocation and have map update with it
+[X]	- Update geolocation of a single attraction from web application via a button
+[X]	- Update geolocation of a specified attraction from web application
+[X] - Update geolocation of an attraction by dragging a marker
 
 ********** END MVP **********
 
@@ -91,7 +90,7 @@ Down votes based on check-ins:
 
 Display Options:
 Timeouts:
-	- Display check-in time stamps along with check-in (on hover)
+[X]	- Display check-in time stamps based on time elapsed
 	- Time out check-ins (check-ins disappear after X minutes/hours)
 Change appearance of attraction icon as check-in times out
 	- Selecting what to display:
@@ -109,6 +108,9 @@ Advanced User Features:
 
 Twilio
 	- Allow a person to text the name of an attraction and get a message back with a google map link showing the most recent check-in for that
+
+Foursquare
+	- Allows a user to checkin to foursquare for that attraction/location
 
 ********** END EXTRAS **********
 
