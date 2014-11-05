@@ -1,8 +1,7 @@
 // load the map
 google.maps.event.addDomListener(window, "load", initialize);
 
-$(document).bind('pageinit', function(event) {
-
+$(document).ready(function() {
 	// on click, get user's geolocation
 	$("#checkinButton").click(
 		function(evt) {
