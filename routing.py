@@ -20,7 +20,6 @@ def convert_to_JSON(result):
 	"""Convert result object to a JSON web request."""
 	response = make_response(json.dumps(result))
 	response.mimetype = "application/json"
-	print "***************CALLED*************"
 	return response
 
 def dump_datetime(value):
