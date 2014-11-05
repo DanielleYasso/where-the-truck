@@ -120,7 +120,7 @@ function addMarkers(map, markers) {
 			function(evt) {
 				var time_info = this.get("time");
 				time = time_info[0] + " " + time_info[1];
-				var content = this.title + "<br>" + jQuery.timeago(time);
+				var content = "<div><p style='margin-top: 0;'><strong>" + this.title + "</strong><br>" + jQuery.timeago(time) + "</p></div>";
 				var infoWindow = new google.maps.InfoWindow({
 					content: content
 				});
