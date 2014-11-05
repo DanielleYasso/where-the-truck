@@ -13,7 +13,7 @@ $(document).ready(function() {
 
 //////// HANDLE CHECKINS ////////
 
-function getGeolocation() {
+function getGeolocation(attraction_id) {
 	var browserSupportFlag = new Boolean();
 
 	// Try W3C Geolocation (Preferred)
@@ -47,8 +47,6 @@ function getGeolocation() {
 }
 
 function setCheckin(attraction_id, lat, lng) {
-
-	
 
 	$.post(
 		"/checkin",
