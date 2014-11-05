@@ -92,6 +92,7 @@ function addMarkers(map, markers) {
 		});
 
 		marker.set("id", markerObject["id"]);
+		marker.set("time", markerObject["timestamp"]);
 
 		marker.setMap(map);
 
@@ -117,7 +118,9 @@ function addMarkers(map, markers) {
 			marker,
 			"click",
 			function(evt) {
-				var content = this.title;
+				var time_info = this.get("time");
+				time = time_info[0] + " " + time_info[1];
+				var content = this.title + "<br>" + jQuery.timeago(time);
 				var infoWindow = new google.maps.InfoWindow({
 					content: content
 				});
