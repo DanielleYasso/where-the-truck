@@ -124,15 +124,28 @@ function addMarkers(map, markers) {
 				}
 				var time_info = this.get("time");
 				time = time_info[0] + " " + time_info[1];
-				var content = "<table style='text-align: left; padding-bottom: 5px'><tr><th>"
-							+ this.title + "</th>"
-							+ "<td>" 
+				var content = "<table style='text-align: left;'><tr>"
+				
+							+ "<th>"
+							+ this.title 
+							+ "</th>"
+
+							+ "<td id='upArrow' padding-right: 5px;'>"
+							+ "<a href='#' onclick='alert(1)'>" 
 							+ "\u2B06"
+							+ "</a>" 
 							+ "</td></tr>"
-							+ "<tr><td style='padding-right: 5px'>"
+
+							+ "<tr><td style='padding-bottom: 5px'>"
+							+ "<span style='margin-right: 5px; padding-right: 5px;'>" 
 							+ jQuery.timeago(time) 
-							+ "</td><td>"
+							+ "</span>"
+							+ "</td>"
+
+							+ "<td id='downArrow' style='vertical-align: top;'>"
+							+ "<a href='#' onclick='alert(-1)'>"
 							+ "\u2B07"
+							+ "</a>"
 							+ "</td></tr></table>";
 				infoWindow = new google.maps.InfoWindow({
 					content: content
