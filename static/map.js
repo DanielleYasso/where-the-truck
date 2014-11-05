@@ -95,6 +95,7 @@ function addMarkers(map, markers) {
 
 		marker.setMap(map);
 
+		// Drag event
 		google.maps.event.addListener(
 			marker,
 			"dragend",
@@ -110,6 +111,18 @@ function addMarkers(map, markers) {
 				// update the database with a new checkin
 				setCheckin(attraction_id, lat, lng);
 		});
+
+		// Info Window
+		google.maps.event.addListener(
+			marker,
+			"click",
+			function(evt) {
+				var content = this.title;
+				var infoWindow = new google.maps.InfoWindow({
+					content: content
+				});
+				infoWindow.open(map, this);
+			});
 	}
 
 }
