@@ -84,11 +84,14 @@ $(document).ready(function() {
 				},
 				function(result) {
 					if (result == "noUser") {
-						evt.preventDefault();
-						alert("No user with that email");
+						$("#emailEF").removeClass("hidden");
+						$("#loginErrorMessage").removeClass("hidden");
+						$("#loginErrorMessage").text("No user with that email");
 					}
 					else if (result == "wrongPassword") {
-						alert("Wrong password!");
+						$("#passwordEF").removeClass("hidden");
+						$("#loginErrorMessage").removeClass("hidden");
+						$("#loginErrorMessage").text("Incorrect password");
 					}
 					else {
 						// user logged in
