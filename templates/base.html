@@ -27,9 +27,16 @@
 		<div id="loginFormDiv">
 			<div class="closeButton"><button class="lightBoxClose">X</button></div>
 			<form id="loginForm" name="loginForm">
-				<input type="text" id="loginEmail" name="email" placeholder="email">
-				<input type="password" id="loginPassword" name="password" placeholder="password">
+				<div>
+					<div class="fieldElement"><input type="text" id="loginEmail" name="email" placeholder="email"></div>
+					<span class="errorField hidden" id="emailEF">*</span>
+				</div>
+				<div>
+					<div class="fieldElement"><input type="password" id="loginPassword" name="password" placeholder="password"></div>
+					<span class="errorField hidden" id="passwordEF">*</span>
+				</div>
 				<button id="loginButton">Login</button>
+				<div id="loginErrorMessage"></div>
 			</form>
 		</div>
 

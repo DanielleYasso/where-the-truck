@@ -55,7 +55,7 @@ html, body {
 	display: none;
 }
 
-#signupErrorMessage {
+#signupErrorMessage, #loginErrorMessage {
 	color: red;
 	font-size: small;
 	padding-top: 5px;

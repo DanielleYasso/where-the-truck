@@ -1,6 +1,12 @@
 $(document).ready(function() {
 	
+	///////////////////////
+
 	//////// LOGIN ////////
+
+	///////////////////////
+
+	var loginEmptyFieldError = false;
 
 	// open login lightbox
 	$("#loginOpenButton").click(
@@ -15,17 +21,59 @@ $(document).ready(function() {
 				}
 			});
 			evt.preventDefault();
+
+			// reset field errors
+			$("#emailEF").addClass("hidden");
+			$("#passwordEF").addClass("hidden");
+
+			loginEmptyFieldError = false;
+			$("#loginErrorMessage").addClass("hidden");
+
+
 		}
 	);
 
 	// login user
 	$("#loginButton").click(
 		function(evt) {
-			// get email
-			var email = $("#loginEmail").val();
-			var password = $("#loginPassword").val();
 
 			evt.preventDefault();
+
+			loginEmptyFieldError = false;
+			var emptyFieldMessage = "* Please fill in required fields";
+			
+			// GET EMAIL
+			var email = $("#loginEmail").val();
+			if (email == "") {
+				$("#emailEF").removeClass("hidden");
+				loginEmptyFieldError = true;
+			}
+			else if (!$("#emailEF").hasClass("hidden")) {
+				$("#emailEF").addClass("hidden");
+			}
+
+			// GET PASSWORD
+			var password = $("#loginPassword").val();
+			if (password == "") {
+				$("#passwordEF").removeClass("hidden");
+				loginEmptyFieldError = true;
+			}
+			else if (!$("#passwordEF").hasClass("hidden")) {
+				$("#passwordEF").addClass("hidden");
+			}
+
+			// ERROR MESSAGE
+			if (loginEmptyFieldError) {
+				$("#loginErrorMessage").removeClass("hidden");
+				$("#loginErrorMessage").text(emptyFieldMessage);
+				return;
+			}
+			else if (!$("#loginErrorMessage").hasClass("hidden")){
+				$("#loginErrorMessage").addClass("hidden");
+				$("#loginErrorMessage").empty();
+			}
+
+			
 
 			// post login event
 			$.post(
@@ -56,11 +104,14 @@ $(document).ready(function() {
 	);
 
 
+	////////////////////////
 
 	/////// SIGN UP ////////
 
-	var emptyFieldError = false;
-	var passwordError = false;
+	////////////////////////
+
+	var signmptyFieldError = false;
+	var signupPasswordError = false;
 
 	// open signup lightbox
 	$("#signupOpenButton").click(
@@ -82,8 +133,8 @@ $(document).ready(function() {
 			$("#usernameEF").addClass("hidden");	
 			$("#signupEmailEF").addClass("hidden");	
 
-			emptyFieldError = false;
-			passwordError = false;
+			signupmptyFieldError = false;
+			signupPasswordError = false;
 			$("#signupErrorMessage").addClass("hidden");
 		}
 	);
@@ -94,17 +145,17 @@ $(document).ready(function() {
 			
 			evt.preventDefault();
 
-			emptyFieldError = false;
+			signupmptyFieldError = false;
 			var emptyFieldMessage = "* Please fill in required fields";
 
-			passwordError = false;
-			var passwordErrorMessage = "Passwords do not match";
+			signupPasswordError = false;
+			var signupPasswordErrorMessage = "Passwords do not match";
 
 			// GET PASSWORD
 			var password = $("#signupPassword").val();
 			if (password == "") {
 				$("#signupPasswordEF").removeClass("hidden");
-				emptyFieldError = true;
+				signupEmptyFieldError = true;
 			}
 			else if (!$("#signupPasswordEF").hasClass("hidden")) {
 				$("#signupPasswordEF").addClass("hidden");
@@ -114,7 +165,7 @@ $(document).ready(function() {
 			var passwordConfirm = $("#passwordConfirm").val();
 			if (passwordConfirm == "") {
 				$("#passwordConfirmEF").removeClass("hidden");
-				emptyFieldError = true;
+				signupEmptyFieldError = true;
 			}
 			else if (!$("#passwordConfirmEF").hasClass("hidden")) {
 				$("#passwordConfirmEF").addClass("hidden");
@@ -124,7 +175,7 @@ $(document).ready(function() {
 			var username = $("#username").val();
 			if (username == "") {
 				$("#usernameEF").removeClass("hidden");
-				emptyFieldError = true;
+				signupEmptyFieldError = true;
 			}
 			else if (!$("#usernameEF").hasClass("hidden")) {
 				$("#usernameEF").addClass("hidden");
@@ -134,33 +185,33 @@ $(document).ready(function() {
 			var email = $("#signupEmail").val();
 			if (email == "") {
 				$("#signupEmailEF").removeClass("hidden");
-				emptyFieldError = true;
+				signupEmptyFieldError = true;
 			}
 			else if (!$("#signupEmailEF").hasClass("hidden")) {
 				$("#signupEmailEF").addClass("hidden");
 			}
 
-			// do passwords match?
-			if (!emptyFieldError && password != passwordConfirm) {
+			// CHECK FOR MATCHING PASSWORDS
+			if (!signupEmptyFieldError && password != passwordConfirm) {
 				if (!$("#signupPasswordEF").hasClass("hidden")) {
 					$("#signupPasswordEF").addClass("hidden");
 				}
-				message = passwordErrorMessage;
-				passwordError = true;
+				message = signupPasswordErrorMessage;
+				signupPasswordError = true;
 				$("#passwordConfirmEF").removeClass("hidden");
 				$("#signupPasswordEF").removeClass("hidden");
 			}
 
 			// ERROR MESSAGE
-			if (emptyFieldError) {
+			if (signupEmptyFieldError) {
 				$("#signupErrorMessage").removeClass("hidden");
 				$("#signupErrorMessage").text(emptyFieldMessage);
 				return;
 			}
-			else if (passwordError) {
+			else if (signupPasswordError) {
 				$("#signupErrorMessage").empty();
 				$("#signupErrorMessage").removeClass("hidden");
-				$("#signupErrorMessage").text(passwordErrorMessage);
+				$("#signupErrorMessage").text(signupPasswordErrorMessage);
 				return;
 			}
 			else if (!$("#signupErrorMessage").hasClass("hidden")){
@@ -194,8 +245,11 @@ $(document).ready(function() {
 	);
 
 
+	////////////////////////////////
 
 	//////// CLOSE LIGHTBOX ////////
+
+	////////////////////////////////
 	
 	$(".lightBoxClose").click(
 		function(evt) {
