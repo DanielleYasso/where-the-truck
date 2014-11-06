@@ -7,42 +7,8 @@ $(document).ready(function() {
 		function(evt) {
 			var attraction_id = $("#attraction_id").val();
 			getGeolocation(attraction_id);
-		});
-
-	// open login lightbox
-	$("#loginOpenButton").click(function(evt) {
-		$("#loginFormDiv").lightbox_me({
-			centered: true,
-			appearEffect: "fadeIn",
-			closeClick: false,
-			closeSelector: ".close",
-			onLoad: function() {
-				$("#loginForm").find("input:first").focus();
-			}
-		});
-		evt.preventDefault();
-	});
-
-	$("#signupOpenButton").click(function(evt) {
-		$("#signupFormDiv").lightbox_me({
-			centered: true,
-			appearEffect: "fadeIn",
-			closeClick: false,
-			closeSelector: ".close",
-			onLoad: function() {
-				$("#signupForm").find("input:first").focus();
-			}
-		});
-		evt.preventDefault();
-	});
-
-	// close lightbox
-	$(".lightBoxClose").click(function(evt) {
-		$("#loginFormDiv").trigger("close");
-		$("#signupFormDiv").trigger("close");
-	});
-
-	
+		}
+	);
 });
 
 

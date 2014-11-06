@@ -5,7 +5,20 @@ import json
 
 app = Flask(__name__)
 
+SECRET_KEY = os.environ.get('SECRET_KEY')
+app.secret_key = SECRET_KEY
+
 API_KEY = os.environ.get('API_KEY')
+
+
+@app.before_request
+def check_login():
+	user_id = session.get("user_id")
+	if user_id:
+		g.user = model.session.query(model.User).get(user_id)
+	else:
+		g.user = None
+
 
 @app.route("/")
 def home():
@@ -30,6 +43,50 @@ def dump_datetime(value):
 
 ###### END JSON ######
 
+@app.route("/logout")
+def logout():
+	session["user_id"] = None
+	return redirect("/")
+
+##############
+# USER LOGIN #
+##############
+@app.route("/login", methods=["POST"])
+def login():
+
+	# get email and password from form inputs
+	email = request.form.get("email")
+	password = request.form.get("password")
+	print "****** email", email
+	print password
+
+	# get user with that email address
+	user = model.session.query(model.User).filter_by(email=email).first()
+
+	# check if user exists in database
+	if not user:
+		return convert_to_JSON("noUser")
+
+	# check if password is right
+	if password != user.password:
+		return convert_to_JSON("wrongPassword")
+
+	session["user_id"] = user.id
+
+	return ""
+
+
+
+###############
+# USER SIGNUP #
+###############
+@app.route("/signup", methods=["POST"])
+def signup():
+	pass
+
+#################################
+# GET MARKERS TO DISPLAY ON MAP #
+#################################
 
 @app.route("/get_markers")
 def get_markers():
@@ -51,6 +108,11 @@ def get_markers():
 								"checkin_id": checkin.id
 								})
 	return convert_to_JSON(attraction_list)
+
+
+########################
+# CREATE A NEW CHECKIN #
+########################
 
 @app.route("/checkin", methods=["POST"])
 def checkin():
@@ -79,6 +141,11 @@ def checkin():
 
  	return ""
 
+
+################
+# UPDATE VOTES #
+################
+
 @app.route("/vote", methods=["POST"])
 def vote():
 	"""Gets a user's up or down vote and updates checkins table record"""
@@ -102,6 +169,11 @@ def vote():
 	model.session.commit()
 
 	return ""
+
+
+############################
+# GET VOTES FOR INFOWINDOW #
+############################
 
 @app.route("/get_votes/<int:checkin_id>")
 def get_votes(checkin_id):

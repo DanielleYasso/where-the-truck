@@ -12,34 +12,42 @@
 <body>
 
 	<div id="nav">
-		<button id="loginOpenButton">Login</button>
-		<button id="signupOpenButton">Signup</button>
+		{% if session.get("user_id", False) %}
+			{{ g.user.username }}
+			<form action="/logout">
+				<button type="submit" id="logoutButton">Logout</button>
+			</form>
+
+		{% else %}
+			<button id="loginOpenButton">Login</button>
+			<button id="signupOpenButton">Signup</button>
+		{% endif %}
 
 		<!-- Light Box content -->
 		<div id="loginFormDiv">
 			<div class="closeButton"><button class="lightBoxClose">X</button></div>
-			<form action="/login" method="POST" id="loginForm">
-				<input type="text" id="email" name="email" placeholder="email">
-				<input type="password" id="password" name="password" placeholder="password">
-				<input id="loginButton" type="submit" value="Login">
+			<form id="loginForm">
+				<input type="text" id="loginEmail" name="email" placeholder="email">
+				<input type="password" id="loginPassword" name="password" placeholder="password">
+				<button id="loginButton">Login</button>
 			</form>
 		</div>
 
 		<div id="signupFormDiv">
 			<div class="closeButton"><button class="lightBoxClose">X</button></div>
-			<form action="/signup" method="POST" id="signupForm">
+			<form id="signupForm">
 				<input type="text" id="username" name="username" placeholder="username">
-				<input type="text" id="email" name="email" placeholder="email">
-				<input type="password" id="password" name="password" placeholder="password">
+				<input type="text" id="signupEmail" name="email" placeholder="email">
+				<input type="password" id="signupPassword" name="password" placeholder="password">
 				<input type="password" id="passwordConfirm" name="passwordConfirm" placeholder="retype password">
-				<input id="signupButton" type="submit" value="Signup">
+				<button id="signupButton">Signup</button>
 			</form>
 		</div>
 	</div>
 
 
 	<div id="checkinBox">
-		<form id="checkinForm" role="form">
+		<form id="checkinForm">
 			<select name="attraction_id" id="attraction_id">
 				{% for attraction in attractions %}
 				<option value="{{ attraction.id }}">{{ attraction.name }}</option>
@@ -57,6 +65,8 @@
 
 	<script src="https://maps.googleapis.com/maps/api/js?key={{API_KEY}}"></script>
 	<script src="static/map.js"></script>
+
+	<script src="static/login.js"></script>
 
 	<!-- Time ago -->
 	<script src="static/jquery.timeago.js"></script>
