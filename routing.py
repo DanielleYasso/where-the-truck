@@ -192,18 +192,10 @@ def update_vote(checkin_id, vote):
 	# get attraction's checkin
 	checkin = model.session.query(model.Checkin).get(checkin_id)
 
-	# update checkin votes
-	if vote == "up":
-		checkin.upvotes += 1
-		print "******* upvotes *******", checkin.upvotes
-	elif vote == "down":
-		checkin.downvotes += 1
-		print "******* downvotes *******", checkin.downvotes
 
-	model.session.commit()
-
+	# ONLY LOGGED IN USERS CAN VOTE
 	# if user is logged in, add vote to users_who_rated
-	if session.get("user_id", False):
+	if g.user:
 		print "username", g.user.username
 		# get dictionary of user votes
 		d = checkin.users_who_rated
@@ -211,8 +203,28 @@ def update_vote(checkin_id, vote):
 
 		if d == None:
 			d = {}
-
 		print d
+
+		# add/update user vote
+		d[g.user.id] = vote
+		print d
+
+		# update checkin
+		checkin.users_who_rated = d
+		model.session.commit()
+
+
+		# update checkin votes
+		if vote == "up":
+			checkin.upvotes += 1
+			print "******* upvotes *******", checkin.upvotes
+		elif vote == "down":
+			checkin.downvotes += 1
+			print "******* downvotes *******", checkin.downvotes
+
+		model.session.commit()
+
+
 
 	return redirect("/")
 
