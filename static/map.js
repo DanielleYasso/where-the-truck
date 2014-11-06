@@ -129,6 +129,7 @@ function addMarkers(map, markers) {
 		});
 
 		marker.set("id", markerObject["id"]);
+		marker.set("name", markerObject["name"]);
 		marker.set("time", markerObject["timestamp"]);
 		marker.set("checkin_id", markerObject["checkin_id"]);
 
@@ -169,43 +170,74 @@ function addMarkers(map, markers) {
 
 				// var attraction_id = this.get("id");
 				var checkin_id = this.get("checkin_id");
+				console.log(checkin_id);
+
+				// get attraction name
+				var attraction_name = this.get("name");
 
 				// get upvotes and downvotes
-				// $.get(
-				// 	"/")
-
-				// create content for info window
-				var content = "<table style='text-align: left;'><tr>"
-
-							+ "<th>"
-							+ this.title 
-							+ "</th>"
-
-							+ "<td id='upArrow' padding-right: 5px;'>"
-							+ "<a href='' onclick='upVote(" + checkin_id + ")'>" 
-							+ "\u2B06"
-							+ "</a>" 
-							+ "</td></tr>"
-
-							+ "<tr><td style='padding-bottom: 5px'>"
-							+ "<span style='margin-right: 5px; padding-right: 5px;'>" 
-							+ jQuery.timeago(time) 
-							+ "</span>"
-							+ "</td>"
-
-							+ "<td id='downArrow' style='vertical-align: top;'>"
-							+ "<a href='' onclick='downVote(" + checkin_id + ")'>"
-							+ "\u2B07"
-							+ "</a>"
-							+ "</td></tr></table>";
+				$.get(
+					"/get_votes/"+checkin_id,
+					function(votes) {
+						console.log(votes);
+						var content = getContent(attraction_name, votes);
+						createInfoWindow(marker, content);
 				
-				// open info window with created content
-				infoWindow = new google.maps.InfoWindow({
-					content: content
-				});
-				infoWindow.open(map, this);
-			});
-	}
+						
+				}); // end of $.get function
+
+				function getContent(attraction_name, votes) {
+					var upvotes = votes[0];
+					var downvotes = votes[1];
+					// create content for info window
+					var content = "<table style='text-align: left;'><tr>"
+
+								+ "<th>"
+								+ attraction_name 
+								+ "</th>"
+
+								+ "<td id='upArrow' padding-right: 5px;'>"
+								+ "<a href='' onclick='upVote(" + checkin_id + ")'>" 
+								+ "\u2B06"
+								+ "</a>" 
+								+ "</td>"
+
+								+ "<td>"
+								+ upvotes
+								+ "</td></tr>"
+
+								+ "<tr><td style='padding-bottom: 5px'>"
+								+ "<span style='margin-right: 5px; padding-right: 5px;'>" 
+								+ jQuery.timeago(time) 
+								+ "</span>"
+								+ "</td>"
+
+								+ "<td id='downArrow' style='vertical-align: top;'>"
+								+ "<a href='' onclick='downVote(" + checkin_id + ")'>"
+								+ "\u2B07"
+								+ "</a>"
+								+ "</td>"
+
+								+ "<td style='vertical-align: top'>"
+								+ downvotes
+								+ "</td></tr></table>";
+
+					return content;
+				}
+
+				function createInfoWindow(marker, content) {
+					// open info window with created content
+					var infoWindow = new google.maps.InfoWindow({
+						content: content
+					});
+
+					infoWindow.open(map, marker);
+				}
+						
+					
+			}); // end of click event
+
+	} // end of for loop for markers
 
 }
 

@@ -103,9 +103,17 @@ def vote():
 
 	return ""
 
-@app.route("/get_votes")
-def get_votes():
-	pass
+@app.route("/get_votes/<int:checkin_id>")
+def get_votes(checkin_id):
+	"""Gets all of the votes for a given checkin"""
+	# checkin_id = request.form.get("checkin_id")
+
+	# get checkin from db
+	checkin = model.session.query(model.Checkin).get(checkin_id)
+
+	votes = [checkin.upvotes, checkin.downvotes]
+
+	return convert_to_JSON(votes)
 
 
 
