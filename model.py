@@ -47,8 +47,9 @@ class Checkin(Base):
 	timestamp = Column(DateTime, default=datetime.now, nullable = False)
 
 	# ratings data
-	upvotes = Column(Integer, nullable = True)
-	downvotes = Column(Integer, nullable = True)
+	defaultVote = 0
+	upvotes = Column(Integer, default=0, nullable = False)
+	downvotes = Column(Integer, default=0, nullable = False)
 	calculated_rating = Column(Integer, nullable = True)
 	users_who_rated = Column(PickleType, nullable = True)
 

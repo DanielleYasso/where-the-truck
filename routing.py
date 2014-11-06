@@ -79,5 +79,34 @@ def checkin():
  	# return redirect("/")
  	return ""
 
+@app.route("/vote", methods=["POST"])
+def vote():
+	"""Gets a user's up or down vote and updates checkins table record"""
+
+	vote = request.form.get("vote")
+	attraction_id = request.form.get("attraction_id")
+
+	print "********* Vote ********* ", vote
+	print "*********** Attraction ***********", attraction_id
+
+	# get attraction from database
+	attraction = model.session.query(model.Attraction).get(attraction_id)
+
+	# get attraction's checkin
+	checkin = model.session.query(model.Checkin).get(attraction.checkin_id)
+
+	# update checkin votes
+	if vote == "up":
+		checkin.upvotes += 1
+		print "******* upvotes *******", checkin.upvotes
+	elif vote == "down":
+		checkin.downvotes += 1
+		print "******* downvotes *******", checkin.downvotes
+
+	model.session.commit()
+
+
+	return ""
+
 if __name__=="__main__":
 	app.run(debug=True)

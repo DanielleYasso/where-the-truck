@@ -14,11 +14,34 @@ $(document).ready(function() {
 //////// VOTES ////////
 function upVote(attraction_id) {
 	alert("upVoted id " + attraction_id);
+	var vote = "up";
+	$.post(
+		"/vote",
+		{
+			"attraction_id": attraction_id,
+			"vote": vote
+		},
+		function(result) {
+
+		}
+	);
 }
 
 function downVote(attraction_id) {
 	alert("downVoted id " + attraction_id);
+	var vote = "down";
+	$.post(
+		"/vote",
+		{
+			"attraction_id": attraction_id,
+			"vote": vote
+		},
+		function(result) {
+
+		}
+	);
 }
+
 
 //////// HANDLE CHECKINS ////////
 
@@ -149,7 +172,7 @@ function addMarkers(map, markers) {
 							+ "</th>"
 
 							+ "<td id='upArrow' padding-right: 5px;'>"
-							+ "<a href='#' onclick='upVote(" + attraction_id + ")'>" 
+							+ "<a href='' onclick='upVote(" + attraction_id + ")'>" 
 							+ "\u2B06"
 							+ "</a>" 
 							+ "</td></tr>"
@@ -161,7 +184,7 @@ function addMarkers(map, markers) {
 							+ "</td>"
 
 							+ "<td id='downArrow' style='vertical-align: top;'>"
-							+ "<a href='#' onclick='downVote(" + attraction_id + ")'>"
+							+ "<a href='' onclick='downVote(" + attraction_id + ")'>"
 							+ "\u2B07"
 							+ "</a>"
 							+ "</td></tr></table>";
