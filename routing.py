@@ -105,7 +105,6 @@ def vote():
 
 	model.session.commit()
 
-
 	return ""
 
 if __name__=="__main__":

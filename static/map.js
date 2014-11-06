@@ -13,7 +13,9 @@ $(document).ready(function() {
 
 //////// VOTES ////////
 function upVote(attraction_id) {
-	alert("upVoted id " + attraction_id);
+
+	// with users: toggle link on and off
+
 	var vote = "up";
 	$.post(
 		"/vote",
@@ -28,7 +30,9 @@ function upVote(attraction_id) {
 }
 
 function downVote(attraction_id) {
-	alert("downVoted id " + attraction_id);
+
+	// with users: toggle link on and off
+	
 	var vote = "down";
 	$.post(
 		"/vote",
