@@ -153,38 +153,75 @@ function addMarkers(map, markers) {
 				function getContent(attraction_name, votes) {
 					var upvotes = votes[0];
 					var downvotes = votes[1];
+					var loggedIn = votes[2];
 					// create content for info window
-					var content = "<table style='text-align: left;'><tr>"
 
-								+ "<th>"
-								+ attraction_name 
-								+ "</th>"
+					if (loggedIn) {
+						var content = "<table style='text-align: left;'><tr>"
 
-								+ "<td id='upArrow' padding-right: 5px;'>"
-								+ "<form action='/upvote/" + checkin_id + "' method='POST'>" 
-								+ "<button type='submit'>\u2B06</button>"
-								+ "</form>" 
-								+ "</td>"
+									+ "<th>"
+									+ attraction_name 
+									+ "</th>"
 
-								+ "<td>"
-								+ upvotes
-								+ "</td></tr>"
+									+ "<td id='upArrow' padding-right: 5px;'>"
+									+ "<form action='/upvote/" + checkin_id + "' method='POST'>" 
+									+ "<button type='submit'>\u2B06</button>"
+									+ "</form>" 
+									+ "</td>"
 
-								+ "<tr><td style='padding-bottom: 5px'>"
-								+ "<span style='margin-right: 5px; padding-right: 5px;'>" 
-								+ jQuery.timeago(time) 
-								+ "</span>"
-								+ "</td>"
+									+ "<td>"
+									+ upvotes
+									+ "</td></tr>"
 
-								+ "<td id='downArrow' style='vertical-align: top;'>"
-								+ "<form action='/downvote/" + checkin_id + "' method='POST'>"
-								+ "<button type='submit'>\u2B07</button>"
-								+ "</form>"
-								+ "</td>"
+									+ "<tr><td style='padding-bottom: 5px'>"
+									+ "<span style='margin-right: 5px; padding-right: 5px;'>" 
+									+ jQuery.timeago(time) 
+									+ "</span>"
+									+ "</td>"
 
-								+ "<td style='vertical-align: top'>"
-								+ downvotes
-								+ "</td></tr></table>";
+									+ "<td id='downArrow' style='vertical-align: top;'>"
+									+ "<form action='/downvote/" + checkin_id + "' method='POST'>"
+									+ "<button type='submit'>\u2B07</button>"
+									+ "</form>"
+									+ "</td>"
+
+									+ "<td style='vertical-align: top'>"
+									+ downvotes
+									+ "</td></tr></table>";
+					}
+					else {
+						var content = "<table style='text-align: left;'><tr>"
+
+									+ "<th>"
+									+ attraction_name 
+									+ "</th>"
+
+									+ "<td id='upArrow' padding-right: 5px;'>"
+									
+									+ "<button onclick='loginToRate()'>" 
+									+ "\u2B06"
+									+ "</button>"
+									+ "</td>"
+
+									+ "<td>"
+									+ upvotes
+									+ "</td></tr>"
+
+									+ "<tr><td style='padding-bottom: 5px'>"
+									+ "<span style='margin-right: 5px; padding-right: 5px;'>" 
+									+ jQuery.timeago(time) 
+									+ "</span>"
+									+ "</td>"
+
+									+ "<td id='downArrow' style='vertical-align: top;'>"
+									+ "<button onclick='loginToRate()'>" 
+									+ "\u2B07</button>"
+									+ "</td>"
+
+									+ "<td style='vertical-align: top'>"
+									+ downvotes
+									+ "</td></tr></table>";
+					}
 
 					return content;
 				}
@@ -203,6 +240,10 @@ function addMarkers(map, markers) {
 
 	} // end of for loop for markers
 
+}
+
+function loginToRate() {
+	alert("Login to rate checkins.");
 }
 
 // Creates the map to show on the page

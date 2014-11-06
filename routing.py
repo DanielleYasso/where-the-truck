@@ -242,6 +242,10 @@ def get_votes(checkin_id):
 
 	votes = [checkin.upvotes, checkin.downvotes]
 
+	# is a user signed in?
+	if g.user:
+		votes.append(True)
+
 	return convert_to_JSON(votes)
 
 
