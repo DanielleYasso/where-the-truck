@@ -10,6 +10,20 @@
 
 </head>
 <body>
+
+	<div id="nav">
+		<button id="loginOpenButton">Login</button>
+		<div id="loginFormDiv">
+			<div style="text-align: right"><button class="lightBoxClose">X</button></div>
+			<form action="/login" method="POST" id="loginForm">
+				<input type="text" id="email" name="email" placeholder="email">
+				<input type="text" id="password" name="password" placeholder="password">
+				<input id="loginButton" type="submit" value="Login">
+			</form>
+		</div>
+	</div>
+
+
 	<div id="checkinBox">
 		<form id="checkinForm" role="form">
 			<select name="attraction_id" id="attraction_id">
@@ -20,6 +34,8 @@
 			<button id="checkinButton" type="button">Checkin Location</button>
 		</form>
 	</div>
+
+
 	<div id="map-canvas"></div>
 
 
@@ -29,7 +45,10 @@
 	<script src="static/map.js"></script>
 
 	<!-- Time ago -->
-	<script src="static/jquery.timeago.js" type="text/javascript"></script>
+	<script src="static/jquery.timeago.js"></script>
+
+	<!-- login lightbox -->
+	<script src="static/jquery.lightbox_me.js"></script>
 
 </body>
 </html>

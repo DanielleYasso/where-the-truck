@@ -8,6 +8,27 @@ $(document).ready(function() {
 			var attraction_id = $("#attraction_id").val();
 			getGeolocation(attraction_id);
 		});
+
+	// open login lightbox
+	$("#loginOpenButton").click(function(evt) {
+		$("#loginFormDiv").lightbox_me({
+			centered: true,
+			appearEffect: "fadeIn",
+			closeClick: false,
+			closeSelector: ".close",
+			onLoad: function() {
+				$("#loginForm").find("input:first").focus()
+			}
+		});
+		evt.preventDefault();
+	});
+
+	// close lightbox
+	$(".lightBoxClose").click(function(evt) {
+		$("#loginFormDiv").trigger("close");
+	});
+
+	
 });
 
 
@@ -24,7 +45,7 @@ function upVote(checkin_id) {
 			"vote": vote
 		},
 		function(result) {
-
+			
 		}
 	);
 }
@@ -41,7 +62,7 @@ function downVote(checkin_id) {
 			"vote": vote
 		},
 		function(result) {
-
+			
 		}
 	);
 }
@@ -180,10 +201,8 @@ function addMarkers(map, markers) {
 				$.get(
 					"/get_votes/"+checkin_id,
 					function(votes) {
-						console.log(votes);
 						var content = getContent(attraction_name, votes);
 						createInfoWindow(marker, content);
-				
 						
 				}); // end of $.get function
 

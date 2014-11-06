@@ -11,7 +11,7 @@ API_KEY = os.environ.get('API_KEY')
 def home():
 
 	attractions = model.session.query(model.Attraction).all()
-	
+
 	return render_template("base.html", API_KEY=API_KEY, attractions=attractions)
 
 

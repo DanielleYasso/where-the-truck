@@ -15,6 +15,28 @@ html, body {
 	padding: 0;
 }
 
+#nav {
+	width: 100%;
+	min-height: 25px;
+	text-align: right;
+}
+
+#loginFormDiv {
+	display: none;
+	background-color: white;
+	border: 1px solid black;
+	border-radius: 10px;
+	padding: 5px;
+}
+#loginForm {
+	padding: 5px 5px 0;
+}
+
+#loginForm input {
+	margin: 0 0 5px;
+	display: block;
+}
+
 #upArrow a:link, #upArrow a:visited {
 	color: black;
 	text-decoration: none;
