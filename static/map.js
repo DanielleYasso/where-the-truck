@@ -12,36 +12,6 @@ $(document).ready(function() {
 });
 
 
-//////// VOTES ////////
-function upVote(checkin_id) {
-
-	// with users: toggle link on and off
-
-	var vote = "up";
-	$.post(
-		"/vote",
-		{
-			"checkin_id": checkin_id,
-			"vote": vote
-		}
-	);
-}
-
-function downVote(checkin_id) {
-
-	// with users: toggle link on and off
-
-	var vote = "down";
-	$.post(
-		"/vote",
-		{
-			"checkin_id": checkin_id,
-			"vote": vote
-		}
-	);
-}
-
-
 //////// HANDLE CHECKINS ////////
 
 function getGeolocation(attraction_id) {
