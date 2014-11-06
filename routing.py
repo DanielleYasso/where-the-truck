@@ -43,14 +43,21 @@ def dump_datetime(value):
 
 ###### END JSON ######
 
+
+###############
+# USER LOGOUT #
+###############
+
 @app.route("/logout")
 def logout():
 	session["user_id"] = None
 	return redirect("/")
 
+
 ##############
 # USER LOGIN #
 ##############
+
 @app.route("/login", methods=["POST"])
 def login():
 
@@ -77,6 +84,7 @@ def login():
 ###############
 # USER SIGNUP #
 ###############
+
 @app.route("/signup", methods=["POST"])
 def signup():
 	# get user info
@@ -163,15 +171,24 @@ def checkin():
 # UPDATE VOTES #
 ################
 
-@app.route("/vote", methods=["POST"])
-def vote():
+@app.route("/downvote/<int:checkin_id>", methods=["POST"])
+def downvote(checkin_id):
+	"""Gets a user's down vote and updates checkins table record"""
+
+	vote = "down"
+
+	return update_vote(checkin_id, vote)
+
+@app.route("/upvote/<int:checkin_id>", methods=["POST"])
+def upvote(checkin_id):
+	"""Gets a user's up vote and updates checkins table record"""
+
+	vote = "up"
+
+	return update_vote(checkin_id, vote)
+
+def update_vote(checkin_id, vote):
 	"""Gets a user's up or down vote and updates checkins table record"""
-
-	vote = request.form.get("vote")
-	checkin_id = request.form.get("checkin_id")
-
-	print "********* Vote ********* ", vote
-
 	# get attraction's checkin
 	checkin = model.session.query(model.Checkin).get(checkin_id)
 
@@ -185,8 +202,19 @@ def vote():
 
 	model.session.commit()
 
-	return ""
+	# if user is logged in, add vote to users_who_rated
+	if session.get("user_id", False):
+		print "username", g.user.username
+		# get dictionary of user votes
+		d = checkin.users_who_rated
+		print d
 
+		if d == None:
+			d = {}
+
+		print d
+
+	return redirect("/")
 
 ############################
 # GET VOTES FOR INFOWINDOW #

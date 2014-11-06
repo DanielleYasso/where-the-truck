@@ -23,9 +23,6 @@ function upVote(checkin_id) {
 		{
 			"checkin_id": checkin_id,
 			"vote": vote
-		},
-		function(result) {
-			
 		}
 	);
 }
@@ -40,9 +37,6 @@ function downVote(checkin_id) {
 		{
 			"checkin_id": checkin_id,
 			"vote": vote
-		},
-		function(result) {
-			
 		}
 	);
 }
@@ -197,9 +191,9 @@ function addMarkers(map, markers) {
 								+ "</th>"
 
 								+ "<td id='upArrow' padding-right: 5px;'>"
-								+ "<a href='' onclick='upVote(" + checkin_id + ")'>" 
-								+ "\u2B06"
-								+ "</a>" 
+								+ "<form action='/upvote/" + checkin_id + "' method='POST'>" 
+								+ "<button type='submit'>\u2B06</button>"
+								+ "</form>" 
 								+ "</td>"
 
 								+ "<td>"
@@ -213,9 +207,9 @@ function addMarkers(map, markers) {
 								+ "</td>"
 
 								+ "<td id='downArrow' style='vertical-align: top;'>"
-								+ "<a href='' onclick='downVote(" + checkin_id + ")'>"
-								+ "\u2B07"
-								+ "</a>"
+								+ "<form action='/downvote/" + checkin_id + "' method='POST'>"
+								+ "<button type='submit'>\u2B07</button>"
+								+ "</form>"
 								+ "</td>"
 
 								+ "<td style='vertical-align: top'>"
