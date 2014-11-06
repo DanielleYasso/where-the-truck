@@ -10,6 +10,16 @@ $(document).ready(function() {
 		});
 });
 
+
+//////// VOTES ////////
+function upVote(attraction_id) {
+	alert("upVoted id " + attraction_id);
+}
+
+function downVote(attraction_id) {
+	alert("downVoted id " + attraction_id);
+}
+
 //////// HANDLE CHECKINS ////////
 
 function getGeolocation(attraction_id) {
@@ -119,19 +129,27 @@ function addMarkers(map, markers) {
 			marker,
 			"click",
 			function(evt) {
+				
+				// close other open windows
 				if (infoWindow) {
 					infoWindow.close();
 				}
+
+				// get timestamp
 				var time_info = this.get("time");
 				time = time_info[0] + " " + time_info[1];
+
+				var attraction_id = this.get("id");
+
+				// create content for info window
 				var content = "<table style='text-align: left;'><tr>"
-				
+
 							+ "<th>"
 							+ this.title 
 							+ "</th>"
 
 							+ "<td id='upArrow' padding-right: 5px;'>"
-							+ "<a href='#' onclick='alert(1)'>" 
+							+ "<a href='#' onclick='upVote(" + attraction_id + ")'>" 
 							+ "\u2B06"
 							+ "</a>" 
 							+ "</td></tr>"
@@ -143,10 +161,12 @@ function addMarkers(map, markers) {
 							+ "</td>"
 
 							+ "<td id='downArrow' style='vertical-align: top;'>"
-							+ "<a href='#' onclick='alert(-1)'>"
+							+ "<a href='#' onclick='downVote(" + attraction_id + ")'>"
 							+ "\u2B07"
 							+ "</a>"
 							+ "</td></tr></table>";
+				
+				// open info window with created content
 				infoWindow = new google.maps.InfoWindow({
 					content: content
 				});
