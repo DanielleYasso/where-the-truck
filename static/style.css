@@ -21,20 +21,25 @@ html, body {
 	text-align: right;
 }
 
-#loginFormDiv {
+#loginFormDiv, #signupFormDiv {
 	display: none;
 	background-color: white;
 	border: 1px solid black;
 	border-radius: 10px;
 	padding: 5px;
 }
-#loginForm {
+#loginForm, #signupForm {
 	padding: 5px 5px 0;
 }
 
-#loginForm input {
+#loginForm input, #signupForm input {
 	margin: 0 0 5px;
 	display: block;
+}
+
+.closeButton {
+	 text-align: right;
+	 display: block;
 }
 
 #upArrow a:link, #upArrow a:visited {

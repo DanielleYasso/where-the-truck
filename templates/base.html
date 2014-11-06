@@ -13,12 +13,26 @@
 
 	<div id="nav">
 		<button id="loginOpenButton">Login</button>
+		<button id="signupOpenButton">Signup</button>
+
+		<!-- Light Box content -->
 		<div id="loginFormDiv">
-			<div style="text-align: right"><button class="lightBoxClose">X</button></div>
+			<div class="closeButton"><button class="lightBoxClose">X</button></div>
 			<form action="/login" method="POST" id="loginForm">
 				<input type="text" id="email" name="email" placeholder="email">
-				<input type="text" id="password" name="password" placeholder="password">
+				<input type="password" id="password" name="password" placeholder="password">
 				<input id="loginButton" type="submit" value="Login">
+			</form>
+		</div>
+
+		<div id="signupFormDiv">
+			<div class="closeButton"><button class="lightBoxClose">X</button></div>
+			<form action="/signup" method="POST" id="signupForm">
+				<input type="text" id="username" name="username" placeholder="username">
+				<input type="text" id="email" name="email" placeholder="email">
+				<input type="password" id="password" name="password" placeholder="password">
+				<input type="password" id="passwordConfirm" name="passwordConfirm" placeholder="retype password">
+				<input id="signupButton" type="submit" value="Signup">
 			</form>
 		</div>
 	</div>
