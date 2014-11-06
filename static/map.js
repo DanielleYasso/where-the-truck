@@ -168,9 +168,8 @@ function addMarkers(map, markers) {
 				var time_info = this.get("time");
 				time = time_info[0] + " " + time_info[1];
 
-				// var attraction_id = this.get("id");
+				// get checkin_id
 				var checkin_id = this.get("checkin_id");
-				console.log(checkin_id);
 
 				// get attraction name
 				var attraction_name = this.get("name");
@@ -229,7 +228,7 @@ function addMarkers(map, markers) {
 
 				function createInfoWindow(marker, content) {
 					// open info window with created content
-					var infoWindow = new google.maps.InfoWindow({
+					infoWindow = new google.maps.InfoWindow({
 						content: content
 					});
 
