@@ -175,6 +175,8 @@ function addMarkers(map, markers) {
 				// get attraction name
 				var attraction_name = this.get("name");
 
+				marker = this;
+
 				// get upvotes and downvotes
 				$.get(
 					"/get_votes/"+checkin_id,
