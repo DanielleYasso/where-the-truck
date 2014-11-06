@@ -47,7 +47,8 @@ def get_markers():
 								"name": attraction.name,
 								"lat": checkin.lat,
 								"lng": checkin.lng,
-								"timestamp": dump_datetime(checkin.timestamp)
+								"timestamp": dump_datetime(checkin.timestamp),
+								"checkin_id": checkin.id
 								})
 	return convert_to_JSON(attraction_list)
 
@@ -76,7 +77,6 @@ def checkin():
 	attraction_rec.checkin_id = new_checkin.id
 	model.session.commit()
 
- 	# return redirect("/")
  	return ""
 
 @app.route("/vote", methods=["POST"])
@@ -84,16 +84,12 @@ def vote():
 	"""Gets a user's up or down vote and updates checkins table record"""
 
 	vote = request.form.get("vote")
-	attraction_id = request.form.get("attraction_id")
+	checkin_id = request.form.get("checkin_id")
 
 	print "********* Vote ********* ", vote
-	print "*********** Attraction ***********", attraction_id
-
-	# get attraction from database
-	attraction = model.session.query(model.Attraction).get(attraction_id)
 
 	# get attraction's checkin
-	checkin = model.session.query(model.Checkin).get(attraction.checkin_id)
+	checkin = model.session.query(model.Checkin).get(checkin_id)
 
 	# update checkin votes
 	if vote == "up":
@@ -106,6 +102,12 @@ def vote():
 	model.session.commit()
 
 	return ""
+
+@app.route("/get_votes")
+def get_votes():
+	pass
+
+
 
 if __name__=="__main__":
 	app.run(debug=True)

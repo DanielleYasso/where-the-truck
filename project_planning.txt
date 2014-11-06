@@ -69,8 +69,8 @@ User features:
 	- Edit attraction name
 
 Ratings:
-	- Allow a user to rate a check-in up or down
-	- Associate ratings with check-ins in database
+[X]	- Allow a user to rate a check-in up or down
+[X]	- Associate ratings with check-ins in database
 	- Allow a user to change their rating
 	- Display ratings next to a check-in (up votes and down votes)
 	- Hide check-ins with bad ratings

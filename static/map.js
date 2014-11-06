@@ -12,7 +12,7 @@ $(document).ready(function() {
 
 
 //////// VOTES ////////
-function upVote(attraction_id) {
+function upVote(checkin_id) {
 
 	// with users: toggle link on and off
 
@@ -20,7 +20,7 @@ function upVote(attraction_id) {
 	$.post(
 		"/vote",
 		{
-			"attraction_id": attraction_id,
+			"checkin_id": checkin_id,
 			"vote": vote
 		},
 		function(result) {
@@ -29,15 +29,15 @@ function upVote(attraction_id) {
 	);
 }
 
-function downVote(attraction_id) {
+function downVote(checkin_id) {
 
 	// with users: toggle link on and off
-	
+
 	var vote = "down";
 	$.post(
 		"/vote",
 		{
-			"attraction_id": attraction_id,
+			"checkin_id": checkin_id,
 			"vote": vote
 		},
 		function(result) {
@@ -130,6 +130,7 @@ function addMarkers(map, markers) {
 
 		marker.set("id", markerObject["id"]);
 		marker.set("time", markerObject["timestamp"]);
+		marker.set("checkin_id", markerObject["checkin_id"]);
 
 		marker.setMap(map);
 
@@ -166,7 +167,12 @@ function addMarkers(map, markers) {
 				var time_info = this.get("time");
 				time = time_info[0] + " " + time_info[1];
 
-				var attraction_id = this.get("id");
+				// var attraction_id = this.get("id");
+				var checkin_id = this.get("checkin_id");
+
+				// get upvotes and downvotes
+				// $.get(
+				// 	"/")
 
 				// create content for info window
 				var content = "<table style='text-align: left;'><tr>"
@@ -176,7 +182,7 @@ function addMarkers(map, markers) {
 							+ "</th>"
 
 							+ "<td id='upArrow' padding-right: 5px;'>"
-							+ "<a href='' onclick='upVote(" + attraction_id + ")'>" 
+							+ "<a href='' onclick='upVote(" + checkin_id + ")'>" 
 							+ "\u2B06"
 							+ "</a>" 
 							+ "</td></tr>"
@@ -188,7 +194,7 @@ function addMarkers(map, markers) {
 							+ "</td>"
 
 							+ "<td id='downArrow' style='vertical-align: top;'>"
-							+ "<a href='' onclick='downVote(" + attraction_id + ")'>"
+							+ "<a href='' onclick='downVote(" + checkin_id + ")'>"
 							+ "\u2B07"
 							+ "</a>"
 							+ "</td></tr></table>";
