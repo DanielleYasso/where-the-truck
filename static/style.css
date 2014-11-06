@@ -42,6 +42,25 @@ html, body {
 	 display: block;
 }
 
+.fieldElement, .errorField {
+	display: inline-block;
+}
+
+.errorField {
+	color: red;
+	vertical-align: top;
+}
+
+.hidden {
+	display: none;
+}
+
+#signupErrorMessage {
+	color: red;
+	font-size: small;
+	padding-top: 5px;
+}
+
 #upArrow a:link, #upArrow a:visited {
 	color: black;
 	text-decoration: none;

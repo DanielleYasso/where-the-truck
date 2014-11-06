@@ -57,8 +57,6 @@ def login():
 	# get email and password from form inputs
 	email = request.form.get("email")
 	password = request.form.get("password")
-	print "****** email", email
-	print password
 
 	# get user with that email address
 	user = model.session.query(model.User).filter_by(email=email).first()
@@ -76,13 +74,32 @@ def login():
 	return ""
 
 
-
 ###############
 # USER SIGNUP #
 ###############
 @app.route("/signup", methods=["POST"])
 def signup():
-	pass
+	# get user info
+	username = request.form.get("username")
+	email = request.form.get("email")
+	password = request.form.get("password")
+
+	print "**** signup ", username
+
+	# check that user email doesn't already exist in database
+	user = model.session.query(model.User).filter_by(email=email).first()
+	if user:
+		return convert_to_JSON("userExists")
+
+	# add new user to database
+	new_user = model.User(username=username, email=email, password=password)
+	model.session.add(new_user)
+	model.session.commit()
+
+	# add user to session --> LOGIN USER
+	session["user_id"] = new_user.id
+
+	return ""
 
 #################################
 # GET MARKERS TO DISPLAY ON MAP #

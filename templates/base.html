@@ -26,7 +26,7 @@
 		<!-- Light Box content -->
 		<div id="loginFormDiv">
 			<div class="closeButton"><button class="lightBoxClose">X</button></div>
-			<form id="loginForm">
+			<form id="loginForm" name="loginForm">
 				<input type="text" id="loginEmail" name="email" placeholder="email">
 				<input type="password" id="loginPassword" name="password" placeholder="password">
 				<button id="loginButton">Login</button>
@@ -35,12 +35,26 @@
 
 		<div id="signupFormDiv">
 			<div class="closeButton"><button class="lightBoxClose">X</button></div>
-			<form id="signupForm">
-				<input type="text" id="username" name="username" placeholder="username">
-				<input type="text" id="signupEmail" name="email" placeholder="email">
-				<input type="password" id="signupPassword" name="password" placeholder="password">
-				<input type="password" id="passwordConfirm" name="passwordConfirm" placeholder="retype password">
+			<form id="signupForm" name="signupForm">
+				<div>
+					<div class="fieldElement"><input type="text" id="username" name="username" placeholder="username"></div>
+					<span class="errorField hidden" id="usernameEF">*</span>
+				</div>
+				<div>
+					<div class="fieldElement"><input type="text" id="signupEmail" name="email" placeholder="email"></div>
+					<span class="errorField hidden" id="signupEmailEF">*</span>
+				</div>
+				<div>
+					<div class="fieldElement"><input type="password" id="signupPassword" name="password" placeholder="password"></div>
+					<span class="errorField hidden" id="signupPasswordEF">*</span>
+				</div>
+				<div>
+					<div class="fieldElement"><input type="password" id="passwordConfirm" name="passwordConfirm" placeholder="retype password"></div>
+					<span class="errorField hidden" id="passwordConfirmEF">*</span>
+				</div>
+
 				<button id="signupButton">Signup</button>
+				<div id="signupErrorMessage"></div>
 			</form>
 		</div>
 	</div>
