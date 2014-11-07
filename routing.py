@@ -292,12 +292,13 @@ def get_votes(checkin_id):
 		votes.append(True)
 
 		# get user vote (if it exists)
-		if g.user.id in checkin.users_who_rated:
+		if checkin.users_who_rated:
+			if g.user.id in checkin.users_who_rated:
 
-			# vote_type is "up" or "down" or 0
-			vote_type = checkin.users_who_rated[g.user.id]
+				# vote_type is "up" or "down" or 0
+				vote_type = checkin.users_who_rated[g.user.id]
 
-			votes.append(vote_type)
+				votes.append(vote_type)
 
 	return convert_to_JSON(votes)
 
