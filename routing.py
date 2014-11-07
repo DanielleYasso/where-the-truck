@@ -198,7 +198,7 @@ def update_vote(checkin_id, vote):
 	"""Gets a user's up or down vote and updates checkins table record"""
 	# get attraction's checkin
 	checkin = model.session.query(model.Checkin).get(checkin_id)
-
+	print g.user
 	# ONLY LOGGED IN USERS CAN VOTE
 	if g.user:
 		# get dictionary of user votes
@@ -208,6 +208,7 @@ def update_vote(checkin_id, vote):
 		# IF NO RATINGS YET
 		if checkin.users_who_rated == None or checkin.users_who_rated == {}:
 			checkin.users_who_rated = {}
+			print "users who rated was None or {}"
 
 			# add user to dictionary
 			checkin.users_who_rated[g.user.id] = vote
@@ -217,7 +218,8 @@ def update_vote(checkin_id, vote):
 			add_votes(checkin, vote)
 
 		# IF USER IS ALREADY IN THE CHECKINS DATABASE
-		if g.user.id in checkin.users_who_rated:
+		elif g.user.id in checkin.users_who_rated:
+			print "user is already in the database"
 
 			# WITH NO RATING, aka 0 (due to deleted rating)
 			if checkin.users_who_rated[g.user.id] == 0:
@@ -249,6 +251,8 @@ def update_vote(checkin_id, vote):
 	return redirect("/")
 
 def remove_votes(checkin, vote):
+	print "in remove votes"
+
 	# update database
 	if vote == "up":
 		# remove upvote
@@ -261,6 +265,7 @@ def remove_votes(checkin, vote):
 	model.session.commit()
 
 def add_votes(checkin, vote):
+	print "in add votes"
 
 	# update checkin votes
 	if vote == "up":
@@ -292,7 +297,7 @@ def get_votes(checkin_id):
 		votes.append(True)
 
 		# get user vote (if it exists)
-		if checkin.users_who_rated:
+		if checkin.users_who_rated != None:
 			if g.user.id in checkin.users_who_rated:
 
 				# vote_type is "up" or "down" or 0
