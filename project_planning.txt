@@ -60,8 +60,8 @@ Updating attraction locations on a map:
 ********** EXTRAS **********
 
 User features:
-	- Allow a user to signup/login
-	- Allow a user to logout
+[X]	- Allow a user to signup/login
+[X]	- Allow a user to logout
 	- Allow a user to check-in an attraction
 	- Create tables to associate users, their check-ins, and the attractions
 	- Allow a user to edit a check-in

@@ -146,6 +146,7 @@ def checkin():
 	# get attraction id
 	attraction_id = request.form.get("attraction_id")
 
+
 	# get geolocation data from user
 	lat = request.form.get("latitude")
 	lng = request.form.get("longitude")
@@ -153,7 +154,13 @@ def checkin():
 	print "Attraction %r, lat %r, lng %r" % (attraction_id, lat, lng)
 
 	# Add checkin to database checkins table
-	new_checkin = model.Checkin(attraction_id=attraction_id, 
+	if g.user:
+		new_checkin = model.Checkin(attraction_id=attraction_id, 
+								lat=lat, 
+								lng=lng,
+								user_id=g.user.id)
+	else:
+		new_checkin = model.Checkin(attraction_id=attraction_id, 
 								lat=lat, 
 								lng=lng)
 	model.session.add(new_checkin)
