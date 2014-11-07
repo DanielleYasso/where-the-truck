@@ -148,7 +148,7 @@ $(document).ready(function() {
 			
 			evt.preventDefault();
 
-			signupmptyFieldError = false;
+			signupEmptyFieldError = false;
 			var emptyFieldMessage = "* Please fill in required fields";
 
 			signupPasswordError = false;
@@ -233,7 +233,9 @@ $(document).ready(function() {
 				},
 				function(result) {
 					if (result == "userExists") {
-						alert("user already exists. LOGIN");
+						$("#signupEmailEF").removeClass("hidden");
+						$("#signupErrorMessage").removeClass("hidden");
+						$("#signupErrorMessage").html("User email exists.<br>Login or use a different email.");
 					}
 					else {
 						// user signed up and logged in
