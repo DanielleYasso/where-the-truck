@@ -70,11 +70,11 @@ def login():
 
 	# check if user exists in database
 	if not user:
-		return convert_to_JSON("noUser")
+		return convert_to_JSON("incorrect")
 
 	# check if password is right
 	if password != user.password:
-		return convert_to_JSON("wrongPassword")
+		return convert_to_JSON("incorrect")
 
 	session["user_id"] = user.id
 

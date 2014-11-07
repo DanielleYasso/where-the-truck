@@ -11,12 +11,14 @@ $(document).ready(function() {
 	// open login lightbox
 	$("#loginOpenButton").click(
 		function(evt) {
+			document.loginForm.reset();
 			$("#loginFormDiv").lightbox_me({
 				centered: true,
 				appearEffect: "fadeIn",
 				closeClick: false,
 				closeSelector: ".close",
 				onLoad: function() {
+					
 					$("#loginForm").find("input:first").focus();
 				}
 			});
@@ -83,15 +85,11 @@ $(document).ready(function() {
 					"password": password
 				},
 				function(result) {
-					if (result == "noUser") {
+					if (result == "incorrect") {
 						$("#emailEF").removeClass("hidden");
-						$("#loginErrorMessage").removeClass("hidden");
-						$("#loginErrorMessage").text("No user with that email");
-					}
-					else if (result == "wrongPassword") {
 						$("#passwordEF").removeClass("hidden");
 						$("#loginErrorMessage").removeClass("hidden");
-						$("#loginErrorMessage").text("Incorrect password");
+						$("#loginErrorMessage").text("Invalid email or password.");
 					}
 					else {
 						// user logged in
@@ -119,6 +117,7 @@ $(document).ready(function() {
 	// open signup lightbox
 	$("#signupOpenButton").click(
 		function(evt) {
+			document.signupForm.reset();
 			$("#signupFormDiv").lightbox_me({
 				centered: true,
 				appearEffect: "fadeIn",
