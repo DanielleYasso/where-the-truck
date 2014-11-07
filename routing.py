@@ -192,57 +192,53 @@ def update_vote(checkin_id, vote):
 	# get attraction's checkin
 	checkin = model.session.query(model.Checkin).get(checkin_id)
 
-
 	# ONLY LOGGED IN USERS CAN VOTE
-	# if user is logged in, add vote to users_who_rated
 	if g.user:
 		# get dictionary of user votes
 		print "checkin.users_who_rated", checkin.users_who_rated
 		print g.user.id
 		
+		# IF NO RATINGS YET
 		if checkin.users_who_rated == None or checkin.users_who_rated == {}:
 			checkin.users_who_rated = {}
+
+			# add user to dictionary
 			checkin.users_who_rated[g.user.id] = vote
-			print "*** was none, now it's", checkin.users_who_rated
 			model.session.commit()
 
+			# increment vote
 			add_votes(checkin, vote)
 
-		# is user in users_who_rated
+		# IF USER IS ALREADY IN THE CHECKINS DATABASE
 		if g.user.id in checkin.users_who_rated:
 
-			# if user has deleted their rating (=0)
+			# WITH NO RATING, aka 0 (due to deleted rating)
 			if checkin.users_who_rated[g.user.id] == 0:
+				
 				# add user vote to dictionary
 				checkin.users_who_rated[g.user.id] = vote
-				print "******None found"
-				print "***** new dict value", checkin.users_who_rated[g.user.id]
-
-				# update checkin.users_who_rated
 				model.session.commit()
 
+				#increment vote
 				add_votes(checkin, vote)
+
+
 			# else user HAS rated this
 			else:
-				print "******* in else"
-				print "*****d[g.user.id]", checkin.users_who_rated[g.user.id]
 
 				# get existing user vote
 				existing_vote = checkin.users_who_rated[g.user.id]
-				print "existing vote", existing_vote
-				print "***** vote", vote
 
-				# is user undoing their vote?
+				# USER IS UNDOING THEIR VOTE
 				if existing_vote == vote:
+
 					# delete rating
 					checkin.users_who_rated[g.user.id] = 0
-					print "updated to 0?", checkin.users_who_rated[g.user.id]
-					# update checkin
 					model.session.commit()
 
-					# update count
+					# decrement vote count
 					remove_votes(checkin, vote)
-					
+
 	return redirect("/")
 
 def remove_votes(checkin, vote):
@@ -287,6 +283,14 @@ def get_votes(checkin_id):
 	# is a user signed in?
 	if g.user:
 		votes.append(True)
+
+		# get user vote (if it exists)
+		if g.user.id in checkin.users_who_rated:
+
+			# vote_type is "up" or "down" or 0
+			vote_type = checkin.users_who_rated[g.user.id]
+
+			votes.append(vote_type)
 
 	return convert_to_JSON(votes)
 

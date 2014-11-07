@@ -154,40 +154,110 @@ function addMarkers(map, markers) {
 					var upvotes = votes[0];
 					var downvotes = votes[1];
 					var loggedIn = votes[2];
+					var voteType = votes[3];
 					// create content for info window
 
 					if (loggedIn) {
-						var content = "<table style='text-align: left;'><tr>"
+						if (voteType == "up") {
+							var content = "<table style='text-align: left;'><tr>"
 
-									+ "<th>"
-									+ attraction_name 
-									+ "</th>"
+										+ "<th>"
+										+ attraction_name 
+										+ "</th>"
 
-									+ "<td id='upArrow' padding-right: 5px;'>"
-									+ "<form action='/upvote/" + checkin_id + "' method='POST'>" 
-									+ "<button type='submit'>\u2B06</button>"
-									+ "</form>" 
-									+ "</td>"
+										+ "<td id='upArrow' padding-right: 5px;'>"
+										+ "<form action='/upvote/" + checkin_id + "' method='POST'>" 
+										+ "<button type='submit'>\u2B06</button>"
+										+ "</form>" 
+										+ "</td>"
 
-									+ "<td>"
-									+ upvotes
-									+ "</td></tr>"
+										+ "<td style='font-weight: bold'>"
+										+ upvotes
+										+ "</td></tr>"
 
-									+ "<tr><td style='padding-bottom: 5px'>"
-									+ "<span style='margin-right: 5px; padding-right: 5px;'>" 
-									+ jQuery.timeago(time) 
-									+ "</span>"
-									+ "</td>"
+										+ "<tr><td style='padding-bottom: 5px'>"
+										+ "<span style='margin-right: 5px; padding-right: 5px;'>" 
+										+ jQuery.timeago(time) 
+										+ "</span>"
+										+ "</td>"
 
-									+ "<td id='downArrow' style='vertical-align: top;'>"
-									+ "<form action='/downvote/" + checkin_id + "' method='POST'>"
-									+ "<button type='submit'>\u2B07</button>"
-									+ "</form>"
-									+ "</td>"
+										+ "<td id='downArrow' style='vertical-align: top;'>"
+										+ "<form action='/downvote/" + checkin_id + "' method='POST'>"
+										+ "<button type='submit' disabled>\u2B07</button>"
+										+ "</form>"
+										+ "</td>"
 
-									+ "<td style='vertical-align: top'>"
-									+ downvotes
-									+ "</td></tr></table>";
+										+ "<td style='vertical-align: top'>"
+										+ downvotes
+										+ "</td></tr></table>";
+						}
+						else if (voteType == "down") {
+							var content = "<table style='text-align: left;'><tr>"
+
+										+ "<th>"
+										+ attraction_name 
+										+ "</th>"
+
+										+ "<td id='upArrow' padding-right: 5px;'>"
+										+ "<form action='/upvote/" + checkin_id + "' method='POST'>" 
+										+ "<button type='submit' disabled>\u2B06</button>"
+										+ "</form>" 
+										+ "</td>"
+
+										+ "<td>"
+										+ upvotes
+										+ "</td></tr>"
+
+										+ "<tr><td style='padding-bottom: 5px'>"
+										+ "<span style='margin-right: 5px; padding-right: 5px;'>" 
+										+ jQuery.timeago(time) 
+										+ "</span>"
+										+ "</td>"
+
+										+ "<td id='downArrow' style='vertical-align: top;'>"
+										+ "<form action='/downvote/" + checkin_id + "' method='POST'>"
+										+ "<button type='submit'>\u2B07</button>"
+										+ "</form>"
+										+ "</td>"
+
+										+ "<td style='vertical-align: top; font-weight: bold'>"
+										+ downvotes
+										+ "</td></tr></table>";
+						}
+						// no existing vote
+						else {
+							var content = "<table style='text-align: left;'><tr>"
+
+										+ "<th>"
+										+ attraction_name 
+										+ "</th>"
+
+										+ "<td id='upArrow' padding-right: 5px;'>"
+										+ "<form action='/upvote/" + checkin_id + "' method='POST'>" 
+										+ "<button type='submit'>\u2B06</button>"
+										+ "</form>" 
+										+ "</td>"
+
+										+ "<td>"
+										+ upvotes
+										+ "</td></tr>"
+
+										+ "<tr><td style='padding-bottom: 5px'>"
+										+ "<span style='margin-right: 5px; padding-right: 5px;'>" 
+										+ jQuery.timeago(time) 
+										+ "</span>"
+										+ "</td>"
+
+										+ "<td id='downArrow' style='vertical-align: top;'>"
+										+ "<form action='/downvote/" + checkin_id + "' method='POST'>"
+										+ "<button type='submit'>\u2B07</button>"
+										+ "</form>"
+										+ "</td>"
+
+										+ "<td style='vertical-align: top'>"
+										+ downvotes
+										+ "</td></tr></table>";
+						}
 					}
 					// not logged in
 					else {
