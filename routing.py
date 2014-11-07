@@ -248,6 +248,15 @@ def update_vote(checkin_id, vote):
 					# decrement vote count
 					remove_votes(checkin, vote)
 
+		# RATINGS EXIST, BUT NOT BY THIS USER
+		else:
+			# add user to dictionary
+			checkin.users_who_rated[g.user.id] = vote
+			model.session.commit()
+
+			# increment vote
+			add_votes(checkin, vote)
+
 	return redirect("/")
 
 def remove_votes(checkin, vote):
