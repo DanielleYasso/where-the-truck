@@ -189,6 +189,7 @@ function addMarkers(map, markers) {
 									+ downvotes
 									+ "</td></tr></table>";
 					}
+					// not logged in
 					else {
 						var content = "<table style='text-align: left;'><tr>"
 
@@ -243,7 +244,7 @@ function addMarkers(map, markers) {
 }
 
 function loginToRate() {
-	alert("Login to rate checkins.");
+	alert("Signup or login to rate checkins.");
 }
 
 // Creates the map to show on the page

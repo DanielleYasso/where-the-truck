@@ -196,37 +196,79 @@ def update_vote(checkin_id, vote):
 	# ONLY LOGGED IN USERS CAN VOTE
 	# if user is logged in, add vote to users_who_rated
 	if g.user:
-		print "username", g.user.username
 		# get dictionary of user votes
-		d = checkin.users_who_rated
-		print d
+		print "checkin.users_who_rated", checkin.users_who_rated
+		print g.user.id
+		
+		if checkin.users_who_rated == None or checkin.users_who_rated == {}:
+			checkin.users_who_rated = {}
+			checkin.users_who_rated[g.user.id] = vote
+			print "*** was none, now it's", checkin.users_who_rated
+			model.session.commit()
 
-		if d == None:
-			d = {}
-		print d
+			add_votes(checkin, vote)
 
-		# add/update user vote
-		d[g.user.id] = vote
-		print d
+		# is user in users_who_rated
+		if g.user.id in checkin.users_who_rated:
 
-		# update checkin
-		checkin.users_who_rated = d
-		model.session.commit()
+			# if user has deleted their rating (=0)
+			if checkin.users_who_rated[g.user.id] == 0:
+				# add user vote to dictionary
+				checkin.users_who_rated[g.user.id] = vote
+				print "******None found"
+				print "***** new dict value", checkin.users_who_rated[g.user.id]
 
+				# update checkin.users_who_rated
+				model.session.commit()
 
-		# update checkin votes
-		if vote == "up":
-			checkin.upvotes += 1
-			print "******* upvotes *******", checkin.upvotes
-		elif vote == "down":
-			checkin.downvotes += 1
-			print "******* downvotes *******", checkin.downvotes
+				add_votes(checkin, vote)
+			# else user HAS rated this
+			else:
+				print "******* in else"
+				print "*****d[g.user.id]", checkin.users_who_rated[g.user.id]
 
-		model.session.commit()
+				# get existing user vote
+				existing_vote = checkin.users_who_rated[g.user.id]
+				print "existing vote", existing_vote
+				print "***** vote", vote
 
+				# is user undoing their vote?
+				if existing_vote == vote:
+					# delete rating
+					checkin.users_who_rated[g.user.id] = 0
+					print "updated to 0?", checkin.users_who_rated[g.user.id]
+					# update checkin
+					model.session.commit()
 
-
+					# update count
+					remove_votes(checkin, vote)
+					
 	return redirect("/")
+
+def remove_votes(checkin, vote):
+	# update database
+	if vote == "up":
+		# remove upvote
+		checkin.upvotes -= 1
+	elif vote == "down":
+		# remove downvote
+		checkin.downvotes -= 1
+
+	# commit changes to database
+	model.session.commit()
+
+def add_votes(checkin, vote):
+
+	# update checkin votes
+	if vote == "up":
+		checkin.upvotes += 1
+		print "******* upvotes *******", checkin.upvotes
+	elif vote == "down":
+		checkin.downvotes += 1
+		print "******* downvotes *******", checkin.downvotes
+
+	model.session.commit()
+
 
 ############################
 # GET VOTES FOR INFOWINDOW #
