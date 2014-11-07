@@ -2,6 +2,7 @@ from flask import Flask, render_template, redirect, request, session, g, make_re
 import os
 import model
 import json
+from passlib.hash import pbkdf2_sha256
 
 app = Flask(__name__)
 
@@ -73,7 +74,7 @@ def login():
 		return convert_to_JSON("incorrect")
 
 	# check if password is right
-	if password != user.password:
+	if not pbkdf2_sha256.verify(password, user.password):
 		return convert_to_JSON("incorrect")
 
 	session["user_id"] = user.id
@@ -99,8 +100,11 @@ def signup():
 	if user:
 		return convert_to_JSON("userExists")
 
+	# securely store password
+	password_hash = pbkdf2_sha256.encrypt(password, rounds=200000, salt_size=16)
+
 	# add new user to database
-	new_user = model.User(username=username, email=email, password=password)
+	new_user = model.User(username=username, email=email, password=password_hash)
 	model.session.add(new_user)
 	model.session.commit()
 

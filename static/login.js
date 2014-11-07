@@ -11,7 +11,6 @@ $(document).ready(function() {
 	// open login lightbox
 	$("#loginOpenButton").click(
 		function(evt) {
-			document.loginForm.reset();
 			$("#loginFormDiv").lightbox_me({
 				centered: true,
 				appearEffect: "fadeIn",
@@ -117,7 +116,6 @@ $(document).ready(function() {
 	// open signup lightbox
 	$("#signupOpenButton").click(
 		function(evt) {
-			document.signupForm.reset();
 			$("#signupFormDiv").lightbox_me({
 				centered: true,
 				appearEffect: "fadeIn",

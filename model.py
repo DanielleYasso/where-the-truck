@@ -108,7 +108,7 @@ class User(Base):
 	id = Column(Integer, primary_key = True)
 	username = Column(String(50), nullable = True)
 	email = Column(String(75), nullable = False)
-	password = Column(String(75), nullable = False)
+	password = Column(String, nullable = False)
 	average_rating = Column(Float, nullable = True)
 
 	# Get average rating
