@@ -263,8 +263,9 @@ def update_vote(checkin_id, vote):
 	model.session.commit()
 
 	# update checkin user's rating based on new calculated rating
-	checkin.user.set_average_rating()
-	model.session.commit()
+	if checkin.user:
+		checkin.user.set_average_rating()
+		model.session.commit()
 
 	return redirect("/")
 
