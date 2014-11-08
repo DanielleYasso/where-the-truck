@@ -63,7 +63,8 @@ User features:
 [X]	- Allow a user to signup/login
 [X]	- Allow a user to logout
 [X]	- Allow a user to check-in an attraction
-[X]	- Create tables to associate users, their check-ins, and the attractions
+[X]	- Create tables to associate users, their check-ins, and the attractions\
+[X] - Securely store user passwords
 
 Advanced Checkin features:
 	- Allow a user to edit a check-in
@@ -141,6 +142,9 @@ Foursquare
 	    z = 1.64485 #1.0 = 85%, 1.6 = 95%
 	    phat = float(ups) / n
 	    return (phat+z*z/(2*n)-z*sqrt((phat*(1-phat)+z*z/(4*n))/n))/(1+z*z/n)
+
+
+   
 
 - http://www.evanmiller.org/how-not-to-sort-by-average-rating.html
 	- talks about why just comparing positive and negative ratings directly is bad - like the way amazon does it, where an item with 1 positive rating is reddits-comment-ranking-algorithmed above an item with 500 4.5 star ratings
