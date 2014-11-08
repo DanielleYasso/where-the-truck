@@ -96,6 +96,7 @@ function addMarkers(map, markers) {
 			map: map,
 			title: markerObject["name"],
 			draggable: true,
+			icon: "static/truck.png"
 			// animation: google.maps.Animation.DROP
 		});
 
