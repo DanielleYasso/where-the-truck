@@ -126,7 +126,7 @@ class User(Base):
 		count = 0
 		# loop through user's check-ins for calculated_ratings
 		for checkin in self.checkins:
-			# is there a calculated_rating?
+			# is there a calculated_rating?  ** calculated_ratings of 0 are false
 			if checkin.calculated_rating:
 				total += checkin.calculated_rating
 				count += 1

@@ -206,10 +206,6 @@ def update_vote(checkin_id, vote):
 
 	# ONLY LOGGED IN USERS CAN VOTE --> taken care of in map.js
 	
-	# get dictionary of user votes
-	print "checkin.users_who_rated", checkin.users_who_rated
-	print g.user.id
-	
 	# IF NO RATINGS YET
 	if checkin.users_who_rated == None or checkin.users_who_rated == {}:
 		checkin.users_who_rated = {}
@@ -264,6 +260,10 @@ def update_vote(checkin_id, vote):
 
 	# update calculated rating
 	checkin.calculate_rating()
+	model.session.commit()
+
+	# update checkin user's rating based on new calculated rating
+	checkin.user.set_average_rating()
 	model.session.commit()
 
 	return redirect("/")
