@@ -203,63 +203,68 @@ def update_vote(checkin_id, vote):
 	# get attraction's checkin
 	checkin = model.session.query(model.Checkin).get(checkin_id)
 	print g.user
-	# ONLY LOGGED IN USERS CAN VOTE
-	if g.user:
-		# get dictionary of user votes
-		print "checkin.users_who_rated", checkin.users_who_rated
-		print g.user.id
-		
-		# IF NO RATINGS YET
-		if checkin.users_who_rated == None or checkin.users_who_rated == {}:
-			checkin.users_who_rated = {}
-			print "users who rated was None or {}"
 
-			# add user to dictionary
+	# ONLY LOGGED IN USERS CAN VOTE --> taken care of in map.js
+	
+	# get dictionary of user votes
+	print "checkin.users_who_rated", checkin.users_who_rated
+	print g.user.id
+	
+	# IF NO RATINGS YET
+	if checkin.users_who_rated == None or checkin.users_who_rated == {}:
+		checkin.users_who_rated = {}
+		print "users who rated was None or {}"
+
+		# add user to dictionary
+		checkin.users_who_rated[g.user.id] = vote
+		model.session.commit()
+
+		# increment vote
+		add_votes(checkin, vote)
+
+	# IF USER IS ALREADY IN THE CHECKINS DATABASE
+	elif g.user.id in checkin.users_who_rated:
+		print "user is already in the database"
+
+		# WITH NO RATING, aka 0 (due to deleted rating)
+		if checkin.users_who_rated[g.user.id] == 0:
+			
+			# add user vote to dictionary
 			checkin.users_who_rated[g.user.id] = vote
 			model.session.commit()
 
-			# increment vote
+			#increment vote
 			add_votes(checkin, vote)
 
-		# IF USER IS ALREADY IN THE CHECKINS DATABASE
-		elif g.user.id in checkin.users_who_rated:
-			print "user is already in the database"
 
-			# WITH NO RATING, aka 0 (due to deleted rating)
-			if checkin.users_who_rated[g.user.id] == 0:
-				
-				# add user vote to dictionary
-				checkin.users_who_rated[g.user.id] = vote
+		# else user HAS rated this
+		else:
+
+			# get existing user vote
+			existing_vote = checkin.users_who_rated[g.user.id]
+
+			# USER IS UNDOING THEIR VOTE
+			if existing_vote == vote:
+
+				# delete rating
+				checkin.users_who_rated[g.user.id] = 0
 				model.session.commit()
 
-				#increment vote
-				add_votes(checkin, vote)
+				# decrement vote count
+				remove_votes(checkin, vote)
 
+	# RATINGS EXIST, BUT NOT BY THIS USER
+	else:
+		# add user to dictionary
+		checkin.users_who_rated[g.user.id] = vote
+		model.session.commit()
 
-			# else user HAS rated this
-			else:
+		# increment vote
+		add_votes(checkin, vote)
 
-				# get existing user vote
-				existing_vote = checkin.users_who_rated[g.user.id]
-
-				# USER IS UNDOING THEIR VOTE
-				if existing_vote == vote:
-
-					# delete rating
-					checkin.users_who_rated[g.user.id] = 0
-					model.session.commit()
-
-					# decrement vote count
-					remove_votes(checkin, vote)
-
-		# RATINGS EXIST, BUT NOT BY THIS USER
-		else:
-			# add user to dictionary
-			checkin.users_who_rated[g.user.id] = vote
-			model.session.commit()
-
-			# increment vote
-			add_votes(checkin, vote)
+	# update calculated rating
+	checkin.calculate_rating()
+	model.session.commit()
 
 	return redirect("/")
 
