@@ -121,15 +121,15 @@ def signup():
 def get_markers():
 	"""Get's all of the attractions with checkins to be displayed as markers"""
 	# get all attractions that have checkins
-	checked_in_attractions = model.session.query(model.Attraction).filter(model.Attraction.checkin_id != None).all()
-	
-	if not checked_in_attractions:
-		return None
+	attractions = model.session.query(model.Attraction).all()
+
+	if not attractions:
+		return convert_to_JSON("noMarkers")
 
 	attraction_list = []
-	for attraction in checked_in_attractions:
-		checkin = model.session.query(model.Checkin).get(attraction.checkin_id)
-		if checkin:
+	for attraction in attractions:
+		if attraction.checkin_id:
+			checkin = model.session.query(model.Checkin).get(attraction.checkin_id)
 			attraction_list.append({"id": attraction.id, 
 									"name": attraction.name,
 									"lat": checkin.lat,
@@ -139,6 +139,7 @@ def get_markers():
 									})
 	if attraction_list == []:
 		return convert_to_JSON("noMarkers")
+
 	return convert_to_JSON(attraction_list)
 
 
