@@ -72,8 +72,14 @@ function getMarkers(map) {
 		"/get_markers",
 		function(result) {
 			console.log("getMarkers:" + result);
+
+			if (result == "noMarkers") {
+				alert("No checkins to show");
+			}
+			else {
+				addMarkers(map, result);
+			}
 			
-			addMarkers(map, result);
 		});
 }
 

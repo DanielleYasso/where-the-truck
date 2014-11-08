@@ -80,7 +80,7 @@ Ratings:
 	- Allow a user to reveal hidden (bad) check-ins (show/hide)
 
 User Ratings:
-	- Use check-in ratings to create user ratings
+[X]	- Use check-in ratings to create user ratings
 	- Apply a user’s ratings to that user’s new check-in (predict whether their check-in will be good)
 
 Complicated User Ratings (for rating predictions):
@@ -144,7 +144,7 @@ Foursquare
 	    return (phat+z*z/(2*n)-z*sqrt((phat*(1-phat)+z*z/(4*n))/n))/(1+z*z/n)
 
 
-   
+
 
 - http://www.evanmiller.org/how-not-to-sort-by-average-rating.html
 	- talks about why just comparing positive and negative ratings directly is bad - like the way amazon does it, where an item with 1 positive rating is reddits-comment-ranking-algorithmed above an item with 500 4.5 star ratings

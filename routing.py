@@ -129,13 +129,16 @@ def get_markers():
 	attraction_list = []
 	for attraction in checked_in_attractions:
 		checkin = model.session.query(model.Checkin).get(attraction.checkin_id)
-		attraction_list.append({"id": attraction.id, 
-								"name": attraction.name,
-								"lat": checkin.lat,
-								"lng": checkin.lng,
-								"timestamp": dump_datetime(checkin.timestamp),
-								"checkin_id": checkin.id
-								})
+		if checkin:
+			attraction_list.append({"id": attraction.id, 
+									"name": attraction.name,
+									"lat": checkin.lat,
+									"lng": checkin.lng,
+									"timestamp": dump_datetime(checkin.timestamp),
+									"checkin_id": checkin.id
+									})
+	if attraction_list == []:
+		return convert_to_JSON("noMarkers")
 	return convert_to_JSON(attraction_list)
 
 
