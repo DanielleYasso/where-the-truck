@@ -95,12 +95,14 @@ Display Options:
 Timeouts:
 [X]	- Display check-in time stamps based on time elapsed
 	- Time out check-ins (check-ins disappear after X minutes/hours)
-Change appearance of attraction icon as check-in times out
-	- Selecting what to display:
+	- Change appearance of attraction icon as check-in times out
+Selecting what to display:
 	- Create in-browser options to display or not display locations for specific attractions
 	- Option to only display check-ins with ratings above X
 	- Option to display all ratings, even bad ratings (normally hidden)
 Map specific:
+	- Custom icons for different marker types
+[X]		- truck icon for food trucks
 	- Limit map to show only San Francisco
 	- Get distances/times/routes to attractions based on current location
 

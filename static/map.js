@@ -91,12 +91,17 @@ function addMarkers(map, markers) {
 		var myLatLng = new google.maps.LatLng(markerObject["lat"], markerObject["lng"]);
 		console.log(myLatLng);
 
+		var iconType = markerObject["type"];
+		if (iconType == "food_truck") {
+			icon = "static/truck.png";
+		}
+
 		var marker = new google.maps.Marker({
 			position: myLatLng,
 			map: map,
 			title: markerObject["name"],
 			draggable: true,
-			icon: "static/truck.png"
+			icon: icon
 			// animation: google.maps.Animation.DROP
 		});
 

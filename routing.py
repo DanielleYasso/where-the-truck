@@ -135,7 +135,8 @@ def get_markers():
 									"lat": checkin.lat,
 									"lng": checkin.lng,
 									"timestamp": dump_datetime(checkin.timestamp),
-									"checkin_id": checkin.id
+									"checkin_id": checkin.id,
+									"type": attraction.att_type
 									})
 	if attraction_list == []:
 		return convert_to_JSON("noMarkers")
