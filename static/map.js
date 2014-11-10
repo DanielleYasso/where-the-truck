@@ -205,13 +205,14 @@ function addMarkers(map, markers) {
 					var upvotes = votes[0];
 					var downvotes = votes[1];
 					var loggedIn = votes[2];
-					var voteType = votes[3];
+					var yourCheckin = votes[3];
+					var voteType = votes[4];
 					// create content for info window
 
 					var upButton;
 					var downButton;
 
-					if (loggedIn) {
+					if (loggedIn && !yourCheckin) {
 						if (voteType == "up") {
 							upButton = "<form action='/upvote/" + checkin_id + "' method='POST'>" 
 										+ "<button type='submit'>\u2B06</button>"
@@ -270,6 +271,25 @@ function addMarkers(map, markers) {
 										+ downvotes
 										+ "</td></tr></table>";
 						}
+					}
+					// not your checkin
+					else if (yourCheckin) {
+						upButton = "<button disabled>" 
+									+ "\u2B06"
+									+ "</button>"
+									+ "</td>"
+
+									+ "<td>"
+									+ upvotes
+									+ "</td></tr>";
+
+						downButton = "<button disabled>" 
+									+ "\u2B07</button>"
+									+ "</td>"
+
+									+ "<td style='vertical-align: top'>"
+									+ downvotes
+									+ "</td></tr></table>";
 					}
 					// not logged in
 					else {

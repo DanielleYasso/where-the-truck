@@ -81,19 +81,24 @@
 	<div id="attractionOptions">
 		<form id="optionsForm" action="/save_preferences" method="POST">
 			{% for attraction in attractions %}
+
 				<!-- If user is signed in and has saved preferences -->
 				{% if session.get("user_id", False) and g.user.preferences != {}%}
+				
 						<!-- user has preferences -->
 						{% if g.user.preferences[attraction.id] %}
 							<input type="checkbox" id="{{attraction.id}}" name="attractionsDisplayed" value="{{attraction.id}}" checked>{{attraction.name}}<br>
 						{% else %}
 							<input type="checkbox" id="{{attraction.id}}" name="attractionsDisplayed" value="{{attraction.id}}">{{attraction.name}}<br>
 						{% endif %}
+
 				<!-- no user or user has no preferences -->
 				{% else %}  
 					<input type="checkbox" id="{{attraction.id}}" name="attractionsDisplayed" value="{{attraction.id}}" checked>{{attraction.name}}<br>
 				{% endif %}
+
 			{% endfor %}
+
 			{% if session.get("user_id", False) %}
 				<button type="submit" id="savePreferences">Save Preferences</button>
 			{% endif %}

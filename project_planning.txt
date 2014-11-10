@@ -76,6 +76,7 @@ Ratings:
 [X]	- Associate ratings with check-ins in database
 [X]	- Allow a user to change their rating
 [X]	- Display ratings next to a check-in (up votes and down votes)
+	- Prevent users from rating their own check-in
 	- Hide check-ins with bad ratings
 	- Allow a user to reveal hidden (bad) check-ins (show/hide)
 
@@ -97,7 +98,7 @@ Timeouts:
 	- Time out check-ins (check-ins disappear after X minutes/hours)
 	- Change appearance of attraction icon as check-in times out
 Selecting what to display:
-	- Create in-browser options to display or not display locations for specific attractions
+[X]	- Create in-browser options to display or not display locations for specific attractions
 	- Create search so users can find specific attractions
 	- Option to only display check-ins with ratings above X
 	- Option to display all ratings, even bad ratings (normally hidden)
@@ -108,7 +109,9 @@ Map specific:
 	- Get distances/times/routes to attractions based on current location
 
 Advanced User Features:
-	- Save a user’s preferences - only show certain attractions, only show certain ratings
+[X]	- Save a user’s preferences
+[X]		- only show certain attractions
+		- only show certain ratings
 	- Allow a user to create a new attraction to check-in
 		- Natural language processing… otherwise could have one attraction with several different names…
 

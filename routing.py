@@ -349,20 +349,25 @@ def get_votes(checkin_id):
 	# get checkin from db
 	checkin = model.session.query(model.Checkin).get(checkin_id)
 
-	votes = [checkin.upvotes, checkin.downvotes]
+	votes = [checkin.upvotes, checkin.downvotes] # [0, 1]
 
 	# is a user signed in?
 	if g.user:
-		votes.append(True)
+		votes.append(True) # [2]
 
-		# get user vote (if it exists)
-		if checkin.users_who_rated != None:
-			if g.user.id in checkin.users_who_rated:
+		if checkin.user_id == g.user.id:
+			votes.append(True) # [3]
+		else:
+			votes.append(False) # [3]
 
-				# vote_type is "up" or "down" or 0
-				vote_type = checkin.users_who_rated[g.user.id]
+			# get user vote (if it exists)
+			if checkin.users_who_rated != None:
+				if g.user.id in checkin.users_who_rated:
 
-				votes.append(vote_type)
+					# vote_type is "up" or "down" or 0
+					vote_type = checkin.users_who_rated[g.user.id]
+
+					votes.append(vote_type) # [4]
 
 	return convert_to_JSON(votes)
 
