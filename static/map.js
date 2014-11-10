@@ -90,10 +90,32 @@ function addMarkers(map, markers) {
 	var checkedAttractions = {};
 	for (var i = 0; i < markers.length; i++) {
 		markerObject = markers[i];
-		checkedAttractions[markerObject["id"]] = true;
+		attractionId = "#" + markerObject["id"];
+		if ($(attractionId).is(":checked")) {
+			checkedAttractions[markerObject["id"]] = true;
+		}
+		else {
+			checkedAttractions[markerObject["id"]] = false;
+		}	
 	}
+
 	// create array to hold all markers
 	var markersArray = [];
+
+	// only show on map if checkbox is selected
+	function setOrDeleteMarkers() {
+		console.log(checkedAttractions);
+		for (i = 0; i < markersArray.length; i++) {
+			marker = markersArray[i];
+			
+			if (checkedAttractions[marker.get("id")] == false) {
+				marker.setMap(null);
+			}
+			else {
+				marker.setMap(map);
+			}
+		}
+	}
 
 	// set the markers on the map each time the map is loaded
 	// loop to add each marker to the map
@@ -300,9 +322,13 @@ function addMarkers(map, markers) {
 				}
 						
 					
-			}); // end of click event
+			}); // end of info window click event
 
 	} // end of for loop for markers
+
+	// put all user-desired markers on the map
+	setOrDeleteMarkers();
+	
 
 	// get checkbox changes
 	$("input:checkbox").change(
@@ -316,22 +342,10 @@ function addMarkers(map, markers) {
 				checkedAttractions[attractionId] = false;
 			}
 
-			// only show on map if checkbox is selected
-			for (i = 0; i < markersArray.length; i++) {
-				marker = markersArray[i];
-				if (checkedAttractions[marker.get("id")] == false) {
-					marker.setMap(null);
-				}
-				else {
-					marker.setMap(map);
-				}
-			}
-			
-	}	);
-		
-	
-
+			setOrDeleteMarkers();	
+	});
 }
+
 
 function loginToRate() {
 	alert("Signup or login to rate checkins.");
