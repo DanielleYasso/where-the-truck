@@ -85,6 +85,17 @@ function getMarkers(map) {
 
 // Gets all current checkin markers and puts them on the map
 function addMarkers(map, markers) {
+	
+	// initialize dictionary of checked markers, key = id, value = true or false
+	var checkedAttractions = {};
+	for (var i = 0; i < markers.length; i++) {
+		markerObject = markers[i];
+		checkedAttractions[markerObject["id"]] = true;
+	}
+	// create array to hold all markers
+	var markersArray = [];
+
+	// set the markers on the map each time the map is loaded
 	// loop to add each marker to the map
 	for (var i = 0; i < markers.length; i++) {
 		markerObject = markers[i];
@@ -110,7 +121,13 @@ function addMarkers(map, markers) {
 		marker.set("time", markerObject["timestamp"]);
 		marker.set("checkin_id", markerObject["checkin_id"]);
 
-		marker.setMap(map);
+		// add the marker to the markers array
+		markersArray.push(marker);
+
+
+		///////////////////
+		// MARKER EVENTS //
+		///////////////////
 
 		// Drag event
 		google.maps.event.addListener(
@@ -286,6 +303,33 @@ function addMarkers(map, markers) {
 			}); // end of click event
 
 	} // end of for loop for markers
+
+	// get checkbox changes
+	$("input:checkbox").change(
+		function() {
+			var attractionId = this.id;
+			if ($(this).is(":checked")) {
+				// checked: update status to true
+				checkedAttractions[attractionId] = true;
+			} else {
+				// unchecked: update status to false
+				checkedAttractions[attractionId] = false;
+			}
+
+			// only show on map if checkbox is selected
+			for (i = 0; i < markersArray.length; i++) {
+				marker = markersArray[i];
+				if (checkedAttractions[marker.get("id")] == false) {
+					marker.setMap(null);
+				}
+				else {
+					marker.setMap(map);
+				}
+			}
+			
+	}	);
+		
+	
 
 }
 

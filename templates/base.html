@@ -78,6 +78,14 @@
 		</form>
 	</div>
 
+	<div id="attractionOptions">
+		<form id="optionsForm">
+			{% for attraction in attractions %}
+				<input type="checkbox" id="{{attraction.id}}" name="{{attraction.name}}" value="{{attraction.id}}" checked>{{attraction.name}}<br>
+			{% endfor %}
+		</form>
+	</div>
+
 
 	<div id="map-canvas"></div>
 
