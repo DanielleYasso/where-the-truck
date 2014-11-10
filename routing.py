@@ -108,6 +108,10 @@ def signup():
 	model.session.add(new_user)
 	model.session.commit()
 
+	# add default empty user preferences
+	new_user.preferences = {}
+	model.session.commit()
+
 	# add user to session --> LOGIN USER
 	session["user_id"] = new_user.id
 
@@ -124,7 +128,22 @@ def save_preferences():
 	checked_attractions = request.form.getlist("attractionsDisplayed")
 	print "***** checked attractions ", checked_attractions
 
-	
+	# add checked attractions to user preferences
+	p = {}
+	for attraction in checked_attractions:
+		p[int(attraction)] = True
+
+	all_attractions = model.session.query(model.Attraction).all()
+	for attraction in all_attractions:
+		if not attraction.id in p:
+			p[attraction.id] = False
+
+	if g.user:
+		g.user.preferences = p
+
+	model.session.commit()
+
+	print "g.user.preferences = ", g.user.preferences
 
 	return redirect("/")
 

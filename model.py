@@ -19,21 +19,6 @@ Base.query = session.query_property()
 # CLASS DECLARATIONS #
 ######################
 
-####################
-# ATTRACTION CLASS #
-
-class Attraction(Base):
-	__tablename__ = "attractions"
-
-	id = Column(Integer, primary_key = True)
-	name = Column(String(50), nullable = False)
-	checkin_id = Column(Integer, nullable = True)
-	att_type = Column(String(50), nullable = True)
-
-
-#################
-# CHECKIN CLASS #
-
 class MutableDict(Mutable, dict):
 
     @classmethod
@@ -59,6 +44,20 @@ class MutableDict(Mutable, dict):
     def __setstate__(self, state):
         self.update(self)
 
+####################
+# ATTRACTION CLASS #
+
+class Attraction(Base):
+	__tablename__ = "attractions"
+
+	id = Column(Integer, primary_key = True)
+	name = Column(String(50), nullable = False)
+	checkin_id = Column(Integer, nullable = True)
+	att_type = Column(String(50), nullable = True)
+
+
+#################
+# CHECKIN CLASS #
 
 class Checkin(Base):
 	__tablename__ = "checkins"
@@ -118,6 +117,7 @@ class User(Base):
 	email = Column(String(75), nullable = False)
 	password = Column(String, nullable = False)
 	average_rating = Column(Float, nullable = True)
+	preferences = Column(MutableDict.as_mutable(PickleType), nullable = True)
 
 	# Get average rating
 	def set_average_rating(self):
