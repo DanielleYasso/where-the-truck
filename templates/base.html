@@ -79,10 +79,13 @@
 	</div>
 
 	<div id="attractionOptions">
-		<form id="optionsForm">
+		<form id="optionsForm" action="/save_preferences" method="POST">
 			{% for attraction in attractions %}
-				<input type="checkbox" id="{{attraction.id}}" name="{{attraction.name}}" value="{{attraction.id}}" checked>{{attraction.name}}<br>
+				<input type="checkbox" id="{{attraction.id}}" name="attractionsDisplayed" value="{{attraction.id}}" checked>{{attraction.name}}<br>
 			{% endfor %}
+			{% if session.get("user_id", False) %}
+				<button type="submit" id="savePreferences">Save Preferences</button>
+			{% endif %}
 		</form>
 	</div>
 

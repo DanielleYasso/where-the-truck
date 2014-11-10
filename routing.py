@@ -113,6 +113,22 @@ def signup():
 
 	return ""
 
+
+#################################
+# SAVE USER DISPLAY PREFERENCES #
+#################################
+
+@app.route("/save_preferences", methods=["POST"])
+def save_preferences():
+
+	checked_attractions = request.form.getlist("attractionsDisplayed")
+	print "***** checked attractions ", checked_attractions
+
+	
+
+	return redirect("/")
+
+
 #################################
 # GET MARKERS TO DISPLAY ON MAP #
 #################################
