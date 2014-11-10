@@ -3,6 +3,7 @@ import os
 import model
 import json
 from passlib.hash import pbkdf2_sha256
+from datetime import datetime
 
 app = Flask(__name__)
 
@@ -165,11 +166,29 @@ def get_markers():
 	for attraction in attractions:
 		if attraction.checkin_id:
 			checkin = model.session.query(model.Checkin).get(attraction.checkin_id)
+			
+			# check how dated timestamp is
+			time_diff = datetime.now() - checkin.timestamp
+			# older than a day?
+			if time_diff.days >= 1:
+				timeout = "old"
+			# older than 6 hours?
+			elif time_diff.seconds >= 21600:
+				timeout = "six_hours"
+			# older than 3 hours?
+			elif time_diff.seconds >= 10800:
+				timeout = "three_hours"
+			elif time_diff.seconds >= 3600:
+				timeout = "one_hour"
+			else:
+				timeout = False
+
 			attraction_list.append({"id": attraction.id, 
 									"name": attraction.name,
 									"lat": checkin.lat,
 									"lng": checkin.lng,
 									"timestamp": dump_datetime(checkin.timestamp),
+									"timeout": timeout,
 									"checkin_id": checkin.id,
 									"type": attraction.att_type
 									})

@@ -76,7 +76,7 @@ Ratings:
 [X]	- Associate ratings with check-ins in database
 [X]	- Allow a user to change their rating
 [X]	- Display ratings next to a check-in (up votes and down votes)
-	- Prevent users from rating their own check-in
+[X]	- Prevent users from rating their own check-in
 	- Hide check-ins with bad ratings
 	- Allow a user to reveal hidden (bad) check-ins (show/hide)
 

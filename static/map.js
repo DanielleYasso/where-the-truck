@@ -125,8 +125,39 @@ function addMarkers(map, markers) {
 		console.log(myLatLng);
 
 		var iconType = markerObject["type"];
-		if (iconType == "food_truck") {
-			icon = "static/truck.png";
+
+		// this WILL be user-determined
+		var showOld = false;
+
+		var timeout = markerObject["timeout"];
+		if (timeout == "old") {
+			if (iconType == "food_truck") {
+				icon = "static/truck6.png";
+				if (!showOld) {
+					continue; // don't add the old marker to the markersArray
+				}
+			}
+		}
+		else if (timeout == "six_hours") {
+			if (iconType == "food_truck") {
+				icon = "static/truck6.png";
+			}
+		}
+		else if (timeout == "three_hours") {
+			if (iconType == "food_truck") {
+				icon = "static/truck3.png";
+			}
+		}
+		else if (timeout == "one_hour") {
+			if (iconType == "food_truck") {
+				icon = "static/truck1.png";
+				
+			}
+		}
+		else {
+			if (iconType == "food_truck") {
+				icon = "static/truck.png";
+			}
 		}
 
 		var marker = new google.maps.Marker({
