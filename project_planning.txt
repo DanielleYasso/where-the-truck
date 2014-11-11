@@ -77,8 +77,8 @@ Ratings:
 [X]	- Allow a user to change their rating
 [X]	- Display ratings next to a check-in (up votes and down votes)
 [X]	- Prevent users from rating their own check-in
-	- Hide check-ins with bad ratings
-	- Allow a user to reveal hidden (bad) check-ins (show/hide)
+[X]	- Hide check-ins with bad ratings
+[X]	- Allow a user to reveal hidden (bad) check-ins (show/hide)
 
 User Ratings:
 [X]	- Use check-in ratings to create user ratings
@@ -101,12 +101,14 @@ Selecting what to display:
 [X]	- Create in-browser options to display or not display locations for specific attractions
 [X]	- Allow users to select whether they see timed-out checkins
 	- Create search so users can find specific attractions
-	- Option to only display check-ins with ratings above X
-	- Option to display all ratings, even bad ratings (normally hidden)
+[X]	- Option to only display check-ins with ratings above X
+[X]		- Option to display all ratings, even bad ratings (normally hidden)
+		- Option to show/hide PREDICTED bad checkins - based off user ratings
 Map specific:
 	- Custom icons for different marker types
 [X]		- truck icon for food trucks
 	- Limit map to show only San Francisco
+[X]		- Keep map always default centered on San Francisco
 	- Get distances/times/routes to attractions based on current location
 
 Advanced User Features:
@@ -123,8 +125,8 @@ Foursquare
 	- Allows a user to checkin to foursquare for that attraction/location
 
 Yelp
-	- Link to applicable yelp pages
-	- Show yelp rating next to name
+[X]	- Link to applicable yelp pages
+[X]	- Show yelp rating next to name
 
 ********** END EXTRAS **********
 
