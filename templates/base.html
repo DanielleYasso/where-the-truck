@@ -84,8 +84,8 @@
 
 				<!-- If user is signed in and has saved preferences -->
 				{% if session.get("user_id", False) and g.user.preferences != {}%}
-				
-						<!-- user has preferences -->
+
+						<!-- user has checked this attraction -->
 						{% if g.user.preferences[attraction.id] %}
 							<input type="checkbox" id="{{attraction.id}}" name="attractionsDisplayed" value="{{attraction.id}}" checked>{{attraction.name}}<br>
 						{% else %}
@@ -98,6 +98,12 @@
 				{% endif %}
 
 			{% endfor %}
+
+			{% if session.get("user_id", False) and g.user.preferences["show_old"] %}
+				<input type="checkbox" id="showOldCheckins" name="showOldCheckins" value="True" checked>Show Old Checkins<br>
+			{% else %}
+				<input type="checkbox" id="showOldCheckins" name="showOldCheckins" value="True">Show Old Checkins<br>
+			{% endif %}
 
 			{% if session.get("user_id", False) %}
 				<button type="submit" id="savePreferences">Save Preferences</button>

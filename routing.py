@@ -129,6 +129,8 @@ def save_preferences():
 	checked_attractions = request.form.getlist("attractionsDisplayed")
 	print "***** checked attractions ", checked_attractions
 
+	show_old = request.form.get("showOldCheckins", False)
+
 	# add checked attractions to user preferences
 	p = {}
 	for attraction in checked_attractions:
@@ -138,6 +140,11 @@ def save_preferences():
 	for attraction in all_attractions:
 		if not attraction.id in p:
 			p[attraction.id] = False
+
+	if show_old:
+		p["show_old"] = True
+	else:
+		p["show_old"] = False
 
 	if g.user:
 		g.user.preferences = p
@@ -178,6 +185,7 @@ def get_markers():
 			# older than 3 hours?
 			elif time_diff.seconds >= 10800:
 				timeout = "three_hours"
+			# older than 1 hour?
 			elif time_diff.seconds >= 3600:
 				timeout = "one_hour"
 			else:

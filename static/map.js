@@ -85,7 +85,6 @@ function getMarkers(map) {
 
 // Gets all current checkin markers and puts them on the map
 function addMarkers(map, markers) {
-	
 	// initialize dictionary of checked markers, key = id, value = true or false
 	var checkedAttractions = {};
 	for (var i = 0; i < markers.length; i++) {
@@ -127,8 +126,14 @@ function addMarkers(map, markers) {
 		var iconType = markerObject["type"];
 
 		// this WILL be user-determined
-		var showOld = false;
-
+		var showOld;
+		if ($("#showOldCheckins").is(":checked")) {
+			showOld = true;
+		}
+		else {
+			showOld = false;
+		}
+		 
 		var timeout = markerObject["timeout"];
 		if (timeout == "old") {
 			if (iconType == "food_truck") {
@@ -151,7 +156,9 @@ function addMarkers(map, markers) {
 		else if (timeout == "one_hour") {
 			if (iconType == "food_truck") {
 				icon = "static/truck1.png";
-				
+				if (!showOld) {
+					continue; // don't add the old marker to the markersArray
+				}
 			}
 		}
 		else {
@@ -384,13 +391,25 @@ function addMarkers(map, markers) {
 	// get checkbox changes
 	$("input:checkbox").change(
 		function() {
-			var attractionId = this.id;
-			if ($(this).is(":checked")) {
-				// checked: update status to true
-				checkedAttractions[attractionId] = true;
-			} else {
-				// unchecked: update status to false
-				checkedAttractions[attractionId] = false;
+			if (this.id == "showOldCheckins") {
+				if ($(this).is(":checked")) {
+					showOld = true;
+					initialize();
+				}
+				else {
+					showOld = false;
+					initialize();
+				}
+			}
+			else {
+				var attractionId = this.id;
+				if ($(this).is(":checked")) {
+					// checked: update status to true
+					checkedAttractions[attractionId] = true;
+				} else {
+					// unchecked: update status to false
+					checkedAttractions[attractionId] = false;
+				}
 			}
 
 			setOrDeleteMarkers();	
