@@ -130,6 +130,7 @@ def save_preferences():
 	print "***** checked attractions ", checked_attractions
 
 	show_old = request.form.get("showOldCheckins", False)
+	show_bad = request.form.get("showBadRatings", False)
 
 	# add checked attractions to user preferences
 	p = {}
@@ -145,6 +146,11 @@ def save_preferences():
 		p["show_old"] = True
 	else:
 		p["show_old"] = False
+
+	if show_bad:
+		p["show_bad"] = True
+	else:
+		p["show_bad"] = False
 
 	if g.user:
 		g.user.preferences = p

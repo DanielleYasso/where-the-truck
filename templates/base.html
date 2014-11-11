@@ -99,11 +99,21 @@
 
 			{% endfor %}
 
+			<!-- SHOW OLD CHECKINS -->
 			{% if session.get("user_id", False) and g.user.preferences["show_old"] %}
 				<input type="checkbox" id="showOldCheckins" name="showOldCheckins" value="True" checked>Show Old Checkins<br>
 			{% else %}
-				<input type="checkbox" id="showOldCheckins" name="showOldCheckins" value="True">Show Old Checkins<br>
+				<input type="checkbox" id="showOldCheckins" name="showOldCheckins" value="True">Show checkins older than 1 day<br>
 			{% endif %}
+
+			<!-- SHOW CHECKINS WITH BAD RATINGS -->
+			{% if session.get("user_id", False) and g.user.preferences["show_bad"] %}
+				<input type="checkbox" id="showBadRatings" name="showBadRatings" value="True" checked>Show checkins with bad ratings<br>
+			{% else %}
+				<input type="checkbox" id="showBadRatings" name="showBadRatings" value="True">Show checkins with bad ratings<br>
+			{% endif %}
+
+				
 
 			{% if session.get("user_id", False) %}
 				<button type="submit" id="savePreferences">Save Preferences</button>

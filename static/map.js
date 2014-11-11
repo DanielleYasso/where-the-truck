@@ -156,6 +156,8 @@ function addMarkers(map, markers) {
 		else if (timeout == "one_hour") {
 			if (iconType == "food_truck") {
 				icon = "static/truck1.png";
+				
+				// below if statement here for testing purposes only
 				if (!showOld) {
 					continue; // don't add the old marker to the markersArray
 				}

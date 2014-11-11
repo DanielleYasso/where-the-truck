@@ -99,6 +99,7 @@ Timeouts:
 [X]	- Change appearance of attraction icon as check-in times out
 Selecting what to display:
 [X]	- Create in-browser options to display or not display locations for specific attractions
+[X]	- Allow users to select whether they see timed-out checkins
 	- Create search so users can find specific attractions
 	- Option to only display check-ins with ratings above X
 	- Option to display all ratings, even bad ratings (normally hidden)
