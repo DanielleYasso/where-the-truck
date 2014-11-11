@@ -212,6 +212,13 @@ function addMarkers(map, markers) {
 		marker.set("time", markerObject["timestamp"]);
 		marker.set("checkin_id", markerObject["checkin_id"]);
 
+		// set Yelp data, if available
+		if (markerObject["ratings_img"]) {
+			marker.set("ratings_img", markerObject["ratings_img"]);
+			marker.set("ratings_count", markerObject["ratings_count"]);
+			marker.set("url", markerObject["url"]);
+		}
+
 		// add the marker to the markers array
 		markersArray.push(marker);
 
@@ -259,6 +266,11 @@ function addMarkers(map, markers) {
 				// get attraction name
 				var attraction_name = this.get("name");
 
+				// get yelp details
+				var ratings_img = this.get("ratings_img");
+				var ratings_count = this.get("ratings_count");
+				var yelp_url = this.get("url");
+
 				marker = this;
 
 				// get upvotes and downvotes
@@ -280,6 +292,8 @@ function addMarkers(map, markers) {
 
 					var upButton;
 					var downButton;
+					var attraction_name_url = attraction_name;
+					var yelp_ratings = "";
 
 					if (loggedIn && !yourCheckin) {
 						if (voteType == "up") {
@@ -377,13 +391,24 @@ function addMarkers(map, markers) {
 
 									+ "<td style='vertical-align: top'>"
 									+ downvotes
-									+ "</td></tr></table>";
+									+ "</td></tr>";
 					}
 
-					var content = "<table style='text-align: left;'><tr>"
+					if (yelp_url) {
+						attraction_name_url = "<a href='" + yelp_url + "' target='_blank'>"
+											+ attraction_name
+											+ "</a>";
+
+						yelp_ratings = "<tr><td>"
+									+ "<img src='" + ratings_img + "'>"
+									+ ratings_count
+									+ "</td></tr>";
+					}
+
+						var content = "<table style='text-align: left;'><tr>"
 
 									+ "<th>"
-									+ attraction_name 
+									+ attraction_name_url
 									+ "</th>"
 
 									+ "<td id='upArrow' padding-right: 5px;'>"
@@ -396,7 +421,11 @@ function addMarkers(map, markers) {
 									+ "</td>"
 
 									+ "<td id='downArrow' style='vertical-align: top;'>"
-									+ downButton;
+									+ downButton
+
+									+ yelp_ratings
+									+ "</table>";
+					
 
 					return content;
 				}

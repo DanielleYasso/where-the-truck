@@ -47,7 +47,7 @@ def dump_datetime(value):
 
 ###### END JSON ######
 
-###### YELP ######
+###### YELP API ######
 def get_yelp_ratings(business_id):
 	# OAuth credentials
 	CONSUMER_KEY = os.environ.get('YELP_CONSUMER_KEY')
@@ -70,6 +70,7 @@ def get_yelp_ratings(business_id):
 	session.close()
 
 	return data
+###### END YELP API ######
 
 
 ###############
@@ -215,6 +216,19 @@ def get_markers():
 
 	attraction_list = []
 	for attraction in attractions:
+
+		# get yelp ratings if they exist
+		if attraction.biz_id:
+			ratings_data = get_yelp_ratings(attraction.biz_id)
+
+			ratings_img = str(ratings_data["rating_img_url"])
+			ratings_count = str(ratings_data["review_count"])
+			url = "http://www.yelp.com/biz/{0}".format(attraction.biz_id)
+		else:
+			ratings_img = None
+			ratings_count = None
+			url = None
+
 		if attraction.checkin_id:
 			checkin = model.session.query(model.Checkin).get(attraction.checkin_id)
 			
@@ -258,7 +272,10 @@ def get_markers():
 									"checkin_id": checkin.id,
 									"type": attraction.att_type,
 									"bad_rating": bad_rating,
-									"non_user_checkin": non_user_checkin
+									"non_user_checkin": non_user_checkin,
+									"ratings_img": ratings_img,
+									"ratings_count": ratings_count,
+									"url": url
 									})
 	if attraction_list == []:
 		return convert_to_JSON("noMarkers")
