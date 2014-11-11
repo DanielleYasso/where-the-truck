@@ -125,13 +125,18 @@ function addMarkers(map, markers) {
 
 		var iconType = markerObject["type"];
 
-		// Show old checkins on the map?
-		var showOld;
-		if ($("#showOldCheckins").is(":checked")) {
-			showOld = true;
+		// Show checkins made by non-users?
+		var showNonUserCheckins;
+		if ($("#showNonUserCheckins").is(":checked")) {
+			showNonUserCheckins = true;
 		}
 		else {
-			showOld = false;
+			showNonUserCheckins = false;
+		}
+		// Don't show a maker if it doesn't have a user associated with it
+		var nonUserCheckin = markerObject["non_user_checkin"];
+		if (nonUserCheckin && !showNonUserCheckins) {
+			continue; // don't add the non-user checkin to the markersArray
 		}
 
 		// Show checkins with established bad ratings on the map?
@@ -142,13 +147,22 @@ function addMarkers(map, markers) {
 		else {
 			showBad = false;
 		}
-
 		// Don't show a marker with bad ratings if user doesn't want to see them
 		var badRating = markerObject["bad_rating"];
 		if (badRating && !showBad) {
 			continue; // don't add the poorly rated checkin to the markersArray
 		}
-		 
+
+		// Show old checkins on the map?
+		var showOld;
+		if ($("#showOldCheckins").is(":checked")) {
+			showOld = true;
+		}
+		else {
+			showOld = false;
+		} 
+
+		// Set marker icons based on how old they are
 		var timeout = markerObject["timeout"];
 		if (timeout == "old") {
 			if (iconType == "food_truck") {
@@ -425,6 +439,16 @@ function addMarkers(map, markers) {
 				}
 				else {
 					showBad = false;
+					initialize();
+				}
+			}
+			else if (this.id == "showNonUserCheckins") {
+				if ($(this).is(":checked")) {
+					showNonUserCheckins = true;
+					initialize();
+				}
+				else {
+					showNonUserCheckins = false;
 					initialize();
 				}
 			}

@@ -131,6 +131,8 @@ def save_preferences():
 
 	show_old = request.form.get("showOldCheckins", False)
 	show_bad = request.form.get("showBadRatings", False)
+	show_bad_users = request.form.get("showBadUsers", False)
+	show_non_users = request.form.get("showNonUserCheckins", False)
 
 	# add checked attractions to user preferences
 	p = {}
@@ -151,6 +153,16 @@ def save_preferences():
 		p["show_bad"] = True
 	else:
 		p["show_bad"] = False
+
+	if show_bad_users:
+		p["show_bad_users"] = True
+	else:
+		p["show_bad_users"] = False
+
+	if show_non_users:
+		p["show_non_users"] = True
+	else:
+		p["show_non_users"] = False
 
 	if g.user:
 		g.user.preferences = p
@@ -180,7 +192,7 @@ def get_markers():
 		if attraction.checkin_id:
 			checkin = model.session.query(model.Checkin).get(attraction.checkin_id)
 			
-			# check how dated timestamp is
+			# check how old timestamp is
 			time_diff = datetime.now() - checkin.timestamp
 			# older than a day?
 			if time_diff.days >= 1:
@@ -198,13 +210,18 @@ def get_markers():
 				timeout = False
 
 			# Check if attraction checkin has a really bad rating
+			bad_rating = False;
+			# if there are X total votes and/or X downvotes:
 			if checkin.downvotes > checkin.upvotes: # COMPARISON VALUES TO CHANGE
 				bad_rating = True
-				# if calculated rating is below a certain point:
+				# if calculated_rating is below a certain number:
 					# bad_rating = True;
+
+			# made by logged in user?
+			if checkin.user_id != None:
+				non_user_checkin = False
 			else:
-				bad_rating = False;
-			
+				non_user_checkin = True
 
 			attraction_list.append({"id": attraction.id, 
 									"name": attraction.name,
@@ -214,7 +231,8 @@ def get_markers():
 									"timeout": timeout,
 									"checkin_id": checkin.id,
 									"type": attraction.att_type,
-									"bad_rating": bad_rating
+									"bad_rating": bad_rating,
+									"non_user_checkin": non_user_checkin
 									})
 	if attraction_list == []:
 		return convert_to_JSON("noMarkers")

@@ -115,7 +115,21 @@
 				<input type="checkbox" id="showBadRatings" name="showBadRatings" value="True">Show checkins with bad ratings<br>
 			{% endif %}
 
-			<input type="checkbox" id="showBadUser" name="showBadUser" value="True">Show checkins by users who typically do crappy checkins<br>
+			<!-- SHOW CHECKINS BY USERS WITH BAD RATINGS -->
+			{% if session.get("user_id", False) and g.user.preferences["show_bad_users"] %}
+				<input type="checkbox" id="showBadUsers" name="showBadUsers" value="True" checked>Show checkins by users who typically do crappy checkins<br>
+			{% else %}
+				<input type="checkbox" id="showBadUsers" name="showBadUsers" value="True">Show checkins by users who typically do crappy checkins<br>
+			{% endif %}
+
+			<!-- SHOW CHECKINS BY NON USERS -->
+			{% if session.get("user_id", False) and g.user.preferences["show_non_users"] == False %}
+				<input type="checkbox" id="showNonUserCheckins" name="showNonUserCheckins" value="True">Show checkins made by non-users<br>
+			{% else %}
+				<input type="checkbox" id="showNonUserCheckins" name="showNonUserCheckins" value="True" checked>Show checkins made by non-users<br>
+			{% endif %}
+
+			
 
 				
 
