@@ -12,7 +12,12 @@ $(document).ready(function() {
 });
 
 
+/////////////////////////////////
+
 //////// HANDLE CHECKINS ////////
+
+/////////////////////////////////
+
 
 function getGeolocation(attraction_id) {
 	var browserSupportFlag = new Boolean();
@@ -65,7 +70,12 @@ function setCheckin(attraction_id, lat, lng) {
 }
 
 
+//////////////////////////////////
+
 //////// MAP MANIPULATION ////////
+
+/////////////////////////////////
+
 
 function getMarkers(map) {
 	$.get(
@@ -294,6 +304,7 @@ function addMarkers(map, markers) {
 					var downButton;
 					var attraction_name_url = attraction_name;
 					var yelp_ratings = "";
+					var powered_by_yelp = "";
 
 					if (loggedIn && !yourCheckin) {
 						if (voteType == "up") {
@@ -399,20 +410,24 @@ function addMarkers(map, markers) {
 											+ attraction_name
 											+ "</a>";
 
-						yelp_ratings = "<tr><td>"
-									+ "<img src='" + ratings_img + "'>"
-									+ ratings_count
-									+ "<a href='" + yelp_url + "' target='_blank'>"
-									+ "<img src='http://s3-media1.fl.yelpcdn.com/assets/2/www/img/14f29ad24935/map/miniMapLogo.png'>"
-									+ "</a>"
-									+ "</td></tr>";
+						yelp_ratings_img = "<a href='" + yelp_url + "' target='_blank'>"
+										+ "<img src='" + ratings_img + "'>"
+										+ "</a>";
+
+						yelp_ratings_count = "<em style='font-size: 8pt;'>" + ratings_count + " reviews on </em>";
+
+						powered_by_yelp = "<a href='" + yelp_url + "' target='_blank'>"
+										+ "<img style='vertical-align: bottom;' src='http://s3-media1.fl.yelpcdn.com/assets/2/www/img/14f29ad24935/map/miniMapLogo.png'>"
+										+ "</a>";
 					}
 
 						var content = "<table style='text-align: left;'><tr>"
 
 									+ "<th>"
-									+ attraction_name_url
+									+ attraction_name_url 
 									+ "</th>"
+
+									
 
 									+ "<td id='upArrow' padding-right: 5px;'>"
 									+ upButton
@@ -426,8 +441,18 @@ function addMarkers(map, markers) {
 									+ "<td id='downArrow' style='vertical-align: top;'>"
 									+ downButton
 
-									+ yelp_ratings
+									+ "<tr><td colspan='3'><span style='margin-right: 1px'>"
+									+ yelp_ratings_img
+									
+									+ yelp_ratings_count
+									
+									+ powered_by_yelp 
+									+ "</span>"
+									+ "</td></tr>"
+
 									+ "</table>";
+
+									
 					
 
 					return content;
@@ -501,7 +526,7 @@ function addMarkers(map, markers) {
 
 
 function loginToRate() {
-	alert("Signup or login to rate checkins.");
+	alert("Signup or login to rate this checkin.");
 }
 
 // Creates the map to show on the page

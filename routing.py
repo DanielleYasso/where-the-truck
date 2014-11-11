@@ -7,6 +7,8 @@ import rauth
 
 import model
 
+import twilio.twiml
+
 app = Flask(__name__)
 
 SECRET_KEY = os.environ.get('SECRET_KEY')
@@ -474,6 +476,74 @@ def get_votes(checkin_id):
 					votes.append(vote_type) # [4]
 
 	return convert_to_JSON(votes)
+
+
+###################
+# TWILIO RESPONSE #
+###################
+@app.route("/twilio", methods=["GET", "POST"])
+def twilio_response():
+	# # Respond to an incoming text message with a static response
+	resp = twilio.twiml.Response()
+
+	message = "Find it in San Francisco at http://18617ef1.ngrok.com/"
+	new_message = ""
+
+	# get user input
+	user_input = request.values.get("Body")
+
+	attractions = model.session.query(model.Attraction).all()
+	for attraction in attractions:
+
+		print str(user_input)
+		print str(user_input).lower()
+
+		print str(attraction.name)
+		print str(attraction.name).lower
+
+		# did user request a known attraction?
+		if str(user_input).lower() == str(attraction.name).lower():
+			
+			# check if that attraction has a checkin
+			if attraction.checkin_id:
+
+				# get the checkin
+				checkin = model.session.query(model.Checkin).get(attraction.checkin_id)
+
+				# check how old timestamp is
+				time_diff = datetime.now() - checkin.timestamp
+				# older than a day?
+				if time_diff.days >= 1:
+					time_ago = "more than 1 day ago"
+				# older than 6 hours?
+				elif time_diff.seconds >= 21600:
+					time_ago = "more than 6 hours ago"
+				# older than 3 hours?
+				elif time_diff.seconds >= 10800:
+					time_ago = "more than 3 hours ago"
+				# older than 1 hour?
+				elif time_diff.seconds >= 3600:
+					time_ago = "more than 1 hour ago"
+				elif time_diff.seconds >= 1800:
+					time_ago = "more than 30 minutes ago"
+				else:
+					time_ago = "less than 30 minutes ago"
+
+				new_message = "{0} was last checked in {1}".format(attraction.name,time_ago)
+				new_message += " at http://maps.google.com/maps/place/{0},{1} \n\n".format(checkin.lat,checkin.lng)
+
+				print new_message
+
+	response_message = new_message + message
+
+	resp.message(response_message)
+
+	return str(resp)
+
+	# map link
+	# http://maps.google.com/maps/place/{0},{1}.format(lat,lng)
+
+	pass
 
 
 

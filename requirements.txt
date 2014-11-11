@@ -3,4 +3,12 @@ Flask-SQLAlchemy==0.16
 Flask-WTF==0.8
 SQLAlchemy==0.7.9
 Jinja2==2.7.3
+MarkupSafe==0.23
+Werkzeug==0.9.6
+httplib2==0.9
+itsdangerous==0.24
+six==1.8.0
+twilio==3.6.8
+unittest2==0.5.1
+wsgiref==0.1.2
 rauth
