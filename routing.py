@@ -197,6 +197,15 @@ def get_markers():
 			else:
 				timeout = False
 
+			# Check if attraction checkin has a really bad rating
+			if checkin.downvotes > checkin.upvotes: # COMPARISON VALUES TO CHANGE
+				bad_rating = True
+				# if calculated rating is below a certain point:
+					# bad_rating = True;
+			else:
+				bad_rating = False;
+			
+
 			attraction_list.append({"id": attraction.id, 
 									"name": attraction.name,
 									"lat": checkin.lat,
@@ -204,7 +213,8 @@ def get_markers():
 									"timestamp": dump_datetime(checkin.timestamp),
 									"timeout": timeout,
 									"checkin_id": checkin.id,
-									"type": attraction.att_type
+									"type": attraction.att_type,
+									"bad_rating": bad_rating
 									})
 	if attraction_list == []:
 		return convert_to_JSON("noMarkers")

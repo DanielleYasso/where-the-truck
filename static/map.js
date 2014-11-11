@@ -125,13 +125,28 @@ function addMarkers(map, markers) {
 
 		var iconType = markerObject["type"];
 
-		// this WILL be user-determined
+		// Show old checkins on the map?
 		var showOld;
 		if ($("#showOldCheckins").is(":checked")) {
 			showOld = true;
 		}
 		else {
 			showOld = false;
+		}
+
+		// Show checkins with established bad ratings on the map?
+		var showBad;
+		if ($("#showBadRatings").is(":checked")) {
+			showBad = true;
+		}
+		else {
+			showBad = false;
+		}
+
+		// Don't show a marker with bad ratings if user doesn't want to see them
+		var badRating = markerObject["bad_rating"];
+		if (badRating && !showBad) {
+			continue; // don't add the poorly rated checkin to the markersArray
 		}
 		 
 		var timeout = markerObject["timeout"];
@@ -400,6 +415,16 @@ function addMarkers(map, markers) {
 				}
 				else {
 					showOld = false;
+					initialize();
+				}
+			}
+			else if (this.id == "showBadRatings") {
+				if ($(this).is(":checked")) {
+					showBad = true;
+					initialize();
+				}
+				else {
+					showBad = false;
 					initialize();
 				}
 			}
