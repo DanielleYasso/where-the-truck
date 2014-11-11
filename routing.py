@@ -481,6 +481,7 @@ def get_votes(checkin_id):
 ###################
 # TWILIO RESPONSE #
 ###################
+
 @app.route("/twilio", methods=["GET", "POST"])
 def twilio_response():
 	# # Respond to an incoming text message with a static response
@@ -494,12 +495,6 @@ def twilio_response():
 
 	attractions = model.session.query(model.Attraction).all()
 	for attraction in attractions:
-
-		print str(user_input)
-		print str(user_input).lower()
-
-		print str(attraction.name)
-		print str(attraction.name).lower
 
 		# did user request a known attraction?
 		if str(user_input).lower() == str(attraction.name).lower():

@@ -119,7 +119,7 @@ Advanced User Features:
 		- Natural language processing… otherwise could have one attraction with several different names…
 
 Twilio
-	- Allow a person to text the name of an attraction and get a message back with a google map link showing the most recent check-in for that
+[X]	- Allow a person to text the name of an attraction and get a message back with a google map link showing the most recent check-in for that
 
 Foursquare
 	- Allows a user to checkin to foursquare for that attraction/location
