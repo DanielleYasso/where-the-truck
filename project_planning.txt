@@ -112,7 +112,7 @@ Map specific:
 Advanced User Features:
 [X]	- Save a user’s preferences
 [X]		- only show certain attractions
-		- only show certain ratings
+[X]		- only show good ratings
 	- Allow a user to create a new attraction to check-in
 		- Natural language processing… otherwise could have one attraction with several different names…
 
