@@ -402,6 +402,9 @@ function addMarkers(map, markers) {
 						yelp_ratings = "<tr><td>"
 									+ "<img src='" + ratings_img + "'>"
 									+ ratings_count
+									+ "<a href='" + yelp_url + "' target='_blank'>"
+									+ "<img src='http://s3-media1.fl.yelpcdn.com/assets/2/www/img/14f29ad24935/map/miniMapLogo.png'>"
+									+ "</a>"
 									+ "</td></tr>";
 					}
 

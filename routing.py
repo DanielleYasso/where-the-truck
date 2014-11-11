@@ -221,7 +221,7 @@ def get_markers():
 		if attraction.biz_id:
 			ratings_data = get_yelp_ratings(attraction.biz_id)
 
-			ratings_img = str(ratings_data["rating_img_url"])
+			ratings_img = str(ratings_data["rating_img_url_small"])
 			ratings_count = str(ratings_data["review_count"])
 			url = "http://www.yelp.com/biz/{0}".format(attraction.biz_id)
 		else:
