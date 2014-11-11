@@ -1,9 +1,11 @@
 from flask import Flask, render_template, redirect, request, session, g, make_response
 import os
-import model
 import json
 from passlib.hash import pbkdf2_sha256
 from datetime import datetime
+import rauth
+
+import model
 
 app = Flask(__name__)
 
@@ -44,6 +46,30 @@ def dump_datetime(value):
     return [value.strftime("%Y-%m-%d"), value.strftime("%H:%M:%S")]
 
 ###### END JSON ######
+
+###### YELP ######
+def get_yelp_ratings(business_id):
+	# OAuth credentials
+	CONSUMER_KEY = os.environ.get('YELP_CONSUMER_KEY')
+	CONSUMER_SECRET = os.environ.get('YELP_CONSUMER_SECRET')
+	TOKEN = os.environ.get('YELP_TOKEN')
+	TOKEN_SECRET = os.environ.get('YELP_TOKEN_SECRET')
+
+	session = rauth.OAuth1Session(
+		consumer_key = CONSUMER_KEY,
+		consumer_secret = CONSUMER_SECRET,
+		access_token = TOKEN,
+		access_token_secret = TOKEN_SECRET)
+
+	url = "http://api.yelp.com/v2/business/{0}".format(business_id)
+
+	request = session.get(url)
+
+	# transform json api response into dictionary
+	data = request.json()
+	session.close()
+
+	return data
 
 
 ###############

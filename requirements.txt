@@ -3,3 +3,4 @@ Flask-SQLAlchemy==0.16
 Flask-WTF==0.8
 SQLAlchemy==0.7.9
 Jinja2==2.7.3
+rauth
