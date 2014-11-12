@@ -547,6 +547,7 @@ function loginToRate() {
 var directionsDisplay;
 var directionsService = new google.maps.DirectionsService();
 var map;
+var startMarker;
 
 function getDirections(toLat,toLng) {
 
@@ -582,6 +583,15 @@ function getDirections(toLat,toLng) {
 					
 				}
 			});
+
+			startMarker = new google.maps.Marker({
+				position: fromLatLng,
+				map: map,
+				title: "You are here",
+				animation: google.maps.Animation.DROP
+			});
+
+			startMarker.setMap(map);
 			
 	  		
 
@@ -643,7 +653,7 @@ function initialize() {
 	// create the map object
 	map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
 
-
+	directionsDisplay.setOptions({suppressMarkers: true});
 	directionsDisplay.setMap(map);
 	directionsDisplay.setPanel(document.getElementById("directions-div"));
 
