@@ -111,6 +111,7 @@ Map specific:
 	- Limit map to show only San Francisco
 [X]		- Keep map always default centered on San Francisco
 [X]	- Directions: Get distances/times/routes to attractions based on current location
+[X]	- Prevent food truck checkins in the ocean
 
 Advanced User Features:
 [X]	- Save a user’s preferences

@@ -89,14 +89,14 @@
 
 						<!-- user has checked this attraction -->
 						{% if g.user.preferences[attraction.id] %}
-							<input type="checkbox" id="{{attraction.id}}" name="attractionsDisplayed" value="{{attraction.id}}" checked>{{attraction.name}}<br>
+							<input type="checkbox" id="{{attraction.id}}" name="attractionsDisplayed" value="{{attraction.id}}" checked><a href="#" onclick="markerFocus({{attraction.id}})">{{attraction.name}}</a><br>
 						{% else %}
 							<input type="checkbox" id="{{attraction.id}}" name="attractionsDisplayed" value="{{attraction.id}}">{{attraction.name}}<br>
 						{% endif %}
 
 				<!-- no user or user has no preferences -->
 				{% else %}  
-					<input type="checkbox" id="{{attraction.id}}" name="attractionsDisplayed" value="{{attraction.id}}" checked>{{attraction.name}}<br>
+					<input type="checkbox" id="{{attraction.id}}" name="attractionsDisplayed" value="{{attraction.id}}" checked><a href="#" class="attractionFocus" id="{{attraction.name}}">{{attraction.name}}</a><br>
 				{% endif %}
 
 			{% endfor %}
@@ -154,6 +154,7 @@
 
 	<script src="https://maps.googleapis.com/maps/api/js?key={{API_KEY}}&libraries=places"></script>
 	
+	<!-- Custom JS files -->
 	<script src="static/map.js"></script>
 	<script src="static/login.js"></script>
 

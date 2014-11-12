@@ -262,6 +262,20 @@ function addMarkers(map, markers) {
 		// MARKER EVENTS //
 		///////////////////
 
+		$(".attractionFocus").click( function(evt) {
+			var name = $(this).attr("id");
+			for (var i = 0; i < markersArray.length; i++) {
+				marker = markersArray[i];
+				if (marker.get("name") == name) {
+					marker.setAnimation(google.maps.Animation.BOUNCE);	
+					break;
+				}			
+			}
+			marker.setAnimation(null);
+			map.setCenter(marker.getPosition());
+
+		});
+
 		// Drag event
 		google.maps.event.addListener(
 			marker,
@@ -657,21 +671,16 @@ function getDirections(toLat,toLng) {
 
 // Creates the map to show on the page
 function initialize() {
-	// latList = typeof latList !== 'undefined' ? latList : false;
 
-	// if (!latList) {
-		var fromLatLng = new google.maps.LatLng(37.7833,-122.4167);
-	// }
-	// else {
-	// 	var fromLatLng = new google.maps.LatLng(latList[0], latList[1]);
-	// }
+	var startLatLng = new google.maps.LatLng(37.7796292,-122.4324726);
+
 	directionsDisplay = new google.maps.DirectionsRenderer();
 
 
 	var mapOptions = {
 		// start on San Francisco
-		center: fromLatLng,
-		zoom: 12
+		center: startLatLng,
+		zoom: 13
 	};
 
 	// detect browser type
