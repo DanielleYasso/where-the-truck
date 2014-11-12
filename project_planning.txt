@@ -100,7 +100,7 @@ Timeouts:
 Selecting what to display:
 [X]	- Create in-browser options to display or not display locations for specific attractions
 [X]	- Allow users to select whether they see timed-out checkins
-	- Create search so users can find specific attractions
+[X]	- Allow users to find specific attractions on the map
 [X]	- Option to only display check-ins with ratings above X
 [X]		- Option to display all ratings, even bad ratings (normally hidden)
 		- Option to show/hide PREDICTED bad checkins - based off user ratings

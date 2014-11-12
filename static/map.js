@@ -6,7 +6,9 @@ $(document).ready(function() {
 	$("#checkinButton").click(
 		function(evt) {
 			var attraction_id = $("#attraction_id").val();
-			getGeolocation(attraction_id);
+			if (attraction_id != "") {
+				getGeolocation(attraction_id);
+			}
 		}
 	);
 });
@@ -57,6 +59,7 @@ function isValidCheckin(attraction_id, lat,lng) {
 	var latLng = new google.maps.LatLng(lat, lng);
 
 	// user geonames
+	// to use https, must pay for service
 	$.getJSON("http://api.geonames.org/oceanJSON", {
 		lat: lat,
 		lng: lng,
@@ -65,10 +68,12 @@ function isValidCheckin(attraction_id, lat,lng) {
 	}, function(result) {
 		if (!result.ocean) {
 			setCheckin(attraction_id, lat, lng);
+			return;
 		}
 		else {
 			alert("Is this truck a boat? Because you're putting it in the " + result.ocean.name);
 			initialize();
+			return;
 		}
 
 	});
@@ -262,6 +267,7 @@ function addMarkers(map, markers) {
 		// MARKER EVENTS //
 		///////////////////
 
+		// Focus on an attraction when it's name is clicked in the checkbox area
 		$(".attractionFocus").click( function(evt) {
 			var name = $(this).attr("id");
 			for (var i = 0; i < markersArray.length; i++) {

@@ -70,6 +70,9 @@
 	<div id="checkinBox">
 		<form id="checkinForm">
 			<select name="attraction_id" id="attraction_id">
+				
+				<option value="">-- Select one --</option>
+
 				{% for attraction in attractions %}
 				<option value="{{ attraction.id }}">{{ attraction.name }}</option>
 				{% endfor %}
@@ -152,7 +155,7 @@
 
 	<script src="static/jquery-1.11.0.min.js"></script>
 
-	<script src="https://maps.googleapis.com/maps/api/js?key={{API_KEY}}&libraries=places"></script>
+	<script src="http://maps.googleapis.com/maps/api/js?key={{API_KEY}}&libraries=places"></script>
 	
 	<!-- Custom JS files -->
 	<script src="static/map.js"></script>
