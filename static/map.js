@@ -60,23 +60,42 @@ function isValidCheckin(attraction_id, lat,lng) {
 
 	// user geonames
 	// to use https, must pay for service
-	$.getJSON("http://api.geonames.org/oceanJSON", {
+	// $.getJSON("http://api.geonames.org/oceanJSON", {
+	// 	lat: lat,
+	// 	lng: lng,
+	// 	username: "dbyasso",
+	// 	type: "JSON"
+
+		
+	// }, function(result) {
+	// 		if (!result.ocean) {
+	// 			setCheckin(attraction_id, lat, lng);
+	// 		}
+	// 		else {
+	// 			alert("Is this truck a boat? Because you're putting it in the " + result.ocean.name);
+	// 			initialize();
+	// 		}
+	// });
+
+$.getJSON("http://api.geonames.org/oceanJSON", {
 		lat: lat,
 		lng: lng,
 		username: "dbyasso",
-		type: "JSON"
-	}, function(result) {
-		if (!result.ocean) {
-			setCheckin(attraction_id, lat, lng);
-			return;
-		}
-		else {
-			alert("Is this truck a boat? Because you're putting it in the " + result.ocean.name);
-			initialize();
-			return;
-		}
+		type: "JSON",
+		}).fail( function() { alert("Can't use this with https... unless you pay geonames.");
+		}).done( function(result) {
+			if (!result.ocean) {
+				setCheckin(attraction_id, lat, lng);
+			}
+			else {
+				alert("Is this truck a boat? Because you're putting it in the " + result.ocean.name);
+				initialize();
+			}
+		});
 
-	});
+		
+	 
+	// });
 
 }
 
