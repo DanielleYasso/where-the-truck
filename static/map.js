@@ -455,7 +455,7 @@ function addMarkers(map, markers) {
 									+ "</td></tr>"
 
 									+ "<tr><td colspan='3'>"
-									+ "Directions:<select id='transportMode' onchange='getDirections(" + latLngList + ")'>"
+									+ "Get directions:<select id='transportMode' onchange='getDirections(" + latLngList + ")'>"
 									+ "<option value=''>--</option>"
 									+ "<option value='DRIVING'>Drive</option>"
 									+ "<option value='WALKING'>Walk</option>"
@@ -547,9 +547,14 @@ function loginToRate() {
 var directionsDisplay;
 var directionsService = new google.maps.DirectionsService();
 var map;
-var startMarker;
+var startMarkerArray = [];
 
 function getDirections(toLat,toLng) {
+
+	if (startMarkerArray.length >= 1) {
+		startMarkerArray[0].setMap(null);
+		startMarkerArray = [];
+	}
 
 	var selectedMode = document.getElementById("transportMode").value; 
 	if (!selectedMode) {
@@ -591,10 +596,13 @@ function getDirections(toLat,toLng) {
 				animation: google.maps.Animation.DROP
 			});
 
+			startMarkerArray.push(startMarker);
 			startMarker.setMap(map);
-			
-	  		
 
+			if ($("#directionsWrapper").hasClass("hidden")) {
+				$("#directionsWrapper").removeClass("hidden");
+			}
+			
 		}, function() {
 	  		// error: no position returned
 	  		handleNoGeolocation(browserSupportFlag);
@@ -615,6 +623,8 @@ function getDirections(toLat,toLng) {
 		}
 	}
 }
+
+
 
 
 
@@ -655,8 +665,20 @@ function initialize() {
 
 	directionsDisplay.setOptions({suppressMarkers: true});
 	directionsDisplay.setMap(map);
-	directionsDisplay.setPanel(document.getElementById("directions-div"));
+	directionsDisplay.setPanel(document.getElementById("directionsDiv"));
 
+	$("#closeDirections").click( function(evt) {
+		directionsDisplay.setMap(null);
+
+		if (!$("#directionsWrapper").hasClass("hidden")) {
+			$("#directionsWrapper").addClass("hidden");
+		}
+
+		if (startMarkerArray.length >= 1) {
+			startMarkerArray[0].setMap(null);
+			startMarkerArray = [];
+		}
+	});
 
 	getMarkers(map);
 
