@@ -455,6 +455,7 @@ function addMarkers(map, markers) {
 									+ "</td></tr>"
 
 									+ "<tr><td colspan='3'>"
+									+ "<span style='margin-right: 1px'>"
 									+ "Get directions:<select id='transportMode' onchange='getDirections(" + latLngList + ")'>"
 									+ "<option value=''>--</option>"
 									+ "<option value='DRIVING'>Drive</option>"
@@ -462,6 +463,7 @@ function addMarkers(map, markers) {
 									+ "<option value='BICYCLING'>Bicycling</option>"
 									+ "<option value='TRANSIT'>Transit</option>"
 									+ "</select>"
+									+ "</span>"
 
 
 									+ "</table>";
@@ -626,8 +628,6 @@ function getDirections(toLat,toLng) {
 
 
 
-
-
 // Creates the map to show on the page
 function initialize() {
 	// latList = typeof latList !== 'undefined' ? latList : false;
@@ -654,7 +654,7 @@ function initialize() {
 	// set map size for mobile vs desktop
 	if (useragent.indexOf('iPhone') != -1 || useragent.indexOf('Android') != -1 ) {
 		mapdiv.style.width = '100%';
-		mapdiv.style.height = '100%';
+		mapdiv.style.height = '85%';
 	} else {
 		mapdiv.style.width = '600px';
 		mapdiv.style.height = '800px';
@@ -666,6 +666,9 @@ function initialize() {
 	directionsDisplay.setOptions({suppressMarkers: true});
 	directionsDisplay.setMap(map);
 	directionsDisplay.setPanel(document.getElementById("directionsDiv"));
+
+
+	// CLOSE DIRECTIONS
 
 	$("#closeDirections").click( function(evt) {
 		directionsDisplay.setMap(null);
