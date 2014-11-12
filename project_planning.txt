@@ -110,7 +110,7 @@ Map specific:
 [X]		- truck icon for food trucks
 	- Limit map to show only San Francisco
 [X]		- Keep map always default centered on San Francisco
-	- Get distances/times/routes to attractions based on current location
+[X]	- Directions: Get distances/times/routes to attractions based on current location
 
 Advanced User Features:
 [X]	- Save a user’s preferences
