@@ -456,11 +456,11 @@ function addMarkers(map, markers) {
 
 									+ "<tr><td colspan='3'>"
 									+ "<span style='margin-right: 1px'>"
-									+ "Get directions:<select id='transportMode' onchange='getDirections(" + latLngList + ")'>"
+									+ "Get directions: <select id='transportMode' onchange='getDirections(" + latLngList + ")'>"
 									+ "<option value=''>--</option>"
 									+ "<option value='DRIVING'>Drive</option>"
 									+ "<option value='WALKING'>Walk</option>"
-									+ "<option value='BICYCLING'>Bicycling</option>"
+									+ "<option value='BICYCLING'>Bicycle</option>"
 									+ "<option value='TRANSIT'>Transit</option>"
 									+ "</select>"
 									+ "</span>"
@@ -657,7 +657,7 @@ function initialize() {
 		mapdiv.style.height = '85%';
 	} else {
 		mapdiv.style.width = '600px';
-		mapdiv.style.height = '800px';
+		mapdiv.style.height = '600px';
 	}
 
 	// create the map object
