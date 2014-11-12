@@ -49,7 +49,7 @@ def dump_datetime(value):
 
 ###### END JSON ######
 
-###### YELP API ######
+###### YELP API FUNCTION CALL ######
 def get_yelp_ratings(business_id):
 	# OAuth credentials
 	CONSUMER_KEY = os.environ.get('YELP_CONSUMER_KEY')
@@ -72,7 +72,7 @@ def get_yelp_ratings(business_id):
 	session.close()
 
 	return data
-###### END YELP API ######
+###### END YELP API FUNCTION CALL ######
 
 
 ###############
@@ -534,11 +534,6 @@ def twilio_response():
 	resp.message(response_message)
 
 	return str(resp)
-
-	# map link
-	# http://maps.google.com/maps/place/{0},{1}.format(lat,lng)
-
-	pass
 
 
 

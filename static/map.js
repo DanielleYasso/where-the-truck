@@ -1,5 +1,5 @@
 // load the map
-google.maps.event.addDomListener(window, "load", initialize);
+google.maps.event.addDomListener(window, "load", initialize());
 
 $(document).ready(function() {
 	// on click, get user's geolocation
@@ -221,6 +221,8 @@ function addMarkers(map, markers) {
 		marker.set("name", markerObject["name"]);
 		marker.set("time", markerObject["timestamp"]);
 		marker.set("checkin_id", markerObject["checkin_id"]);
+		marker.set("lat", markerObject["lat"]);
+		marker.set("lng", markerObject["lng"]);
 
 		// set Yelp data, if available
 		if (markerObject["ratings_img"]) {
@@ -280,6 +282,8 @@ function addMarkers(map, markers) {
 				var ratings_img = this.get("ratings_img");
 				var ratings_count = this.get("ratings_count");
 				var yelp_url = this.get("url");
+
+				var latLngList = [this.get("lat"),this.get("lng")];
 
 				marker = this;
 
@@ -450,6 +454,16 @@ function addMarkers(map, markers) {
 									+ "</span>"
 									+ "</td></tr>"
 
+									+ "<tr><td colspan='3'>"
+									+ "Directions:<select id='transportMode' onchange='getDirections(" + latLngList + ")'>"
+									+ "<option value=''>--</option>"
+									+ "<option value='DRIVING'>Drive</option>"
+									+ "<option value='WALKING'>Walk</option>"
+									+ "<option value='BICYCLING'>Bicycling</option>"
+									+ "<option value='TRANSIT'>Transit</option>"
+									+ "</select>"
+
+
 									+ "</table>";
 
 									
@@ -469,6 +483,7 @@ function addMarkers(map, markers) {
 						
 					
 			}); // end of info window click event
+
 
 	} // end of for loop for markers
 
@@ -529,11 +544,86 @@ function loginToRate() {
 	alert("Signup or login to rate this checkin.");
 }
 
+var directionsDisplay;
+var directionsService = new google.maps.DirectionsService();
+var map;
+
+function getDirections(toLat,toLng) {
+
+	var selectedMode = document.getElementById("transportMode").value; 
+	if (!selectedMode) {
+		return;
+	}
+	var toLatLng = new google.maps.LatLng(toLat, toLng);
+
+	var browserSupportFlag = new Boolean();
+
+	// Try W3C Geolocation (Preferred)
+	if(navigator.geolocation) {
+		browserSupportFlag = true;
+		navigator.geolocation.getCurrentPosition(function(position) {
+	  		var lat = position.coords.latitude;
+	  		var lng = position.coords.longitude;
+
+	  		var fromLatLng = new google.maps.LatLng(lat, lng);
+
+			
+
+			var request = {
+				origin: fromLatLng,
+				destination: toLatLng,
+				travelMode: google.maps.TravelMode[selectedMode]
+				
+			};
+
+			directionsService.route(request, function(response, status) {
+				if (status == google.maps.DirectionsStatus.OK) {
+					directionsDisplay.setDirections(response);
+					
+				}
+			});
+			
+	  		
+
+		}, function() {
+	  		// error: no position returned
+	  		handleNoGeolocation(browserSupportFlag);
+		});
+	}
+	// Browser doesn't support Geolocation
+	else {
+		browserSupportFlag = false;
+		handleNoGeolocation(browserSupportFlag);
+		return null;
+	}
+
+	function handleNoGeolocation(errorFlag) {
+		if (errorFlag) {
+			alert("Error: Geolocation service failed.");
+		} else {
+			alert("Error: Your browser doesn't support geolocation.");
+		}
+	}
+}
+
+
+
 // Creates the map to show on the page
 function initialize() {
+	// latList = typeof latList !== 'undefined' ? latList : false;
+
+	// if (!latList) {
+		var fromLatLng = new google.maps.LatLng(37.7833,-122.4167);
+	// }
+	// else {
+	// 	var fromLatLng = new google.maps.LatLng(latList[0], latList[1]);
+	// }
+	directionsDisplay = new google.maps.DirectionsRenderer();
+
+
 	var mapOptions = {
 		// start on San Francisco
-		center: { lat: 37.7833, lng: -122.4167 },
+		center: fromLatLng,
 		zoom: 13
 	};
 
@@ -551,7 +641,12 @@ function initialize() {
 	}
 
 	// create the map object
-	var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+	map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+
+
+	directionsDisplay.setMap(map);
+	directionsDisplay.setPanel(document.getElementById("directions-div"));
+
 
 	getMarkers(map);
 
