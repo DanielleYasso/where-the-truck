@@ -56,46 +56,24 @@ function getGeolocation(attraction_id) {
 
 function isValidCheckin(attraction_id, lat,lng) {
 
-	var latLng = new google.maps.LatLng(lat, lng);
-
-	// user geonames
-	// to use https, must pay for service
-	// $.getJSON("http://api.geonames.org/oceanJSON", {
-	// 	lat: lat,
-	// 	lng: lng,
-	// 	username: "dbyasso",
-	// 	type: "JSON"
-
-		
-	// }, function(result) {
-	// 		if (!result.ocean) {
-	// 			setCheckin(attraction_id, lat, lng);
-	// 		}
-	// 		else {
-	// 			alert("Is this truck a boat? Because you're putting it in the " + result.ocean.name);
-	// 			initialize();
-	// 		}
-	// });
-
-$.getJSON("http://api.geonames.org/oceanJSON", {
-		lat: lat,
-		lng: lng,
-		username: "dbyasso",
-		type: "JSON",
-		}).fail( function() { alert("Can't use this with https... unless you pay geonames.");
-		}).done( function(result) {
-			if (!result.ocean) {
+	$.get(
+		"/api/geonames",
+		{
+			"lat": lat,
+			"lng": lng
+		},
+		function(result) {
+			console.log(result);
+			if (!result["ocean"]) {
 				setCheckin(attraction_id, lat, lng);
 			}
 			else {
 				alert("Is this truck a boat? Because you're putting it in the " + result.ocean.name);
 				initialize();
 			}
-		});
+		}
+		);
 
-		
-	 
-	// });
 
 }
 
@@ -140,6 +118,8 @@ function getMarkers(map) {
 		});
 }
 
+
+
 // Gets all current checkin markers and puts them on the map
 function addMarkers(map, markers) {
 	// initialize dictionary of checked markers, key = id, value = true or false
@@ -157,6 +137,8 @@ function addMarkers(map, markers) {
 
 	// create array to hold all markers
 	var markersArray = [];
+	// reset array to empty
+	// markersArray = [];
 
 	// only show on map if checkbox is selected
 	function setOrDeleteMarkers() {
@@ -293,12 +275,12 @@ function addMarkers(map, markers) {
 				marker = markersArray[i];
 				if (marker.get("name") == name) {
 					marker.setAnimation(google.maps.Animation.BOUNCE);	
-					break;
-				}			
+					
+				}
+				marker.setAnimation(null);
 			}
-			marker.setAnimation(null);
-			map.setCenter(marker.getPosition());
-
+			map.setCenter(marker.getPosition());			
+			
 		});
 
 		// Drag event

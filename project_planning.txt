@@ -104,7 +104,7 @@ Selecting what to display:
 [X]	- Option to only display check-ins with ratings above X
 [X]		- Option to display all ratings, even bad ratings (normally hidden)
 		- Option to show/hide PREDICTED bad checkins - based off user ratings
-	- Clicking on an attraction name in the checkbox area makes its marker on the map bounce or something
+[X]	- Clicking on an attraction name in the checkbox area makes its marker on the map bounce or something
 Map specific:
 	- Custom icons for different marker types
 [X]		- truck icon for food trucks

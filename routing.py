@@ -1,20 +1,42 @@
 from flask import Flask, render_template, redirect, request, session, g, make_response
+from flask.ext.cors import CORS, cross_origin
 import os
 import json
 from passlib.hash import pbkdf2_sha256
 from datetime import datetime
 import rauth
 
+import requests
+
+
 import model
 
 import twilio.twiml
 
 app = Flask(__name__)
+cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 SECRET_KEY = os.environ.get('SECRET_KEY')
 app.secret_key = SECRET_KEY
 
 API_KEY = os.environ.get('API_KEY')
+	
+
+@app.route("/api/geonames")
+def api_geonames():
+
+	lat = request.args.get("lat")
+	lng = request.args.get("lng")
+
+	url = "http://api.geonames.org/oceanJSON?lat={0}&lng={1}&username=dbyasso".format(lat,lng)
+
+	r = requests.get(url)
+
+	print r.text
+
+	response = json.loads(r.text)
+
+	return convert_to_JSON(response)
 
 
 @app.before_request
@@ -73,6 +95,7 @@ def get_yelp_ratings(business_id):
 
 	return data
 ###### END YELP API FUNCTION CALL ######
+
 
 
 ###############
