@@ -22,21 +22,6 @@ app.secret_key = SECRET_KEY
 API_KEY = os.environ.get('API_KEY')
 	
 
-@app.route("/api/geonames")
-def api_geonames():
-
-	lat = request.args.get("lat")
-	lng = request.args.get("lng")
-
-	url = "http://api.geonames.org/oceanJSON?lat={0}&lng={1}&username=dbyasso".format(lat,lng)
-
-	r = requests.get(url)
-
-	print r.text
-
-	response = json.loads(r.text)
-
-	return convert_to_JSON(response)
 
 
 @app.before_request
@@ -95,6 +80,24 @@ def get_yelp_ratings(business_id):
 
 	return data
 ###### END YELP API FUNCTION CALL ######
+
+
+
+######## CORS (CROSS-ORIGIN RESOURCE SHARING) API CALLS ########
+@app.route("/api/geonames")
+def api_geonames():
+
+	lat = request.args.get("lat")
+	lng = request.args.get("lng")
+
+	url = "http://api.geonames.org/oceanJSON?lat={0}&lng={1}&username=dbyasso".format(lat,lng)
+
+	r = requests.get(url)
+
+	response = json.loads(r.text)
+
+	return convert_to_JSON(response)
+######## END CORS API CALLS ########
 
 
 
@@ -282,11 +285,17 @@ def get_markers():
 				# if calculated_rating is below a certain number:
 					# bad_rating = True;
 
+				# if it has a bad rating: store its last good user checkin_id in new column
+
 			# made by logged in user?
 			if checkin.user_id != None:
 				non_user_checkin = False
 			else:
 				non_user_checkin = True
+
+				# if made by non-user, store last good user checkin in new column
+					#last_user_checkin
+					# or just send info for the last good user checkin (will require another db query though)
 
 			attraction_list.append({"id": attraction.id, 
 									"name": attraction.name,

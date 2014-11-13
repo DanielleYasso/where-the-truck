@@ -15,11 +15,27 @@ html, body {
 	padding: 0;
 }
 
+.hidden {
+	display: none;
+}
+
+/****************************
+
+		NAVIGATION BAR
+
+****************************/
+
 #nav {
 	width: 100%;
 	min-height: 25px;
 	text-align: right;
 }
+
+/****************************
+
+	LOGIN AND SIGNUP FORMS
+
+****************************/
 
 #loginFormDiv, #signupFormDiv {
 	display: none;
@@ -37,6 +53,16 @@ html, body {
 	display: block;
 }
 
+
+#rememberMeLogin {
+	display: inline-block!important;
+}
+.rememberMe {
+	font-size: small;
+	display: inline-block;
+}
+
+
 .closeButton {
 	 text-align: right;
 	 display: block;
@@ -51,15 +77,18 @@ html, body {
 	vertical-align: top;
 }
 
-.hidden {
-	display: none;
-}
-
 #signupErrorMessage, #loginErrorMessage {
 	color: red;
 	font-size: small;
 	padding-top: 5px;
 }
+
+
+/****************************
+
+		RATING ARROWS
+
+****************************/
 
 #upArrow a:link, #upArrow a:visited {
 	color: black;
