@@ -1,4 +1,5 @@
-from flask import Flask, render_template, redirect, request, session, g, make_response
+from flask import Flask, render_template, redirect, request
+from flask import session, g, make_response, flash
 from flask_mail import Mail, Message
 from flask.ext.cors import CORS, cross_origin
 import requests
@@ -162,15 +163,39 @@ def forgot_password():
 	
 	return render_template("forgot_password.html")
 
-@app.route("/recover_password")
+@app.route("/recover_password", methods=["POST"])
 def recover_password():
 
-	# test send message
-	msg = Message("hey there",
-					sender="dbyasso@gmail.com",
-					recipients=["dbyasso@gmail.com"])
+	# get user email from form
+	user_email = request.form.get("recoveryEmail")
+	print "***** user input", user_email
 
-	mail.send(msg)
+	# check if user email exists
+	user = model.session.query(model.User).filter_by(email=user_email).first()
+
+	if not user:
+		flash("No user found with that email address.")
+		return redirect("/forgot_password")
+
+	# user email exists
+	# generate crypto random secret key
+	# store key, current timestamp and user identifier
+	# send it to user email
+	# when user applies secret key - to url or special form:
+		# validate it (exists, not expired, not used before)
+		# get user id
+		# delete or mark as used current secret key
+		# provide logi to enter/generate new password
+			# form should require one-time user login key
+
+
+
+	# test send message
+	# msg = Message("hey there",
+	# 				sender="dbyasso@gmail.com",
+	# 				recipients=["dbyasso@gmail.com"])
+
+	# mail.send(msg)
 
 	return redirect("/")
 

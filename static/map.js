@@ -275,10 +275,11 @@ function addMarkers(map, markers) {
 				marker = markersArray[i];
 				if (marker.get("name") == name) {
 					marker.setAnimation(google.maps.Animation.BOUNCE);	
-					
+					break;
 				}
-				marker.setAnimation(null);
+				
 			}
+			marker.setAnimation(null);
 			map.setCenter(marker.getPosition());			
 			
 		});
