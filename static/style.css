@@ -15,9 +15,7 @@ html, body {
 	padding: 0;
 }
 
-.hidden {
-	display: none;
-}
+
 
 /****************************
 
@@ -62,6 +60,11 @@ html, body {
 	display: inline-block;
 }
 
+.forgotPassword {
+	font-size: small;
+	padding-top: 5px;
+}
+
 
 .closeButton {
 	 text-align: right;
@@ -98,6 +101,17 @@ html, body {
 #downArrow a:link, #downArrow a:visited {
 	color: black;
 	text-decoration: none;
+}
+
+
+/****************************
+
+		SPECIAL CLASSES
+
+****************************/
+
+.hidden {
+	display: none;
 }
 
 

@@ -1,24 +1,40 @@
 from flask import Flask, render_template, redirect, request, session, g, make_response
+from flask_mail import Mail, Message
 from flask.ext.cors import CORS, cross_origin
+import requests
 import os
 import json
 from passlib.hash import pbkdf2_sha256
 from datetime import datetime
 import rauth
-
-import requests
-
+import twilio.twiml
 
 import model
 
-import twilio.twiml
 
 app = Flask(__name__)
-cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 
+# Cross-origin resource sharing
+cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
+mail = Mail(app)
+
+# mail instance for Flask-Mail
+app.config.update(dict(
+	DEBUG=True,
+	# Email settings
+	MAIL_SERVER = 'smtp.gmail.com',
+	MAIL_PORT = 465,
+	MAIL_USE_SSL = True,
+	MAIL_USERNAME= 'dbyasso@gmail.com',
+	MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
+	))
+mail = Mail(app)
+
+# secret key for session
 SECRET_KEY = os.environ.get('SECRET_KEY')
 app.secret_key = SECRET_KEY
 
+# google maps api key
 API_KEY = os.environ.get('API_KEY')
 	
 
@@ -136,6 +152,27 @@ def login():
 	session["user_id"] = user.id
 
 	return ""
+
+####################
+# RECOVER PASSWORD #
+####################
+
+@app.route("/forgot_password")
+def forgot_password():
+	
+	return render_template("forgot_password.html")
+
+@app.route("/recover_password")
+def recover_password():
+
+	# test send message
+	msg = Message("hey there",
+					sender="dbyasso@gmail.com",
+					recipients=["dbyasso@gmail.com"])
+
+	mail.send(msg)
+
+	return redirect("/")
 
 
 ###############
