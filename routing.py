@@ -10,9 +10,12 @@ from datetime import datetime
 import rauth
 import twilio.twiml
 
-
 import model
 
+from flask.ext.login import LoginManager, login_user, logout_user, login_required, current_user
+
+
+# Create Flask app
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///checkins.db'
 
@@ -42,17 +45,18 @@ app.secret_key = SECRET_KEY
 
 # google maps api key
 API_KEY = os.environ.get('API_KEY')
+
+login_manager = LoginManager()
+login_manager.init_app(app)
 	
 
-
+@login_manager.user_loader
+def load_user(user_id):
+	return model.User.query.get(user_id)
 
 @app.before_request
 def check_login():
-	user_id = session.get("user_id")
-	if user_id:
-		g.user = model.db.session.query(model.User).get(user_id)
-	else:
-		g.user = None
+	g.user = current_user
 
 
 @app.route("/")
@@ -129,7 +133,9 @@ def api_geonames():
 
 @app.route("/logout")
 def logout():
-	session["user_id"] = None
+
+	logout_user()
+
 	return redirect("/")
 
 
@@ -143,6 +149,7 @@ def login():
 	# get email and password from form inputs
 	email = request.form.get("email")
 	password = request.form.get("password")
+	remember_me = request.form.get("rememberMeLogin")
 
 	# get user with that email address
 	user = model.db.session.query(model.User).filter_by(email=email).first()
@@ -155,9 +162,13 @@ def login():
 	if not pbkdf2_sha256.verify(password, user.password):
 		return convert_to_JSON("incorrect")
 
-	session["user_id"] = user.id
+	model.db.session.add(user)
+	model.db.session.commit()
+	login_user(user,remember=remember_me)
 
-	return ""
+	# session["user_id"] = user.id
+
+	return redirect("/")
 
 ####################
 # RECOVER PASSWORD #

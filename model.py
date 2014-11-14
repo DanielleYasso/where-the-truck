@@ -1,6 +1,6 @@
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import create_engine
-from sqlalchemy import Column, Integer, Float, String, DateTime, PickleType
+from sqlalchemy import Column, Integer, Float, String, DateTime, PickleType, Boolean
 from sqlalchemy import ForeignKey
 from sqlalchemy.ext.mutable import Mutable
 from sqlalchemy.orm import sessionmaker, relationship, backref, scoped_session
@@ -17,13 +17,6 @@ from flask.ext.sqlalchemy import SQLAlchemy
 from routing import app
 db = SQLAlchemy(app)
 
-
-# ENGINE = create_engine("sqlite:///checkins.db", echo=False)
-# session = scoped_session(sessionmaker(bind=ENGINE, autocommit = False, autoflush = False))
-
-# Base = declarative_base()
-# Base.query = session.query_property()
-# User.query(...)    session.query(User)
 
 
 ######################
@@ -136,6 +129,24 @@ class User(db.Model):
 
 	# define relationship with Role table
 	role = relationship("Role", backref=backref("users", order_by=id))
+
+	# functions for Flask-Login
+	def is_active(self):
+		"""True, as all users are active"""
+		return True
+
+	def get_id(self):
+		"""Return the email address to satisfy Flask-Login's requirements"""
+		return self.id 
+
+	def is_authenticated(self):
+		"""Return true"""
+		return True 
+
+	def is_anonymous(self):
+		"""False, as anonymous users aren't supported"""
+		return False
+
 
 	# Get average rating
 	def set_average_rating(self):

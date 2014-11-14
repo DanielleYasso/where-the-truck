@@ -639,11 +639,14 @@ function getDirections(toLat,toLng) {
 				}
 			});
 
+			// var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter_withshadow&chld=A|00FF00");
+
 			startMarker = new google.maps.Marker({
 				position: fromLatLng,
 				map: map,
 				title: "You are here",
 				animation: google.maps.Animation.DROP
+				// icon: pinImage
 			});
 
 			startMarkerArray.push(startMarker);
