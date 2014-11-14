@@ -277,7 +277,6 @@ function addMarkers(map, markers) {
 					marker.setAnimation(google.maps.Animation.BOUNCE);	
 					break;
 				}
-				
 			}
 			marker.setAnimation(null);
 			map.setCenter(marker.getPosition());			

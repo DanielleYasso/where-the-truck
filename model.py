@@ -8,11 +8,22 @@ from datetime import datetime
 
 from math import sqrt # for calculated_rating
 
-ENGINE = create_engine("sqlite:///checkins.db", echo=False)
-session = scoped_session(sessionmaker(bind=ENGINE, autocommit = False, autoflush = False))
+from flask.ext.sqlalchemy import SQLAlchemy
+# from flask.ext.security import Security, SQLAlchemyUserDatastore, UserMixin, RoleMixin, login_required
 
-Base = declarative_base()
-Base.query = session.query_property()
+
+
+## Create database connection object
+from routing import app
+db = SQLAlchemy(app)
+
+
+# ENGINE = create_engine("sqlite:///checkins.db", echo=False)
+# session = scoped_session(sessionmaker(bind=ENGINE, autocommit = False, autoflush = False))
+
+# Base = declarative_base()
+# Base.query = session.query_property()
+# User.query(...)    session.query(User)
 
 
 ######################
@@ -47,7 +58,7 @@ class MutableDict(Mutable, dict):
 ####################
 # ATTRACTION CLASS #
 
-class Attraction(Base):
+class Attraction(db.Model):
 	__tablename__ = "attractions"
 
 	id = Column(Integer, primary_key = True)
@@ -60,7 +71,7 @@ class Attraction(Base):
 #################
 # CHECKIN CLASS #
 
-class Checkin(Base):
+class Checkin(db.Model):
 	__tablename__ = "checkins"
 
 	id = Column(Integer, primary_key = True)
@@ -110,7 +121,7 @@ class Checkin(Base):
 ##############
 # USER CLASS #
 
-class User(Base):
+class User(db.Model):
 	__tablename__ = "users"
 
 	id = Column(Integer, primary_key = True)

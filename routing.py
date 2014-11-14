@@ -10,16 +10,22 @@ from datetime import datetime
 import rauth
 import twilio.twiml
 
+
 import model
 
+# from model import app
 
 app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///checkins.db'
+
+
 
 # Cross-origin resource sharing
 cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
+
 mail = Mail(app)
 
-# mail instance for Flask-Mail
+# update app config with mail data for Flask-Mail
 app.config.update(dict(
 	DEBUG=True,
 	# Email settings
@@ -29,6 +35,9 @@ app.config.update(dict(
 	MAIL_USERNAME= 'dbyasso@gmail.com',
 	MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
 	))
+
+
+# update Flask-Mail instance with new app config settings
 mail = Mail(app)
 
 # secret key for session
@@ -45,7 +54,7 @@ API_KEY = os.environ.get('API_KEY')
 def check_login():
 	user_id = session.get("user_id")
 	if user_id:
-		g.user = model.session.query(model.User).get(user_id)
+		g.user = model.db.session.query(model.User).get(user_id)
 	else:
 		g.user = None
 
@@ -53,7 +62,7 @@ def check_login():
 @app.route("/")
 def home():
 
-	attractions = model.session.query(model.Attraction).all()
+	attractions = model.db.session.query(model.Attraction).all()
 
 	return render_template("base.html", API_KEY=API_KEY, attractions=attractions)
 
@@ -140,7 +149,7 @@ def login():
 	password = request.form.get("password")
 
 	# get user with that email address
-	user = model.session.query(model.User).filter_by(email=email).first()
+	user = model.db.session.query(model.User).filter_by(email=email).first()
 
 	# check if user exists in database
 	if not user:
@@ -171,7 +180,7 @@ def recover_password():
 	print "***** user input", user_email
 
 	# check if user email exists
-	user = model.session.query(model.User).filter_by(email=user_email).first()
+	user = model.db.session.query(model.User).filter_by(email=user_email).first()
 
 	if not user:
 		flash("No user found with that email address.")
@@ -214,7 +223,7 @@ def signup():
 	print "**** signup ", username
 
 	# check that user email doesn't already exist in database
-	user = model.session.query(model.User).filter_by(email=email).first()
+	user = model.db.session.query(model.User).filter_by(email=email).first()
 	if user:
 		return convert_to_JSON("userExists")
 
@@ -223,12 +232,12 @@ def signup():
 
 	# add new user to database
 	new_user = model.User(username=username, email=email, password=password_hash)
-	model.session.add(new_user)
-	model.session.commit()
+	model.db.session.add(new_user)
+	model.db.session.commit()
 
 	# add default empty user preferences
 	new_user.preferences = {}
-	model.session.commit()
+	model.db.session.commit()
 
 	# add user to session --> LOGIN USER
 	session["user_id"] = new_user.id
@@ -256,10 +265,12 @@ def save_preferences():
 	for attraction in checked_attractions:
 		p[int(attraction)] = True
 
-	all_attractions = model.session.query(model.Attraction).all()
+	all_attractions = model.db.session.query(model.Attraction).all()
 	for attraction in all_attractions:
 		if not attraction.id in p:
 			p[attraction.id] = False
+
+	# p["show_old"] = show_old
 
 	if show_old:
 		p["show_old"] = True
@@ -284,7 +295,7 @@ def save_preferences():
 	if g.user:
 		g.user.preferences = p
 
-	model.session.commit()
+	model.db.session.commit()
 
 	print "g.user.preferences = ", g.user.preferences
 
@@ -299,7 +310,7 @@ def save_preferences():
 def get_markers():
 	"""Get's all of the attractions with checkins to be displayed as markers"""
 	# get all attractions that have checkins
-	attractions = model.session.query(model.Attraction).all()
+	attractions = model.db.session.query(model.Attraction).all()
 
 	if not attractions:
 		return convert_to_JSON("noMarkers")
@@ -320,7 +331,7 @@ def get_markers():
 			url = None
 
 		if attraction.checkin_id:
-			checkin = model.session.query(model.Checkin).get(attraction.checkin_id)
+			checkin = model.db.session.query(model.Checkin).get(attraction.checkin_id)
 			
 			# check how old timestamp is
 			time_diff = datetime.now() - checkin.timestamp
@@ -407,13 +418,13 @@ def checkin():
 		new_checkin = model.Checkin(attraction_id=attraction_id, 
 								lat=lat, 
 								lng=lng)
-	model.session.add(new_checkin)
-	model.session.commit()
+	model.db.session.add(new_checkin)
+	model.db.session.commit()
 
 	# Use checkin record to update attraction's checkin_id
 	attraction_rec = new_checkin.attraction
 	attraction_rec.checkin_id = new_checkin.id
-	model.session.commit()
+	model.db.session.commit()
 
  	return ""
 
@@ -441,7 +452,7 @@ def upvote(checkin_id):
 def update_vote(checkin_id, vote):
 	"""Gets a user's up or down vote and updates checkins table record"""
 	# get attraction's checkin
-	checkin = model.session.query(model.Checkin).get(checkin_id)
+	checkin = model.db.session.query(model.Checkin).get(checkin_id)
 	print g.user
 
 	# ONLY LOGGED IN USERS CAN VOTE --> taken care of in map.js
@@ -453,7 +464,7 @@ def update_vote(checkin_id, vote):
 
 		# add user to dictionary
 		checkin.users_who_rated[g.user.id] = vote
-		model.session.commit()
+		model.db.session.commit()
 
 		# increment vote
 		add_votes(checkin, vote)
@@ -467,7 +478,7 @@ def update_vote(checkin_id, vote):
 			
 			# add user vote to dictionary
 			checkin.users_who_rated[g.user.id] = vote
-			model.session.commit()
+			model.db.session.commit()
 
 			#increment vote
 			add_votes(checkin, vote)
@@ -484,7 +495,7 @@ def update_vote(checkin_id, vote):
 
 				# delete rating
 				checkin.users_who_rated[g.user.id] = 0
-				model.session.commit()
+				model.db.session.commit()
 
 				# decrement vote count
 				remove_votes(checkin, vote)
@@ -493,19 +504,19 @@ def update_vote(checkin_id, vote):
 	else:
 		# add user to dictionary
 		checkin.users_who_rated[g.user.id] = vote
-		model.session.commit()
+		model.db.session.commit()
 
 		# increment vote
 		add_votes(checkin, vote)
 
 	# update calculated rating
 	checkin.calculate_rating()
-	model.session.commit()
+	model.db.session.commit()
 
 	# update checkin user's rating based on new calculated rating
 	if checkin.user:
 		checkin.user.set_average_rating()
-		model.session.commit()
+		model.db.session.commit()
 
 	return redirect("/")
 
@@ -521,7 +532,7 @@ def remove_votes(checkin, vote):
 		checkin.downvotes -= 1
 
 	# commit changes to database
-	model.session.commit()
+	model.db.session.commit()
 
 def add_votes(checkin, vote):
 	print "in add votes"
@@ -534,7 +545,7 @@ def add_votes(checkin, vote):
 		checkin.downvotes += 1
 		print "******* downvotes *******", checkin.downvotes
 
-	model.session.commit()
+	model.db.session.commit()
 
 
 ############################
@@ -547,7 +558,7 @@ def get_votes(checkin_id):
 	# checkin_id = request.form.get("checkin_id")
 
 	# get checkin from db
-	checkin = model.session.query(model.Checkin).get(checkin_id)
+	checkin = model.db.session.query(model.Checkin).get(checkin_id)
 
 	votes = [checkin.upvotes, checkin.downvotes] # [0, 1]
 
@@ -587,7 +598,7 @@ def twilio_response():
 	# get user input
 	user_input = request.values.get("Body")
 
-	attractions = model.session.query(model.Attraction).all()
+	attractions = model.db.session.query(model.Attraction).all()
 	for attraction in attractions:
 
 		# did user request a known attraction?
@@ -597,7 +608,7 @@ def twilio_response():
 			if attraction.checkin_id:
 
 				# get the checkin
-				checkin = model.session.query(model.Checkin).get(attraction.checkin_id)
+				checkin = model.db.session.query(model.Checkin).get(attraction.checkin_id)
 
 				# check how old timestamp is
 				time_diff = datetime.now() - checkin.timestamp
