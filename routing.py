@@ -270,27 +270,10 @@ def save_preferences():
 		if not attraction.id in p:
 			p[attraction.id] = False
 
-	# p["show_old"] = show_old
-
-	if show_old:
-		p["show_old"] = True
-	else:
-		p["show_old"] = False
-
-	if show_bad:
-		p["show_bad"] = True
-	else:
-		p["show_bad"] = False
-
-	if show_bad_users:
-		p["show_bad_users"] = True
-	else:
-		p["show_bad_users"] = False
-
-	if show_non_users:
-		p["show_non_users"] = True
-	else:
-		p["show_non_users"] = False
+	p["show_old"] = show_old
+	p["show_bad"] = show_bad
+	p["show_bad_users"] = show_bad_users
+	p["show_non_users"] = show_non_users
 
 	if g.user:
 		g.user.preferences = p
