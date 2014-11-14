@@ -228,6 +228,7 @@ def signup():
 	username = request.form.get("username")
 	email = request.form.get("email")
 	password = request.form.get("password")
+	remember_me = request.form.get("rememberMe")
 
 	print "**** signup ", username
 
@@ -241,15 +242,17 @@ def signup():
 
 	# add new user to database
 	new_user = model.User(username=username, email=email, password=password_hash)
+	
 	model.db.session.add(new_user)
 	model.db.session.commit()
-
+	
 	# add default empty user preferences
 	new_user.preferences = {}
 	model.db.session.commit()
 
 	# add user to session --> LOGIN USER
-	session["user_id"] = new_user.id
+	# session["user_id"] = new_user.id
+	login_user(new_user,remember=remember_me)
 
 	return ""
 

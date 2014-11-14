@@ -226,6 +226,13 @@ $(document).ready(function() {
 				$("#signupErrorMessage").empty();
 			}
 
+			var rememberMe = false;
+			// GET REMEMBER ME CHECKBOX
+			if ($("input[name='rememberMeSignup']:checked")) {
+				alert("checked");
+				rememberMe = true;
+			}
+
 			
 			// post event
 			$.post(
@@ -233,7 +240,8 @@ $(document).ready(function() {
 				{
 					"username": username,
 					"email": email,
-					"password": password
+					"password": password,
+					"rememberMe": rememberMe
 				},
 				function(result) {
 					if (result == "userExists") {
