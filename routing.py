@@ -13,12 +13,8 @@ import twilio.twiml
 
 import model
 
-# from model import app
-
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///checkins.db'
-
-
 
 # Cross-origin resource sharing
 cors = CORS(app, resources={r"/api/*": {"origins": "*"}})

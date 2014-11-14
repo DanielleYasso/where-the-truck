@@ -130,6 +130,12 @@ class User(db.Model):
 	password = Column(String, nullable = False)
 	average_rating = Column(Float, nullable = True)
 	preferences = Column(MutableDict.as_mutable(PickleType), nullable = True)
+	active = Column(Boolean())
+	confirmed_at = Column(DateTime())
+	role_id = Column(Integer(), ForeignKey("roles.id"))
+
+	# define relationship with Role table
+	role = relationship("Role", backref=backref("users", order_by=id))
 
 	# Get average rating
 	def set_average_rating(self):
@@ -145,6 +151,16 @@ class User(db.Model):
 				count += 1
 
 		self.average_rating = total/count
+
+##############
+# ROLE CLASS #
+
+class Role(db.Model):
+	__tablename__ = "roles"
+
+	id = Column(Integer, primary_key = True)
+	name = Column(String(80), unique = True)
+	description = Column(String(255))
 
 # END CLASS DECLARATIONS #
 ##########################
