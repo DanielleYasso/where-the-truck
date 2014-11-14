@@ -149,7 +149,9 @@ def login():
 	# get email and password from form inputs
 	email = request.form.get("email")
 	password = request.form.get("password")
-	remember_me = request.form.get("rememberMeLogin")
+	remember_me = request.form.get("rememberMe")
+
+	print "****remember?", remember_me
 
 	# get user with that email address
 	user = model.db.session.query(model.User).filter_by(email=email).first()

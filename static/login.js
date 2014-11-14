@@ -74,14 +74,21 @@ $(document).ready(function() {
 				$("#loginErrorMessage").empty();
 			}
 
-			
+			var rememberMe = false;
+			// GET REMEMBER ME CHECKBOX
+			if ($("input[name='rememberMeLogin']:checked")) {
+				alert("checked");
+				rememberMe = true;
+			}
+
 
 			// post login event
 			$.post(
 				"/login",
 				{
 					"email": email,
-					"password": password
+					"password": password,
+					"rememberMe": rememberMe
 				},
 				function(result) {
 					if (result == "incorrect") {

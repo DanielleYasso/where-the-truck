@@ -571,6 +571,9 @@ function addMarkers(map, markers) {
 					initialize();
 				}
 			}
+			else if (this.id == "rememberMeLogin") {
+				// do nothing
+			}
 			else {
 				var attractionId = this.id;
 				if ($(this).is(":checked")) {
