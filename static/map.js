@@ -279,8 +279,7 @@ function addMarkers(map, markers) {
 				}
 			}
 			marker.setAnimation(null);
-			map.setCenter(marker.getPosition());			
-			
+			map.setCenter(marker.getPosition());	
 		});
 
 		// Drag event

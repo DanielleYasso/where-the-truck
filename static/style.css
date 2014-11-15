@@ -52,7 +52,7 @@ html, body {
 }
 
 
-#rememberMeLogin {
+#rememberMeLogin, #rememberMeSignup {
 	display: inline-block!important;
 }
 .rememberMe {

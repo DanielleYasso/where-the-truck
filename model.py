@@ -9,8 +9,9 @@ from datetime import datetime
 from math import sqrt # for calculated_rating
 
 from flask.ext.sqlalchemy import SQLAlchemy
-# from flask.ext.security import Security, SQLAlchemyUserDatastore, UserMixin, RoleMixin, login_required
 
+# Flask Security - setup at bottom
+# from flask.ext.security import Security, SQLAlchemyUserDatastore, UserMixin, RoleMixin
 
 
 ## Create database connection object
@@ -148,6 +149,11 @@ class User(db.Model):
 		return False
 
 
+	def get_token(self, expiration=1800):
+		s = Serializer(current_app.config['SECRET_KEY'], expiration)
+		return s.dumps({'user': self.id}.decode('utf-8'))
+
+
 	# Get average rating
 	def set_average_rating(self):
 		"""Calculates a user's average_rating"""
@@ -175,6 +181,12 @@ class Role(db.Model):
 
 # END CLASS DECLARATIONS #
 ##########################
+
+
+# Setup Flask-Security
+# user_datastore = SQLAlchemyUserDatastore(db, User, Role)
+# security = Security(app, user_datastore)
+
 
 
 

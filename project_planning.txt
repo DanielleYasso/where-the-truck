@@ -117,6 +117,9 @@ Advanced User Features:
 [X]	- Save a user’s preferences
 [X]		- only show certain attractions
 [X]		- only show good ratings
+[X]	- Remember a user's login
+	- Let a user recover their password
+	- Let a user change their password in user settings
 	- Allow a user to create a new attraction to check-in
 		- Natural language processing… otherwise could have one attraction with several different names…
 

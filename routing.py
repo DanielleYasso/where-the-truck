@@ -15,6 +15,8 @@ import model
 from flask.ext.login import LoginManager, login_user, logout_user, login_required, current_user
 
 
+
+
 # Create Flask app
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///checkins.db'
@@ -33,6 +35,11 @@ app.config.update(dict(
 	MAIL_USE_SSL = True,
 	MAIL_USERNAME= 'dbyasso@gmail.com',
 	MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
+	# # Flask-Security
+	# SECURITY_PASSWORD_HASH = 'pbkdf2_sha256',
+	# SECURITY_CONFIRMABLE = True,
+	# SECURITY_RECOVERABLE = True
+
 	))
 
 
@@ -46,9 +53,12 @@ app.secret_key = SECRET_KEY
 # google maps api key
 API_KEY = os.environ.get('API_KEY')
 
+# Set up Flask-Login LoginManager
 login_manager = LoginManager()
 login_manager.init_app(app)
-	
+login_manager.session_protection = "strong"
+
+
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -168,9 +178,7 @@ def login():
 	model.db.session.commit()
 	login_user(user,remember=remember_me)
 
-	# session["user_id"] = user.id
-
-	return redirect("/")
+	return ""
 
 ####################
 # RECOVER PASSWORD #
@@ -195,6 +203,7 @@ def recover_password():
 		flash("No user found with that email address.")
 		return redirect("/forgot_password")
 
+
 	# user email exists
 	# generate crypto random secret key
 	# store key, current timestamp and user identifier
@@ -215,7 +224,15 @@ def recover_password():
 
 	# mail.send(msg)
 
+	# utils.send_mail("hi", "dbyasso@gmail.com", render_template("security/emails/reset_instructions.html"))
+
+
 	return redirect("/")
+
+@app.route("/reset")
+def reset_password():
+	token_status = reset_password_token_status(token)
+	return;
 
 
 ###############
@@ -287,7 +304,7 @@ def save_preferences():
 	p["show_bad_users"] = show_bad_users
 	p["show_non_users"] = show_non_users
 
-	if g.user:
+	if g.user.is_authenticated():
 		g.user.preferences = p
 
 	model.db.session.commit()
@@ -404,7 +421,7 @@ def checkin():
 	print "Attraction %r, lat %r, lng %r" % (attraction_id, lat, lng)
 
 	# Add checkin to database checkins table
-	if g.user:
+	if g.user.is_authenticated():
 		new_checkin = model.Checkin(attraction_id=attraction_id, 
 								lat=lat, 
 								lng=lng,
@@ -558,7 +575,7 @@ def get_votes(checkin_id):
 	votes = [checkin.upvotes, checkin.downvotes] # [0, 1]
 
 	# is a user signed in?
-	if g.user:
+	if g.user.is_authenticated():
 		votes.append(True) # [2]
 
 		if checkin.user_id == g.user.id:

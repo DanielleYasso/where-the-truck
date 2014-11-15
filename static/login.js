@@ -77,7 +77,6 @@ $(document).ready(function() {
 			var rememberMe = false;
 			// GET REMEMBER ME CHECKBOX
 			if ($("input[name='rememberMeLogin']:checked")) {
-				alert("checked");
 				rememberMe = true;
 			}
 
@@ -229,7 +228,6 @@ $(document).ready(function() {
 			var rememberMe = false;
 			// GET REMEMBER ME CHECKBOX
 			if ($("input[name='rememberMeSignup']:checked")) {
-				alert("checked");
 				rememberMe = true;
 			}
 
