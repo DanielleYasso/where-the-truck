@@ -1,5 +1,5 @@
 from flask import Flask, render_template, redirect, request
-from flask import session, g, make_response, flash
+from flask import session, g, make_response, flash, url_for
 from flask_mail import Mail, Message
 from flask.ext.cors import CORS, cross_origin
 import requests
@@ -12,7 +12,8 @@ import twilio.twiml
 
 import model
 
-from flask.ext.login import LoginManager, login_user, logout_user, login_required, current_user
+from flask.ext.login import LoginManager, login_user, logout_user, current_user
+from itsdangerous import URLSafeTimedSerializer
 
 
 
@@ -42,13 +43,15 @@ app.config.update(dict(
 
 	))
 
+# secret key for session
+SECRET_KEY = os.environ.get('SECRET_KEY')
+app.secret_key = SECRET_KEY
 
 # update Flask-Mail instance with new app config settings
 mail = Mail(app)
 
-# secret key for session
-SECRET_KEY = os.environ.get('SECRET_KEY')
-app.secret_key = SECRET_KEY
+# Create serializer for generating tokens for user email confirmation
+ts = URLSafeTimedSerializer(app.config['SECRET_KEY'])
 
 # google maps api key
 API_KEY = os.environ.get('API_KEY')
@@ -204,6 +207,8 @@ def recover_password():
 		return redirect("/forgot_password")
 
 
+
+
 	# user email exists
 	# generate crypto random secret key
 	# store key, current timestamp and user identifier
@@ -267,11 +272,49 @@ def signup():
 	new_user.preferences = {}
 	model.db.session.commit()
 
+	# email confirmation
+	subject = "Confirm your email"
+	token = ts.dumps(new_user.email, salt="email-confirm-key")
+
+	confirm_url = url_for(
+		"confirm_email",
+		token=token,
+		_external=True)
+
+	html = render_template(
+		"emails/activate.html",
+		confirm_url=confirm_url)
+
+	msg = Message(subject, 
+				sender="dbyasso@gmail.com", 
+				recipients=[new_user.email])
+
+	msg.html = html
+
+	mail.send(msg)
+
 	# add user to session --> LOGIN USER
 	# session["user_id"] = new_user.id
 	login_user(new_user,remember=remember_me)
 
 	return ""
+
+@app.route("/confirm/<token>")
+def confirm_email(token):
+	try:
+		email = ts.loads(token, salt="email-confirm-key", max_age=86400)
+	except:
+		abort(404)
+
+	user = model.User.query.filter_by(email=email).first_or_404()
+
+	user.confirmed_at = datetime.now()
+
+	model.db.session.add(user)
+	model.db.session.commit()
+
+	return redirect("/")
+
 
 
 #################################
