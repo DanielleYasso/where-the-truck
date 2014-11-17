@@ -5,7 +5,7 @@
 <body>
 	<form action="{{ url_for('reset_with_token', token=token) }}" method="POST">
 	    {{ form.password.label }}: {{ form.password }}<br>
-	    {{ form.confirm.label }}: {{ form.confirm }}
+	    {{ form.confirm.label }}: {{ form.confirm }}<br>
 	    {{ form.csrf_token }}
 	    <input type="submit" value="Reset my password" />
 	</form>

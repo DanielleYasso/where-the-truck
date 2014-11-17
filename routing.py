@@ -215,7 +215,7 @@ def recover_password():
 		"reset_with_token",
 		token=token,
 		_external=True)
-
+	
 	html = render_template(
 		"emails/recover_password.html",
 		recover_url=recover_url)
@@ -227,8 +227,9 @@ def recover_password():
 	msg.html = html
 
 	mail.send(msg)
+	flash("Password reset instructions sent to your email address.")
 
-	return redirect("/")
+	return redirect("/forgot_password")
 
 
 @app.route("/reset/<token>", methods=["GET", "POST"])
@@ -251,6 +252,9 @@ def reset_with_token(token):
 
 		model.db.session.add(user)
 		model.db.session.commit()
+
+		# login user
+		login_user(user)
 
 		return redirect("/")
 	else:
