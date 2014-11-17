@@ -11,6 +11,7 @@ import rauth
 import twilio.twiml
 
 import model
+from forms import PasswordForm
 
 from flask.ext.login import LoginManager, login_user, logout_user, current_user
 from itsdangerous import URLSafeTimedSerializer
@@ -206,38 +207,56 @@ def recover_password():
 		flash("No user found with that email address.")
 		return redirect("/forgot_password")
 
+	# Create reset password email
+	subject = "Password reset requested"
+	token = ts.dumps(user.email, salt="recover-key")
 
+	recover_url = url_for(
+		"reset_with_token",
+		token=token,
+		_external=True)
 
+	html = render_template(
+		"emails/recover_password.html",
+		recover_url=recover_url)
 
-	# user email exists
-	# generate crypto random secret key
-	# store key, current timestamp and user identifier
-	# send it to user email
-	# when user applies secret key - to url or special form:
-		# validate it (exists, not expired, not used before)
-		# get user id
-		# delete or mark as used current secret key
-		# provide logi to enter/generate new password
-			# form should require one-time user login key
+	# Create email message to send
+	msg = Message(subject,
+				sender="dbyasso@gmail.com",
+				recipients=[user.email])
+	msg.html = html
 
-
-
-	# test send message
-	# msg = Message("hey there",
-	# 				sender="dbyasso@gmail.com",
-	# 				recipients=["dbyasso@gmail.com"])
-
-	# mail.send(msg)
-
-	# utils.send_mail("hi", "dbyasso@gmail.com", render_template("security/emails/reset_instructions.html"))
-
+	mail.send(msg)
 
 	return redirect("/")
 
-@app.route("/reset")
-def reset_password():
-	token_status = reset_password_token_status(token)
-	return;
+
+@app.route("/reset/<token>", methods=["GET", "POST"])
+def reset_with_token(token):
+	try:
+		email = ts.loads(token, salt="recover-key", max_age=86400)
+	except:
+		abort(404)
+
+	#get form data
+	form = PasswordForm()
+	if form.validate_on_submit():
+		user = model.User.query.filter_by(email=email).first_or_404()
+
+		password = form.password.data
+		# securely store password
+		password_hash = pbkdf2_sha256.encrypt(password, rounds=200000, salt_size=16)
+		user.password = password_hash
+
+
+		model.db.session.add(user)
+		model.db.session.commit()
+
+		return redirect("/")
+	else:
+		return render_template("/reset_with_token.html", form=form, token=token)
+
+
 
 
 ###############
@@ -298,6 +317,11 @@ def signup():
 	login_user(new_user,remember=remember_me)
 
 	return ""
+
+
+########################
+# SIGNUP CONFIRM EMAIL #
+########################
 
 @app.route("/confirm/<token>")
 def confirm_email(token):

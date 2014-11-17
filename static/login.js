@@ -278,4 +278,12 @@ $(document).ready(function() {
 	);
 
 
+	///////// FORGOT PASSWORD ////////
+
+
+
+
+	
+
+
 });
