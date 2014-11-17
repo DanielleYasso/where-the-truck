@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
 <head>
 	<title></title>
 
 	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
 
-	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+
+	<meta name="viewport" content="width=device=width, initial-scale=1.0, user-scalable=no" />
 
 </head>
 <body>
 
+<div class="container-fluid">
 	<div id="nav">
 		{% if session.get("user_id", False) %}
 			{{ g.user.username }}
@@ -159,6 +162,7 @@
 	<div id="footer">
 		<a href="https://www.yelp.com" target="_blank"><img src="https://s3-media3.fl.yelpcdn.com/assets/2/www/img/9c9b10dc7226/developers/reviewsFromYelpWHT.gif"></a>
 	</div>
+</div>
 
 
 	<!-- JAVASCRIPT -->

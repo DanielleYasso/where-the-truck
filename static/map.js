@@ -499,7 +499,7 @@ function addMarkers(map, markers) {
 									+ "</td></tr>"
 
 									+ "<tr><td colspan='3'>"
-									+ "<span style='margin-right: 1px'>"
+									+ "<br><span style='margin-right: 1px'>"
 									+ "Get directions: <select id='transportMode' onchange='getDirections(" + latLngList + ")'>"
 									+ "<option value=''>--</option>"
 									+ "<option value='DRIVING'>Drive</option>"
@@ -507,7 +507,7 @@ function addMarkers(map, markers) {
 									+ "<option value='BICYCLING'>Bicycle</option>"
 									+ "<option value='TRANSIT'>Transit</option>"
 									+ "</select>"
-									+ "</span>"
+									+ "</span></td></tr>"
 
 
 									+ "</table>";

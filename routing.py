@@ -37,11 +37,6 @@ app.config.update(dict(
 	MAIL_USE_SSL = True,
 	MAIL_USERNAME= 'dbyasso@gmail.com',
 	MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
-	# # Flask-Security
-	# SECURITY_PASSWORD_HASH = 'pbkdf2_sha256',
-	# SECURITY_CONFIRMABLE = True,
-	# SECURITY_RECOVERABLE = True
-
 	))
 
 # secret key for session
@@ -184,6 +179,7 @@ def login():
 
 	return ""
 
+
 ####################
 # RECOVER PASSWORD #
 ####################
@@ -215,7 +211,7 @@ def recover_password():
 		"reset_with_token",
 		token=token,
 		_external=True)
-	
+
 	html = render_template(
 		"emails/recover_password.html",
 		recover_url=recover_url)
@@ -231,6 +227,9 @@ def recover_password():
 
 	return redirect("/forgot_password")
 
+##################
+# RESET PASSWORD #
+##################
 
 @app.route("/reset/<token>", methods=["GET", "POST"])
 def reset_with_token(token):
