@@ -372,7 +372,7 @@ function addMarkers(map, markers) {
 
 										+ "<td style='vertical-align: top'>"
 										+ downvotes
-										+ "</td></tr></table>";
+										+ "</td></tr>";
 						}
 						else if (voteType == "down") {						
 							upButton = "<form action='/upvote/" + checkin_id + "' method='POST'>" 
@@ -391,7 +391,7 @@ function addMarkers(map, markers) {
 
 										+ "<td style='vertical-align: top; font-weight: bold'>"
 										+ downvotes
-										+ "</td></tr></table>";
+										+ "</td></tr>";
 						}
 						// no existing vote
 						else {
@@ -411,7 +411,7 @@ function addMarkers(map, markers) {
 
 										+ "<td style='vertical-align: top'>"
 										+ downvotes
-										+ "</td></tr></table>";
+										+ "</td></tr>";
 						}
 					}
 					// not your checkin
@@ -431,7 +431,7 @@ function addMarkers(map, markers) {
 
 									+ "<td style='vertical-align: top'>"
 									+ downvotes
-									+ "</td></tr></table>";
+									+ "</td></tr>";
 					}
 					// not logged in
 					else {
@@ -469,7 +469,7 @@ function addMarkers(map, markers) {
 										+ "</a>";
 					}
 
-						var content = "<table style='text-align: left;'><tr>"
+						var content = "<table style='text-align: left; width: 100%'><tr>"
 
 									+ "<th>"
 									+ attraction_name_url 
@@ -499,7 +499,7 @@ function addMarkers(map, markers) {
 									+ "</td></tr>"
 
 									+ "<tr><td colspan='3'>"
-									+ "<br><span style='margin-right: 1px'>"
+									+ "<span style='margin-right: 1px'>"
 									+ "Get directions: <select id='transportMode' onchange='getDirections(" + latLngList + ")'>"
 									+ "<option value=''>--</option>"
 									+ "<option value='DRIVING'>Drive</option>"
@@ -704,7 +704,7 @@ function initialize() {
 		mapdiv.style.width = '100%';
 		mapdiv.style.height = '85%';
 	} else {
-		mapdiv.style.width = '90%';
+		mapdiv.style.width = '100%';
 		mapdiv.style.height = '400px';
 	}
 

@@ -15,25 +15,25 @@
 
 <!-- NAVIGATION -->
 
-<div class="navbar navbar-default navbar-static-top" role="navigation">
-	<div class="container-fluid">
+<nav class="navbar navbar-default navbar-static-top" role="navigation">
+	<div class="container">
 		<div class="navbar-header">
 			<a class="navbar-brand" href="#">SF Find</a>
 		</div>
 		<div class="nav navbar-nav navbar-right">
-		{% if session.get("user_id", False) %}
-			<form action="/logout">
-				<p class="navbar-text">{{ g.user.username }}</p>
-				<button type="submit" id="logoutButton" class="btn navbar-btn">Logout</button>
-			</form>
+			{% if session.get("user_id", False) %}
+				<form action="/logout">
+					<p class="navbar-text">{{ g.user.username }}</p>
+					<button type="submit" id="logoutButton" class="btn navbar-btn">Logout</button>
+				</form>
 
-		{% else %}
-			<button id="loginOpenButton" class="btn navbar-btn">Login</button>
-			<button id="signupOpenButton" class="btn navbar-btn">Signup</button>
-		{% endif %}
+			{% else %}
+				<button id="loginOpenButton" class="btn navbar-btn">Login</button>
+				<button id="signupOpenButton" class="btn navbar-btn">Signup</button>
+			{% endif %}
 		</div>
 	</div>
-</div>
+</nav>
 
 <!-- END NAVIGATION -->
 
@@ -92,9 +92,9 @@
 <!-- END LIGHTBOX CONTENT -->
 
 
-<div class="container-fluid">
-	<div id="checkinBox" class="row">
-		<form id="checkinForm">
+<div class="container">
+	<div id="checkinBox" class="form-group">
+		<form id="checkinForm" role="form">
 			<select name="attraction_id" id="attraction_id">
 				
 				<option value="">-- Select one --</option>
@@ -108,18 +108,22 @@
 	</div>
 
 	
-	<div id="attractionOptions" class="row col-sm-12">
-		<h4 class="col-sm-6">Food Trucks</h4>
-		<h4 class="col-sm-6">Display Options</h4>
+	<div id="attractionOptions" class="form-group"> 
 
-		<form id="optionsForm" action="/save_preferences" method="POST">
+		<form id="optionsForm" role="form" action="/save_preferences" method="POST">
 		
-		<span class="row">
+		<div class="checkbox">
 
 			<!-- SHOW ATTRACTIONS CHECKBOXES -->
+			
+			<div class="col-sm-6">
+				<div class="row">
+					<h4 class="col-sm-12">Food Trucks</h4>
+				</div>
+				<div class="row">
 			{% for attraction in attractions %}
 			{% if attraction.id == 1 or attraction.id == 5 %}
-			<span class="col-sm-3">
+			<div class="col-sm-6">
 			{% endif %}
 
 				<!-- If user is signed in and has saved preferences -->
@@ -137,12 +141,15 @@
 					<input type="checkbox" id="{{attraction.id}}" name="attractionsDisplayed" value="{{attraction.id}}" checked><a href="#" class="attractionFocus" id="{{attraction.name}}">{{attraction.name}}</a><br>
 				{% endif %}
 			{% if attraction.id == 4 or attraction.id == 6 %}
-			</span>
+			</div>
 			{% endif %}
 
 			{% endfor %}
+		</div>
+	</div>
 		
-		<span class="col-sm-6">
+		<div class="col-sm-6">
+			<h4>Display Options</h4>
 
 			<!-- SHOW OLD CHECKINS -->
 			{% if session.get("user_id", False) and g.user.preferences["show_old"] %}
@@ -160,7 +167,7 @@
 
 			<!-- SHOW CHECKINS BY USERS WITH BAD RATINGS -->
 			{% if session.get("user_id", False) and g.user.preferences["show_bad_users"] %}
-				<input type="checkbox" id="showBadUsers" name="showBadUsers" value="True" checked>Show checkins by users who typically do crappy checkins<br>
+				<input type="checkbox" id="showBadUsers" name="showBadUsers" value="True" checked>Show checkins by poorly-rated users<br>
 			{% else %}
 				<input type="checkbox" id="showBadUsers" name="showBadUsers" value="True">Show checkins by users who typically do crappy checkins<br>
 			{% endif %}
@@ -173,26 +180,28 @@
 			{% endif %}
 
 					
-		</span>
-		</span><!-- end row -->
-		<span class="row col-sm-12">
+		</div>
+
+		</div><!-- end row -->
+		<div class="row col-sm-12">
 		
 			{% if session.get("user_id", False) %}
 				<button type="submit" id="savePreferences">Save Preferences</button>
 			{% endif %}
-		</span>
+		</div>
 
 
 		</form>	
 	</div><!-- END CHECKBOXES DIV -->
 
-
 	<div id="map-canvas" class="row col-sm-12"></div>
-	<div id="directionsWrapper" class="hidden"><button id="closeDirections">Close directions</button><div id="directionsDiv"></div></div>
 
-	<div id="footer">
-		<a href="https://www.yelp.com" target="_blank"><img src="https://s3-media3.fl.yelpcdn.com/assets/2/www/img/9c9b10dc7226/developers/reviewsFromYelpWHT.gif"></a>
+
+	<div id="directionsWrapper" class="hidden">
+		<button id="closeDirections">Close directions</button>
+		<div id="directionsDiv"></div>
 	</div>
+
 </div>
 
 
