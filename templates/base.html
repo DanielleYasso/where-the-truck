@@ -20,18 +20,20 @@
 		<div class="navbar-header">
 			<a class="navbar-brand" href="#">SF Find</a>
 		</div>
-		<div class="nav navbar-nav navbar-right">
-			{% if session.get("user_id", False) %}
-				<form action="/logout">
-					<p class="navbar-text">{{ g.user.username }}</p>
-					<button type="submit" id="logoutButton" class="btn navbar-btn btn-default">Logout</button>
-				</form>
+		<!-- <div class="navbar-collapse collapse"> -->
+			<div class="nav navbar-nav navbar-right">
+				{% if session.get("user_id", False) %}
+					<form action="/logout">
+						<p class="navbar-text">{{ g.user.username }}</p>
+						<button type="submit" id="logoutButton" class="btn navbar-btn btn-default">Logout</button>
+					</form>
 
-			{% else %}
-				<button id="loginOpenButton" class="btn navbar-btn btn-default">Login</button>
-				<button id="signupOpenButton" class="btn navbar-btn btn-default">Signup</button>
-			{% endif %}
-		</div>
+				{% else %}
+					<button id="loginOpenButton" class="btn navbar-btn btn-default">Login</button>
+					<button id="signupOpenButton" class="btn navbar-btn btn-default">Signup</button>
+				{% endif %}
+			</div>
+		<!-- </div> -->
 	</div>
 </nav>
 
@@ -40,6 +42,7 @@
 <!-- LIGHT BOX CONTENT -->
 <div id="loginFormDiv">
 	<div class="closeButton">
+		<span class="h5">Login</span>
 		<button class="close lightBoxClose"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
 	</div>
 	<form id="loginForm" name="loginForm">
@@ -53,7 +56,7 @@
 		</div>
 
 		
-		<button id="loginButton">Login</button>
+		<button id="loginButton" class="btn btn-default">Login</button>
 		<div class="rememberMe"><input type="checkbox" id="rememberMeLogin" name="rememberMeLogin"> Remember me</div>
 
 		<div class="forgotPassword"><a href="/forgot_password">Forgot password?</a></div>
@@ -66,6 +69,7 @@
 
 <div id="signupFormDiv">
 	<div class="closeButton">
+		<span class="h5">Signup</span>
 		<button class="close lightBoxClose"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
 	</div>
 	<form id="signupForm" name="signupForm">
@@ -86,8 +90,10 @@
 			<span class="errorField hidden" id="passwordConfirmEF">*</span>
 		</div>
 
-		<button id="signupButton">Signup</button>
+		
+		<button id="signupButton" class="btn btn-default">Signup</button>
 		<div class="rememberMe"><input type="checkbox" id="rememberMeSignup" name="rememberMeSignup"> Remember me</div>
+	
 
 		<div id="signupErrorMessage"></div>
 	</form>
