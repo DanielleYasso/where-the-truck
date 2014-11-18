@@ -39,7 +39,9 @@
 
 <!-- LIGHT BOX CONTENT -->
 <div id="loginFormDiv">
-	<div class="closeButton"><button class="lightBoxClose">X</button></div>
+	<div class="closeButton">
+		<button class="close lightBoxClose"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+	</div>
 	<form id="loginForm" name="loginForm">
 		<div>
 			<div class="fieldElement"><input type="text" id="loginEmail" name="email" placeholder="email"></div>
@@ -63,7 +65,9 @@
 </div>
 
 <div id="signupFormDiv">
-	<div class="closeButton"><button class="lightBoxClose">X</button></div>
+	<div class="closeButton">
+		<button class="close lightBoxClose"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+	</div>
 	<form id="signupForm" name="signupForm">
 		<div>
 			<div class="fieldElement"><input type="text" id="username" name="username" placeholder="username"></div>
@@ -194,7 +198,7 @@
 		</form>	
 	</div><!-- END CHECKBOXES DIV -->
 
-	<div id="map-canvas"></div>
+	<div id="map-canvas" class="img-rounded"></div>
 
 
 	<div id="directionsWrapper" class="hidden">
