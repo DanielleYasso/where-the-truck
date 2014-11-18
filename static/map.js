@@ -704,8 +704,8 @@ function initialize() {
 		mapdiv.style.width = '100%';
 		mapdiv.style.height = '85%';
 	} else {
-		mapdiv.style.width = '600px';
-		mapdiv.style.height = '600px';
+		mapdiv.style.width = '90%';
+		mapdiv.style.height = '400px';
 	}
 
 	// create the map object
