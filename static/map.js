@@ -435,17 +435,16 @@ function addMarkers(map, markers) {
 					}
 					// not logged in
 					else {
-						upButton = "<button onclick='loginToRate()'>" 
-									+ "\u2B06"
-									+ "</button>"
+						upButton = "<a href='#' onclick='loginToRate()' class='glyphicon glyphicon-arrow-up' aria-hidden='true'>" 
+									+ "</a>"
 									+ "</td>"
 
 									+ "<td>"
 									+ upvotes
 									+ "</td></tr>";
 
-						downButton = "<button onclick='loginToRate()'>" 
-									+ "\u2B07</button>"
+						downButton = "<a href='#' onclick='loginToRate()' class='glyphicon glyphicon-arrow-down' aria-hidden='true'>" 
+									+ "</a>"
 									+ "</td>"
 
 									+ "<td style='vertical-align: top'>"

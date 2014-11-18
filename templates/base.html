@@ -24,12 +24,12 @@
 			{% if session.get("user_id", False) %}
 				<form action="/logout">
 					<p class="navbar-text">{{ g.user.username }}</p>
-					<button type="submit" id="logoutButton" class="btn navbar-btn">Logout</button>
+					<button type="submit" id="logoutButton" class="btn navbar-btn btn-default">Logout</button>
 				</form>
 
 			{% else %}
-				<button id="loginOpenButton" class="btn navbar-btn">Login</button>
-				<button id="signupOpenButton" class="btn navbar-btn">Signup</button>
+				<button id="loginOpenButton" class="btn navbar-btn btn-default">Login</button>
+				<button id="signupOpenButton" class="btn navbar-btn btn-default">Signup</button>
 			{% endif %}
 		</div>
 	</div>
@@ -103,7 +103,7 @@
 				<option value="{{ attraction.id }}">{{ attraction.name }}</option>
 				{% endfor %}
 			</select>
-			<button id="checkinButton" type="button">Checkin Location</button>
+			<button id="checkinButton" type="button" class="btn btn-default">Checkin Location</button>
 		</form>
 	</div>
 
@@ -186,7 +186,7 @@
 		<div class="row col-sm-12">
 		
 			{% if session.get("user_id", False) %}
-				<button type="submit" id="savePreferences">Save Preferences</button>
+				<button type="submit" id="savePreferences" class="btn btn-default">Save Preferences</button>
 			{% endif %}
 		</div>
 
@@ -194,11 +194,11 @@
 		</form>	
 	</div><!-- END CHECKBOXES DIV -->
 
-	<div id="map-canvas" class="row col-sm-12"></div>
+	<div id="map-canvas"></div>
 
 
 	<div id="directionsWrapper" class="hidden">
-		<button id="closeDirections">Close directions</button>
+		<button id="closeDirections" class="btn btn-default">Close directions</button>
 		<div id="directionsDiv"></div>
 	</div>
 
