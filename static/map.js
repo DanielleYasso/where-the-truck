@@ -356,8 +356,11 @@ function addMarkers(map, markers) {
 
 					if (loggedIn && !yourCheckin) {
 						if (voteType == "up") {
-							upButton = "<form action='/upvote/" + checkin_id + "' method='POST'>" 
-										+ "<button type='submit'>\u2B06</button>"
+							upButton = "<form action='/upvote/" + checkin_id + "' method='POST' class='form-arrow'>"
+										+ "<button type='submit' class='btn btn-link btn-arrow'>"
+										+ "<span class='glyphicon glyphicon-arrow-up' aria-hidden='true'>" 
+										+ "</span"
+										+ "</button>"
 										+ "</form>" 
 										+ "</td>"
 
@@ -365,8 +368,11 @@ function addMarkers(map, markers) {
 										+ upvotes
 										+ "</td></tr>";
 
-							downButton = "<form action='/downvote/" + checkin_id + "' method='POST'>"
-										+ "<button type='submit' disabled>\u2B07</button>"
+							downButton = "<form action='/downvote/" + checkin_id + "' method='POST' class='form-arrow'>"
+										+ "<button type='submit' class='btn btn-link btn-arrow' disabled>"
+										+ "<span class='glyphicon glyphicon-arrow-down' aria-hidden='true'>" 
+										+ "</span"
+										+ "</button>"
 										+ "</form>"
 										+ "</td>"
 
@@ -375,8 +381,11 @@ function addMarkers(map, markers) {
 										+ "</td></tr>";
 						}
 						else if (voteType == "down") {						
-							upButton = "<form action='/upvote/" + checkin_id + "' method='POST'>" 
-										+ "<button type='submit' disabled>\u2B06</button>"
+							upButton = "<form action='/upvote/" + checkin_id + "' method='POST' class='form-arrow'>"
+										+ "<button type='submit' class='btn btn-link btn-arrow' disabled>"
+										+ "<span class='glyphicon glyphicon-arrow-up' aria-hidden='true'>" 
+										+ "</span"
+										+ "</button>"
 										+ "</form>" 
 										+ "</td>"
 
@@ -384,8 +393,11 @@ function addMarkers(map, markers) {
 										+ upvotes
 										+ "</td></tr>";
 
-							downButton = "<form action='/downvote/" + checkin_id + "' method='POST'>"
-										+ "<button type='submit'>\u2B07</button>"
+							downButton = "<form action='/downvote/" + checkin_id + "' method='POST' class='form-arrow'>"
+										+ "<button type='submit' class='btn btn-link btn-arrow'>"
+										+ "<span class='glyphicon glyphicon-arrow-down' aria-hidden='true'>" 
+										+ "</span"
+										+ "</button>"
 										+ "</form>"
 										+ "</td>"
 
@@ -395,8 +407,11 @@ function addMarkers(map, markers) {
 						}
 						// no existing vote
 						else {
-							upButton = "<form action='/upvote/" + checkin_id + "' method='POST'>"
-										+ "<button type='submit' class='btn btn-link glyphicon glyphicon-arrow-up'>"
+							upButton = "<form action='/upvote/" + checkin_id + "' method='POST' class='form-arrow'>"
+										+ "<button type='submit' class='btn btn-link btn-arrow'>"
+										+ "<span class='glyphicon glyphicon-arrow-up' aria-hidden='true'>" 
+										+ "</span"
+										+ "</button>"
 										+ "</form>" 
 										+ "</td>"
 
@@ -404,8 +419,8 @@ function addMarkers(map, markers) {
 										+ upvotes
 										+ "</td></tr>";
 
-							downButton = "<form action='/downvote/" + checkin_id + "' method='POST'>"
-										+ "<button type='submit' class='btn btn-link'>"
+							downButton = "<form action='/downvote/" + checkin_id + "' method='POST' class='form-arrow'>"
+										+ "<button type='submit' class='btn btn-link btn-arrow'>"
 										+ "<span class='glyphicon glyphicon-arrow-down' aria-hidden='true'>" 
 										+ "</span"
 										+ "</button>"
@@ -419,16 +434,20 @@ function addMarkers(map, markers) {
 					}
 					// your checkin
 					else if (yourCheckin) {
-						upButton = "<span class='glyphicon glyphicon-arrow-up' aria-hidden='true'>" 
+						upButton = "<button class='btn btn-link btn-arrow' disabled>"
+									+ "<span class='glyphicon glyphicon-arrow-up' aria-hidden='true'>" 
 									+ "</span"
+									+ "</button>"
 									+ "</td>"
 
 									+ "<td>"
 									+ upvotes
 									+ "</td></tr>";
 
-						downButton = "<span class='glyphicon glyphicon-arrow-down' aria-hidden='true'>" 
+						downButton = "<button type='submit' class='btn btn-link btn-arrow' disabled>"
+									+ "<span class='glyphicon glyphicon-arrow-down' aria-hidden='true'>" 
 									+ "</span"
+									+ "</button>"
 									+ "</td>"
 
 									+ "<td style='vertical-align: top'>"
@@ -437,16 +456,18 @@ function addMarkers(map, markers) {
 					}
 					// not logged in
 					else {
-						upButton = "<a href='#' onclick='loginToRate()' class='glyphicon glyphicon-arrow-up' aria-hidden='true'>" 
-									+ "</a>"
+						upButton = "<button onclick='loginToRate()' class='btn btn-link btn-arrow'>"
+									+ "<span class='glyphicon glyphicon-arrow-up' aria-hidden='true'></span>" 
+									+ "</button>"
 									+ "</td>"
 
 									+ "<td>"
 									+ upvotes
 									+ "</td></tr>";
 
-						downButton = "<a href='#' onclick='loginToRate()' class='glyphicon glyphicon-arrow-down' aria-hidden='true'>" 
-									+ "</a>"
+						downButton = "<button onclick='loginToRate()' class='btn btn-link btn-arrow'>"
+									+ "<span class='glyphicon glyphicon-arrow-down' aria-hidden='true'></span>" 
+									+ "</button>"
 									+ "</td>"
 
 									+ "<td style='vertical-align: top'>"

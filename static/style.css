@@ -110,4 +110,11 @@ html, body, .container {
 	display: none;
 }
 
+.btn-arrow, .form-arrow {
+	padding: 0!important;
+	margin: 0!important;
+	border: 0;
+	text-align: right;
+}
+
 
