@@ -40,6 +40,7 @@ html, body, .container {
 }
 #loginForm, #signupForm {
 	padding: 5px 5px 0;
+	clear: right;
 }
 
 #loginForm input, #signupForm input {
