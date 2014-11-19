@@ -1,7 +1,7 @@
-// load the map
-google.maps.event.addDomListener(window, "load", initialize());
-
 $(document).ready(function() {
+
+	// load the map
+	google.maps.event.addDomListener(window, "load", initialize());
 	
 	//////////////////////////////////
 	//////// DROPDOWN CHECKIN ////////
@@ -16,7 +16,7 @@ $(document).ready(function() {
 			}
 		}
 	);
-});
+}); // end document load
 
 
 /////////////////////////////////
@@ -94,8 +94,6 @@ function isValidCheckin(attraction_id, lat,lng) {
 			}
 		}
 		);
-
-
 }
 
 /////////////////////////////////////////
@@ -729,6 +727,8 @@ function initialize() {
 	});
 
 }
+
+
 
 
 
