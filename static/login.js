@@ -75,8 +75,8 @@ $(document).ready(function() {
 			}
 
 			// GET REMEMBER ME CHECKBOX
-			var rememberMe = $("input[name='rememberMeLogin']:checked");
-			
+			var rememberMe = $("#rememberMeLogin").is(":checked");
+
 
 			// post login event
 			$.post(
@@ -223,7 +223,7 @@ $(document).ready(function() {
 			}
 
 			// GET REMEMBER ME CHECKBOX
-			var rememberMe = $("input[name='rememberMeSignup']:checked");
+			var rememberMe = $("#rememberMeSignup").is(":checked");
 			
 			
 			// post event

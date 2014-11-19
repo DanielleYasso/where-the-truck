@@ -140,12 +140,7 @@ function addMarkers(map, markers) {
 	for (var i = 0; i < markers.length; i++) {
 		markerObject = markers[i];
 		attractionId = "#" + markerObject["id"];
-		if ($(attractionId).is(":checked")) {
-			checkedAttractions[markerObject["id"]] = true;
-		}
-		else {
-			checkedAttractions[markerObject["id"]] = false;
-		}	
+		checkedAttractions[markerObject["id"]] = $(attractionId).is(":checked");
 	}
 
 	///////////////////////////////////////
@@ -531,7 +526,7 @@ function addMarkers(map, markers) {
 			else if (this.id == "showNonUserCheckins") {
 				showNonUserCheckins = $(this).is(":checked");
 			}
-			else if (this.id == "rememberMeLogin") {
+			else if (this.id == "rememberMeLogin" || this.id == "rememberMeSignup") {
 				// do nothing
 			}
 			
