@@ -178,38 +178,23 @@ function addMarkers(map, markers) {
 	function setOptionChecks() {
 		for (i = 0; i < markersArray.length; i++) {
 			marker = markersArray[i];
+
 			var removeMarker = false;
+
 			// Show checkins made by non-users?
-			if ($("#showNonUserCheckins").is(":checked")) {
-				showNonUserCheckins = true;
-			}
-			else {
-				showNonUserCheckins = false;
-			}
-			// Don't show a maker if it doesn't have a user associated with it
+			showNonUserCheckins = $("#showNonUserCheckins").is(":checked");
 			if (marker.get("non_user_checkin") && !showNonUserCheckins) {
 				removeMarker = true; // don't add the non-user checkin to the markersArray
 			}
 
 			// Show checkins with established bad ratings on the map?
-			if ($("#showBadRatings").is(":checked")) {
-				showBad = true;
-			}
-			else {
-				showBad = false;
-			}
-			// Don't show a marker with bad ratings if user doesn't want to see them
+			showBad = $("#showBadRatings").is(":checked");
 			if (marker.get("bad_rating") && !showBad) {
 				removeMarker = true; // don't add the poorly rated checkin to the markersArray
 			}
 
 			// Show old checkins on the map?
-			if ($("#showOldCheckins").is(":checked")) {
-				showOld = true;
-			}
-			else {
-				showOld = false;
-			} 
+			showOld = $("#showOldCheckins").is(":checked");
 			if (marker.get("timeout") == "old") {
 				if (iconType == "food_truck") {
 					icon = "static/truck6.png";
@@ -236,7 +221,7 @@ function addMarkers(map, markers) {
 		}
 	} // end of setOptionChecks function
 	
-	
+
 	/////////////////////////////////////
 	//////// CREATE MARKERS LOOP ////////
 
