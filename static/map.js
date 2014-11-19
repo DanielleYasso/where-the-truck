@@ -273,7 +273,7 @@ function addMarkers(map, markers) {
 			var name = $(this).attr("id");
 			for (var i = 0; i < markersArray.length; i++) {
 				marker = markersArray[i];
-				if (marker.get("name") == name) {
+				if (marker.get("name") == name && checkedAttractions[marker.get("id")]) {
 					marker.setAnimation(google.maps.Animation.BOUNCE);	
 					break;
 				}

@@ -674,7 +674,7 @@ def twilio_response():
 	# # Respond to an incoming text message with a static response
 	resp = twilio.twiml.Response()
 
-	message = "Find it in San Francisco at http://18617ef1.ngrok.com/"
+	message = "Find it in San Francisco at https://4d3d4b3a.ngrok.com/"
 	new_message = ""
 
 	# get user input
