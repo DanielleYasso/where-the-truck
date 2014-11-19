@@ -10,7 +10,7 @@
 
 	<meta name="viewport" content="width=device=width, initial-scale=1.0, user-scalable=no" />
 
-	<script src="https://maps.googleapis.com/maps/api/js?key={{API_KEY}}"></script>
+	
 
 </head>
 <body>
@@ -21,8 +21,14 @@
 	<div class="container">
 		<div class="navbar-header">
 			<a class="navbar-brand" href="#">SF Find</a>
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#collapsedNav">
+		        <span class="sr-only">Toggle navigation</span>
+		        <span class="icon-bar"></span>
+		        <span class="icon-bar"></span>
+		        <span class="icon-bar"></span>
+	      </button>
 		</div>
-		<!-- <div class="navbar-collapse collapse"> -->
+		<div class="navbar-collapse collapse" id="collapsedNav">
 			<ul class="nav navbar-nav navbar-right">
 				{% if session.get("user_id", False) %}
 					<li><p class="navbar-text">{{ g.user.username }}</p></li>
@@ -37,8 +43,8 @@
 					<li><button id="signupOpenButton" class="btn navbar-btn btn-default">Signup</button></li>
 				{% endif %}
 			</ul>
-		<!-- </div> -->
-	</div>
+		</div> <!-- end navbar collapse -->
+	</div> <!-- end container -->
 </nav>
 
 <!-- END NAVIGATION -->
@@ -227,7 +233,17 @@
 
 	<!-- JAVASCRIPT -->
 
+	<!-- jQuery -->
 	<script src="static/jquery-1.11.0.min.js"></script>
+
+	<!-- Google Maps -->
+	<script src="https://maps.googleapis.com/maps/api/js?key={{API_KEY}}"></script>
+
+ 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<!-- Bootstrap -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+
 
 	<!-- Custom JS files -->
 	<script src="static/map.js"></script>
