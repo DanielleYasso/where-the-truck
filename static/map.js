@@ -120,6 +120,8 @@ function setCheckin(attraction_id, lat, lng) {
 					latLng = new google.maps.LatLng(lat, lng);
 					console.log(latLng);
 					marker.setPosition(latLng);
+					marker.set("lat", lat);
+					marker.set("lng", lng);
 					return;
 				}
 			}
