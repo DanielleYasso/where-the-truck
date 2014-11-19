@@ -186,10 +186,10 @@
 			{% endif %}
 
 			<!-- SHOW CHECKINS BY USERS WITH BAD RATINGS -->
-			{% if session.get("user_id", False) and g.user.preferences["show_bad_users"] %}
-				<input type="checkbox" id="showBadUsers" name="showBadUsers" value="True" checked>Show checkins by poorly-rated users<br>
+			{% if session.get("user_id", False) and g.user.preferences["show_untrusted"] %}
+				<input type="checkbox" id="showUntrusted" name="showUntrusted" value="True" checked>Show checkins by untrusted users<br>
 			{% else %}
-				<input type="checkbox" id="showBadUsers" name="showBadUsers" value="True">Show checkins by users who typically do crappy checkins<br>
+				<input type="checkbox" id="showUntrusted" name="showUntrusted" value="True">Show checkins by untrusted users<br>
 			{% endif %}
 
 			<!-- SHOW CHECKINS BY NON USERS -->

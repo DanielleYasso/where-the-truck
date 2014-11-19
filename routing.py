@@ -356,7 +356,7 @@ def save_preferences():
 
 	show_old = request.form.get("showOldCheckins", False)
 	show_bad = request.form.get("showBadRatings", False)
-	show_bad_users = request.form.get("showBadUsers", False)
+	show_untrusted = request.form.get("showUntrusted", False)
 	show_non_users = request.form.get("showNonUserCheckins", False)
 
 	# add checked attractions to user preferences
@@ -371,7 +371,7 @@ def save_preferences():
 
 	p["show_old"] = show_old
 	p["show_bad"] = show_bad
-	p["show_bad_users"] = show_bad_users
+	p["show_untrusted"] = show_untrusted
 	p["show_non_users"] = show_non_users
 
 	if g.user.is_authenticated():

@@ -217,19 +217,25 @@ function addMarkers(map, markers) {
 			// Show checkins made by non-users?
 			showNonUserCheckins = $("#showNonUserCheckins").is(":checked");
 			if (marker.get("non_user_checkin") && !showNonUserCheckins) {
-				removeMarker = true; // don't add the non-user checkin to the markersArray
+				removeMarker = true; 
 			}
 
 			// Show checkins with established bad ratings on the map?
 			showBad = $("#showBadRatings").is(":checked");
 			if (marker.get("bad_rating") && !showBad) {
-				removeMarker = true; // don't add the poorly rated checkin to the markersArray
+				removeMarker = true; 
 			}
+
+			// // Show checkins made by un-trusted users?
+			// showUntrusted = $("#showUntrusted").is(":checked");
+			// if (!marker.get("trusted_user") && !showUntrusted) {
+			// 	removeMarker = true;
+			// }
 
 			// Show old checkins on the map?
 			showOld = $("#showOldCheckins").is(":checked");
 			if (marker.get("timeout") == "old" && !showOld) {
-				removeMarker = true; // don't add the poorly rated checkin to the markersArray
+				removeMarker = true; 
 			}
 
 			// attraction is checked for display
@@ -302,6 +308,7 @@ function addMarkers(map, markers) {
 		marker.set("timeout", markerObject["timeout"]);
 		marker.set("non_user_checkin", markerObject["non_user_checkin"]);
 		marker.set("bad_rating", markerObject["bad_rating"]);
+		// marker.set("trusted_user", markerObject["trusted_user"]);
 
 		// set Yelp data, if available
 		if (markerObject["ratings_img"]) {
@@ -565,6 +572,9 @@ function addMarkers(map, markers) {
 			}
 			else if (this.id == "showNonUserCheckins") {
 				showNonUserCheckins = $(this).is(":checked");
+			}
+			else if (this.id == "showUntrusted") {
+				showUntrusted = $(this).is(":checked");
 			}
 			else if (this.id == "rememberMeLogin" || this.id == "rememberMeSignup") {
 				// do nothing
