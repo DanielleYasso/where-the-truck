@@ -195,26 +195,17 @@ function addMarkers(map, markers) {
 
 			// Show old checkins on the map?
 			showOld = $("#showOldCheckins").is(":checked");
-			if (marker.get("timeout") == "old") {
-				if (!showOld) {
-					removeMarker = true; // don't add the poorly rated checkin to the markersArray
-				}
+			if (marker.get("timeout") == "old" && !showOld) {
+				removeMarker = true; // don't add the poorly rated checkin to the markersArray
 			}
 
 			// attraction is checked for display
-			var showAttraction = false;
 			attractionId = "#" + marker.get("id");
-			if ($(attractionId).is(":checked")) {
-				showAttraction = true;
-			}	
+			var showAttraction = $(attractionId).is(":checked");
 
 			// remove markers
-			if (removeMarker || !showAttraction) {
-				checkedAttractions[marker.get("id")] = false;
-			}
-			else {
-				checkedAttractions[marker.get("id")] = true;
-			}
+			checkedAttractions[marker.get("id")] = !(removeMarker || !showAttraction);
+			
 		}
 	} // end of setOptionChecks function
 	
