@@ -19,11 +19,6 @@ html, body, .container {
 
 ****************************/
 
-/*#nav {
-	width: 100%;
-	min-height: 25px;
-	text-align: right;
-}*/
 
 ul.nav {
 	list-style-type: none;
@@ -33,6 +28,16 @@ ul.nav li {
 	padding-left: 5px;
 }
 
+.navbar-btn {
+	margin-left: 5px;
+	margin-right: 5px;
+	padding-left: 10px!important;
+	padding-right: 10px!important;
+}
+
+#collapsedNav {
+	text-align: center;
+}
 
 /****************************
 
