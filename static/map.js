@@ -95,11 +95,11 @@ function setCheckin(attraction_id, lat, lng) {
 }
 
 
-//////////////////////////////////
+/////////////////////////////
 
-//////// MAP MANIPULATION ////////
+//////// GET MARKERS ////////
 
-/////////////////////////////////
+/////////////////////////////
 
 
 function getMarkers(map) {
@@ -119,9 +119,22 @@ function getMarkers(map) {
 }
 
 
+//////////////////////////////
+
+//////// ADD MARKERS ////////
+
+//////////////////////////////
+
 
 // Gets all current checkin markers and puts them on the map
 function addMarkers(map, markers) {
+	
+	// create array to hold all markers
+	var markersArray = [];
+
+	///////////////////////////////////////////////////////////
+	//////// INITIALIZE CHECKED ATTRACTIONS DICTIONARY ////////
+
 	// initialize dictionary of checked markers, key = id, value = true or false
 	var checkedAttractions = {};
 	for (var i = 0; i < markers.length; i++) {
@@ -135,9 +148,9 @@ function addMarkers(map, markers) {
 		}	
 	}
 
-	// create array to hold all markers
-	var markersArray = [];
-	var removedMarkersArray = [];
+	///////////////////////////////////////
+	//////// SET OR DELETE MARKERS ////////
+	///////////////////////////////////////
 
 	// only show on map if checkbox is selected
 	function setOrDeleteMarkers() {
@@ -153,6 +166,10 @@ function addMarkers(map, markers) {
 			}
 		}
 	}
+
+	/////////////////////////////////////
+	//////// SET DISPLAY OPTIONS ////////
+	/////////////////////////////////////
 
 	var showNonUserCheckins;
 	var showBad;
@@ -219,6 +236,9 @@ function addMarkers(map, markers) {
 		}
 	} // end of setOptionChecks function
 	
+	
+	/////////////////////////////////////
+	//////// CREATE MARKERS LOOP ////////
 
 	// set the markers on the map each time the map is loaded
 	// loop to add each marker to the map
@@ -292,9 +312,15 @@ function addMarkers(map, markers) {
 		markersArray.push(marker);
 		
 
-		///////////////////
-		// MARKER EVENTS //
-		///////////////////
+		///////////////////////////////
+
+		//////// MARKER EVENTS ////////
+
+		///////////////////////////////
+
+		////////////////////////////
+		//////// NAME CLICK ////////
+		////////////////////////////
 
 		// Focus on an attraction when it's name is clicked in the checkbox area
 		$(".attractionFocus").click( function(evt) {
@@ -314,6 +340,10 @@ function addMarkers(map, markers) {
 			}	
 		});
 
+		////////////////////////////
+		//////// DRAG EVENT ////////
+		////////////////////////////
+
 		// Drag event
 		google.maps.event.addListener(
 			marker,
@@ -331,6 +361,10 @@ function addMarkers(map, markers) {
 				isValidCheckin(attraction_id, lat, lng);
 				
 		});
+
+		/////////////////////////////////
+		//////// INFOWINDOW EVENT ///////
+		/////////////////////////////////
 
 		// Info Window
 		var infoWindow;
@@ -372,6 +406,11 @@ function addMarkers(map, markers) {
 						
 				}); // end of $.get function
 
+
+				///////////////////////////////////////////
+				//////// CREATE INFOWINDOW CONTENT ////////
+				///////////////////////////////////////////
+
 				function getContent(attraction_name, votes) {
 					var upvotes = votes[0];
 					var downvotes = votes[1];
@@ -402,10 +441,6 @@ function addMarkers(map, markers) {
 						else if (voteType == "down") {						
 							upButton = upButtonDisabled;
 							downVoteNum = "<strong>" + downvotes + "</strong>";
-						}
-						// no existing vote
-						else {
-							// use defaults set above			
 						}
 					}
 					// your checkin --> buttons disabled
@@ -483,11 +518,12 @@ function addMarkers(map, markers) {
 
 									+ "</table>";
 
-									
-					
-
 					return content;
 				}
+
+				///////////////////////////////////
+				//////// CREATE INFOWINDOW ////////
+				///////////////////////////////////
 
 				function createInfoWindow(marker, content) {
 					// open info window with created content
@@ -508,10 +544,11 @@ function addMarkers(map, markers) {
 	setOptionChecks();
 	setOrDeleteMarkers();
 
-	
-	
-	
 
+	//////////////////////////////////////
+	//////// GET CHECKBOX CHANGES ////////
+	//////////////////////////////////////
+	
 	// get checkbox changes
 	$("input:checkbox").change(
 		function() {
@@ -566,13 +603,17 @@ function loginToRate() {
 	alert("Signup or login to rate this checkin.");
 }
 
+
+////////////////////////////////
+
+//////// GET DIRECTIONS ////////
+
+////////////////////////////////
+
 var directionsDisplay;
 var directionsService = new google.maps.DirectionsService();
 var map;
 var startMarkerArray = [];
-
-
-
 
 function getDirections(toLat,toLng) {
 
@@ -597,8 +638,6 @@ function getDirections(toLat,toLng) {
 	  		var lng = position.coords.longitude;
 
 	  		var fromLatLng = new google.maps.LatLng(lat, lng);
-
-			
 
 			var request = {
 				origin: fromLatLng,
@@ -653,6 +692,12 @@ function getDirections(toLat,toLng) {
 }
 
 
+////////////////////////////
+
+//////// INITIALIZE ////////
+
+////////////////////////////
+
 // Creates the map to show on the page
 function initialize() {
 
@@ -687,7 +732,10 @@ function initialize() {
 
 	getMarkers(map);
 
-	// CLOSE DIRECTIONS
+
+	//////////////////////////////////
+	//////// CLOSE DIRECTIONS ////////
+	//////////////////////////////////
 
 	$("#closeDirections").click( function(evt) {
 		directionsDisplay.setMap(null);
