@@ -445,6 +445,8 @@ def get_markers():
 			# made by logged in user?
 			if checkin.user_id != None:
 				non_user_checkin = False
+				# # trusted user?
+				# trusted_user = checkin.user.trusted_user;
 			else:
 				non_user_checkin = True
 
@@ -464,7 +466,8 @@ def get_markers():
 									"non_user_checkin": non_user_checkin,
 									"ratings_img": ratings_img,
 									"ratings_count": ratings_count,
-									"url": url
+									"url": url #,
+									#"trusted_user": trusted_user
 									})
 	if attraction_list == []:
 		return convert_to_JSON("noMarkers")

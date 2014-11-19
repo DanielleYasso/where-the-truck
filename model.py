@@ -123,8 +123,9 @@ class User(db.Model):
 	email = Column(String(75), nullable = False)
 	password = Column(String, nullable = False)
 	average_rating = Column(Float, nullable = True)
+	# trusted_user = Column(Boolean(), default=True, nullable=False)
 	preferences = Column(MutableDict.as_mutable(PickleType), nullable = True)
-	active = Column(Boolean())
+	# active = Column(Boolean())
 	confirmed_at = Column(DateTime())
 	role_id = Column(Integer(), ForeignKey("roles.id"))
 
@@ -170,6 +171,14 @@ class User(db.Model):
 		# in case of deleted rating leading to 0 count		
 		if count != 0:
 			self.average_rating = total/count
+
+		# set bad_user to True or False
+		if self.average_rating:
+			if count >= 10 and self.average_rating < 0:
+				print "**** bad user"
+				# self.trusted_user = False
+			#else:
+				# self.trusted_user = True
 
 ##############
 # ROLE CLASS #
