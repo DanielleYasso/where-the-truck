@@ -137,15 +137,14 @@ function addMarkers(map, markers) {
 
 	// create array to hold all markers
 	var markersArray = [];
-	// reset array to empty
-	// markersArray = [];
+	var removedMarkersArray = [];
 
 	// only show on map if checkbox is selected
 	function setOrDeleteMarkers() {
 		console.log(checkedAttractions);
 		for (i = 0; i < markersArray.length; i++) {
 			marker = markersArray[i];
-			
+
 			if (checkedAttractions[marker.get("id")] == false) {
 				marker.setMap(null);
 			}
@@ -155,8 +154,75 @@ function addMarkers(map, markers) {
 		}
 	}
 
+	var showNonUserCheckins;
+	var showBad;
+	var showOld;
+
+	function setOptionChecks() {
+		for (i = 0; i < markersArray.length; i++) {
+			marker = markersArray[i];
+			var removeMarker = false;
+			// Show checkins made by non-users?
+			if ($("#showNonUserCheckins").is(":checked")) {
+				showNonUserCheckins = true;
+			}
+			else {
+				showNonUserCheckins = false;
+			}
+			// Don't show a maker if it doesn't have a user associated with it
+			if (marker.get("non-user-checkin") && !showNonUserCheckins) {
+				removeMarker = true; // don't add the non-user checkin to the markersArray
+			}
+
+			// Show checkins with established bad ratings on the map?
+			if ($("#showBadRatings").is(":checked")) {
+				showBad = true;
+			}
+			else {
+				showBad = false;
+			}
+			// Don't show a marker with bad ratings if user doesn't want to see them
+			if (marker.get("bad-rating") && !showBad) {
+				removeMarker = true; // don't add the poorly rated checkin to the markersArray
+			}
+
+			// Show old checkins on the map?
+			if ($("#showOldCheckins").is(":checked")) {
+				showOld = true;
+			}
+			else {
+				showOld = false;
+			} 
+			if (marker.get("timeout") == "old") {
+				if (iconType == "food_truck") {
+					icon = "static/truck6.png";
+					if (!showOld) {
+						removeMarker = true; // don't add the poorly rated checkin to the markersArray
+					}
+				}
+			}
+
+			// attraction is checked for display
+			var showAttraction = false;
+			attractionId = "#" + marker.get("id");
+			if ($(attractionId).is(":checked")) {
+				showAttraction = true;
+			}	
+
+			// remove markers
+			if (removeMarker || !showAttraction) {
+				checkedAttractions[marker.get("id")] = false;
+			}
+			else {
+				checkedAttractions[marker.get("id")] = true;
+			}
+		}
+	} // end of setOptionChecks function
+	
+
 	// set the markers on the map each time the map is loaded
 	// loop to add each marker to the map
+	console.log("in create markers");
 	for (var i = 0; i < markers.length; i++) {
 		markerObject = markers[i];
 		var myLatLng = new google.maps.LatLng(markerObject["lat"], markerObject["lng"]);
@@ -164,50 +230,13 @@ function addMarkers(map, markers) {
 
 		var iconType = markerObject["type"];
 
-		// Show checkins made by non-users?
-		var showNonUserCheckins;
-		if ($("#showNonUserCheckins").is(":checked")) {
-			showNonUserCheckins = true;
-		}
-		else {
-			showNonUserCheckins = false;
-		}
-		// Don't show a maker if it doesn't have a user associated with it
-		var nonUserCheckin = markerObject["non_user_checkin"];
-		if (nonUserCheckin && !showNonUserCheckins) {
-			continue; // don't add the non-user checkin to the markersArray
-		}
-
-		// Show checkins with established bad ratings on the map?
-		var showBad;
-		if ($("#showBadRatings").is(":checked")) {
-			showBad = true;
-		}
-		else {
-			showBad = false;
-		}
-		// Don't show a marker with bad ratings if user doesn't want to see them
-		var badRating = markerObject["bad_rating"];
-		if (badRating && !showBad) {
-			continue; // don't add the poorly rated checkin to the markersArray
-		}
-
-		// Show old checkins on the map?
-		var showOld;
-		if ($("#showOldCheckins").is(":checked")) {
-			showOld = true;
-		}
-		else {
-			showOld = false;
-		} 
-
 		// Set marker icons based on how old they are
 		var timeout = markerObject["timeout"];
 		if (timeout == "old") {
 			if (iconType == "food_truck") {
 				icon = "static/truck6.png";
 				if (!showOld) {
-					continue; // don't add the old marker to the markersArray
+					removeMarker = true; // don't add the poorly rated checkin to the markersArray
 				}
 			}
 		}
@@ -224,11 +253,6 @@ function addMarkers(map, markers) {
 		else if (timeout == "one_hour") {
 			if (iconType == "food_truck") {
 				icon = "static/truck1.png";
-				
-				// below if statement here for testing purposes only
-				if (!showOld) {
-					continue; // don't add the old marker to the markersArray
-				}
 			}
 		}
 		else {
@@ -252,6 +276,9 @@ function addMarkers(map, markers) {
 		marker.set("checkin_id", markerObject["checkin_id"]);
 		marker.set("lat", markerObject["lat"]);
 		marker.set("lng", markerObject["lng"]);
+		marker.set("timeout", markerObject["timeout"]);
+		marker.set("non-user-checkin", markerObject["non-user-checkin"]);
+		marker.set("bad-rating", markerObject["bad_rating"]);
 
 		// set Yelp data, if available
 		if (markerObject["ratings_img"]) {
@@ -260,9 +287,10 @@ function addMarkers(map, markers) {
 			marker.set("url", markerObject["url"]);
 		}
 
-		// add the marker to the markers array
+		
+		// add the marker to the markers array 
 		markersArray.push(marker);
-
+		
 
 		///////////////////
 		// MARKER EVENTS //
@@ -415,8 +443,7 @@ function addMarkers(map, markers) {
 									+ "<form action='/upvote/" + checkin_id + "' method='POST' class='form-arrow'>"
 									+ upButton
 									+ "<span class='glyphicon glyphicon-arrow-up' aria-hidden='true'></span>"
-									+ "</button>"
-									+ "</form>" 
+									+ "</button></form>" 
 									+ "</td>"
 
 									+ "<td>" + upVoteNum + "</td></tr>"
@@ -431,8 +458,7 @@ function addMarkers(map, markers) {
 									+ "<form action='/downvote/" + checkin_id + "' method='POST' class='form-arrow'>"
 									+ downButton
 									+ "<span class='glyphicon glyphicon-arrow-down' aria-hidden='true'></span>"
-									+ "</button>"
-									+ "</form>"
+									+ "</button></form>"
 									+ "</td>"
 
 									+ "<td style='vertical-align: top'>" + downVoteNum + "</td></tr>"
@@ -479,7 +505,11 @@ function addMarkers(map, markers) {
 	} // end of for loop for markers
 
 	// put all user-desired markers on the map
+	setOptionChecks();
 	setOrDeleteMarkers();
+
+	
+	
 	
 
 	// get checkbox changes
@@ -488,31 +518,25 @@ function addMarkers(map, markers) {
 			if (this.id == "showOldCheckins") {
 				if ($(this).is(":checked")) {
 					showOld = true;
-					initialize();
 				}
 				else {
 					showOld = false;
-					initialize();
 				}
 			}
 			else if (this.id == "showBadRatings") {
 				if ($(this).is(":checked")) {
 					showBad = true;
-					initialize();
 				}
 				else {
 					showBad = false;
-					initialize();
 				}
 			}
 			else if (this.id == "showNonUserCheckins") {
 				if ($(this).is(":checked")) {
 					showNonUserCheckins = true;
-					initialize();
 				}
 				else {
 					showNonUserCheckins = false;
-					initialize();
 				}
 			}
 			else if (this.id == "rememberMeLogin") {
@@ -527,9 +551,13 @@ function addMarkers(map, markers) {
 					// unchecked: update status to false
 					checkedAttractions[attractionId] = false;
 				}
+				setOrDeleteMarkers();
+				return;
+				
 			}
+			setOptionChecks();
+			setOrDeleteMarkers();
 
-			setOrDeleteMarkers();	
 	});
 }
 
@@ -625,20 +653,10 @@ function getDirections(toLat,toLng) {
 }
 
 
-
 // Creates the map to show on the page
 function initialize() {
 
-	var startLatLng = new google.maps.LatLng(37.7796292,-122.4324726);
-
 	directionsDisplay = new google.maps.DirectionsRenderer();
-
-
-	var mapOptions = {
-		// start on San Francisco
-		center: startLatLng,
-		zoom: 13
-	};
 
 	// detect browser type
  	var useragent = navigator.userAgent;
@@ -654,12 +672,18 @@ function initialize() {
 	}
 
 	// create the map object
+	var startLatLng = new google.maps.LatLng(37.7796292,-122.4324726);
+	var mapOptions = {
+		// start on San Francisco
+		center: startLatLng,
+		zoom: 13
+	};
+	// create the map object
 	map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
 
 	directionsDisplay.setOptions({suppressMarkers: true});
 	directionsDisplay.setMap(map);
 	directionsDisplay.setPanel(document.getElementById("directionsDiv"));
-
 
 	getMarkers(map);
 
