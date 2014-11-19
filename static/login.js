@@ -74,12 +74,9 @@ $(document).ready(function() {
 				$("#loginErrorMessage").empty();
 			}
 
-			var rememberMe = false;
 			// GET REMEMBER ME CHECKBOX
-			if ($("input[name='rememberMeLogin']:checked")) {
-				rememberMe = true;
-			}
-
+			var rememberMe = $("input[name='rememberMeLogin']:checked");
+			
 
 			// post login event
 			$.post(
@@ -225,12 +222,9 @@ $(document).ready(function() {
 				$("#signupErrorMessage").empty();
 			}
 
-			var rememberMe = false;
 			// GET REMEMBER ME CHECKBOX
-			if ($("input[name='rememberMeSignup']:checked")) {
-				rememberMe = true;
-			}
-
+			var rememberMe = $("input[name='rememberMeSignup']:checked");
+			
 			
 			// post event
 			$.post(
@@ -283,7 +277,7 @@ $(document).ready(function() {
 
 
 
-	
+
 
 
 });
