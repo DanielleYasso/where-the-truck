@@ -10,7 +10,7 @@
 
 	<meta name="viewport" content="width=device=width, initial-scale=1.0, user-scalable=no" />
 
-	<script src="https://maps.googleapis.com/maps/api/js?key={{API_KEY}}&libraries=places"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?key={{API_KEY}}"></script>
 
 </head>
 <body>
@@ -23,18 +23,20 @@
 			<a class="navbar-brand" href="#">SF Find</a>
 		</div>
 		<!-- <div class="navbar-collapse collapse"> -->
-			<div class="nav navbar-nav navbar-right">
+			<ul class="nav navbar-nav navbar-right">
 				{% if session.get("user_id", False) %}
-					<form action="/logout">
-						<p class="navbar-text">{{ g.user.username }}</p>
-						<button type="submit" id="logoutButton" class="btn navbar-btn btn-default">Logout</button>
-					</form>
+					<li><p class="navbar-text">{{ g.user.username }}</p></li>
+					<li>
+						<form action="/logout">
+							<button type="submit" id="logoutButton" class="btn navbar-btn btn-default">Logout</button>
+						</form>
+					</li>
 
 				{% else %}
-					<button id="loginOpenButton" class="btn navbar-btn btn-default">Login</button>
-					<button id="signupOpenButton" class="btn navbar-btn btn-default">Signup</button>
+					<li><button id="loginOpenButton" class="btn navbar-btn btn-default">Login</button></li>
+					<li><button id="signupOpenButton" class="btn navbar-btn btn-default">Signup</button></li>
 				{% endif %}
-			</div>
+			</ul>
 		<!-- </div> -->
 	</div>
 </nav>
@@ -195,6 +197,9 @@
 		</div>
 
 		</div><!-- end row -->
+
+		
+
 		<div class="row col-sm-12">
 		
 			{% if session.get("user_id", False) %}
@@ -205,6 +210,9 @@
 
 		</form>	
 	</div><!-- END CHECKBOXES DIV -->
+
+	<!-- add an empty row -->
+	<div class="row col-sm-12">&nbsp;</div>
 
 	<div id="map-canvas" class="img-rounded"></div>
 

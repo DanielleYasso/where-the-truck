@@ -25,6 +25,15 @@ html, body, .container {
 	text-align: right;
 }*/
 
+ul.nav {
+	list-style-type: none;
+}
+
+ul.nav li {
+	display: inline-block;
+}
+
+
 /****************************
 
 	LOGIN AND SIGNUP FORMS
