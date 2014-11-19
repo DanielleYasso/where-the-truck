@@ -10,9 +10,6 @@ from math import sqrt # for calculated_rating
 
 from flask.ext.sqlalchemy import SQLAlchemy
 
-# Flask Security - setup at bottom
-# from flask.ext.security import Security, SQLAlchemyUserDatastore, UserMixin, RoleMixin
-
 
 ## Create database connection object
 from routing import app
@@ -192,13 +189,6 @@ class Role(db.Model):
 
 # END CLASS DECLARATIONS #
 ##########################
-
-
-# Setup Flask-Security
-# user_datastore = SQLAlchemyUserDatastore(db, User, Role)
-# security = Security(app, user_datastore)
-
-
 
 
 def main():
