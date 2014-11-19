@@ -166,8 +166,10 @@ class User(db.Model):
 			if checkin.calculated_rating:
 				total += checkin.calculated_rating
 				count += 1
-
-		self.average_rating = total/count
+				
+		# in case of deleted rating leading to 0 count		
+		if count != 0:
+			self.average_rating = total/count
 
 ##############
 # ROLE CLASS #

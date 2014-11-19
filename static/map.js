@@ -350,133 +350,45 @@ function addMarkers(map, markers) {
 					var loggedIn = votes[2];
 					var yourCheckin = votes[3];
 					var voteType = votes[4];
-					// create content for info window
+					
+					// create content and set defaults for info window
+					var upButton = "<button type='submit' class='btn btn-link btn-arrow'>";
+					var downButton = "<button type='submit' class='btn btn-link btn-arrow'>";
+					var upButtonDisabled = "<button class='btn btn-link btn-arrow' disabled>";
+					var downButtonDisabled = "<button class='btn btn-link btn-arrow' disabled>";
+					var upVoteNum = upvotes;
+					var downVoteNum = downvotes;
 
-					var upButton;
-					var downButton;
+					// set yelp api data defaults
 					var attraction_name_url = attraction_name;
 					var yelp_ratings = "";
 					var powered_by_yelp = "";
 
 					if (loggedIn && !yourCheckin) {
+						// upvote --> down button disabled
 						if (voteType == "up") {
-							upButton = "<form action='/upvote/" + checkin_id + "' method='POST' class='form-arrow'>"
-										+ "<button type='submit' class='btn btn-link btn-arrow'>"
-										+ "<span class='glyphicon glyphicon-arrow-up' aria-hidden='true'>" 
-										+ "</span"
-										+ "</button>"
-										+ "</form>" 
-										+ "</td>"
-
-										+ "<td style='font-weight: bold'>"
-										+ upvotes
-										+ "</td></tr>";
-
-							downButton = "<form action='/downvote/" + checkin_id + "' method='POST' class='form-arrow'>"
-										+ "<button type='submit' class='btn btn-link btn-arrow' disabled>"
-										+ "<span class='glyphicon glyphicon-arrow-down' aria-hidden='true'>" 
-										+ "</span"
-										+ "</button>"
-										+ "</form>"
-										+ "</td>"
-
-										+ "<td style='vertical-align: top'>"
-										+ downvotes
-										+ "</td></tr>";
+							upVoteNum =	"<strong>" + upvotes + "</strong";
+							downButton = downButtonDisabled;
 						}
+						// downvote --> up button disabled
 						else if (voteType == "down") {						
-							upButton = "<form action='/upvote/" + checkin_id + "' method='POST' class='form-arrow'>"
-										+ "<button type='submit' class='btn btn-link btn-arrow' disabled>"
-										+ "<span class='glyphicon glyphicon-arrow-up' aria-hidden='true'>" 
-										+ "</span"
-										+ "</button>"
-										+ "</form>" 
-										+ "</td>"
-
-										+ "<td>"
-										+ upvotes
-										+ "</td></tr>";
-
-							downButton = "<form action='/downvote/" + checkin_id + "' method='POST' class='form-arrow'>"
-										+ "<button type='submit' class='btn btn-link btn-arrow'>"
-										+ "<span class='glyphicon glyphicon-arrow-down' aria-hidden='true'>" 
-										+ "</span"
-										+ "</button>"
-										+ "</form>"
-										+ "</td>"
-
-										+ "<td style='vertical-align: top; font-weight: bold'>"
-										+ downvotes
-										+ "</td></tr>";
+							upButton = upButtonDisabled;
+							downVoteNum = "<strong>" + downvotes + "</strong>";
 						}
 						// no existing vote
 						else {
-							upButton = "<form action='/upvote/" + checkin_id + "' method='POST' class='form-arrow'>"
-										+ "<button type='submit' class='btn btn-link btn-arrow'>"
-										+ "<span class='glyphicon glyphicon-arrow-up' aria-hidden='true'>" 
-										+ "</span"
-										+ "</button>"
-										+ "</form>" 
-										+ "</td>"
-
-										+ "<td>"
-										+ upvotes
-										+ "</td></tr>";
-
-							downButton = "<form action='/downvote/" + checkin_id + "' method='POST' class='form-arrow'>"
-										+ "<button type='submit' class='btn btn-link btn-arrow'>"
-										+ "<span class='glyphicon glyphicon-arrow-down' aria-hidden='true'>" 
-										+ "</span"
-										+ "</button>"
-										+ "</form>"
-										+ "</td>"
-
-										+ "<td style='vertical-align: top'>"
-										+ downvotes
-										+ "</td></tr>";
+							// use defaults set above			
 						}
 					}
-					// your checkin
+					// your checkin --> buttons disabled
 					else if (yourCheckin) {
-						upButton = "<button class='btn btn-link btn-arrow' disabled>"
-									+ "<span class='glyphicon glyphicon-arrow-up' aria-hidden='true'>" 
-									+ "</span"
-									+ "</button>"
-									+ "</td>"
-
-									+ "<td>"
-									+ upvotes
-									+ "</td></tr>";
-
-						downButton = "<button type='submit' class='btn btn-link btn-arrow' disabled>"
-									+ "<span class='glyphicon glyphicon-arrow-down' aria-hidden='true'>" 
-									+ "</span"
-									+ "</button>"
-									+ "</td>"
-
-									+ "<td style='vertical-align: top'>"
-									+ downvotes
-									+ "</td></tr>";
+						upButton = upButtonDisabled;
+						downButton = downButtonDisabled;
 					}
-					// not logged in
+					// not logged in --> buttons show login to rate alert
 					else {
-						upButton = "<button onclick='loginToRate()' class='btn btn-link btn-arrow'>"
-									+ "<span class='glyphicon glyphicon-arrow-up' aria-hidden='true'></span>" 
-									+ "</button>"
-									+ "</td>"
-
-									+ "<td>"
-									+ upvotes
-									+ "</td></tr>";
-
-						downButton = "<button onclick='loginToRate()' class='btn btn-link btn-arrow'>"
-									+ "<span class='glyphicon glyphicon-arrow-down' aria-hidden='true'></span>" 
-									+ "</button>"
-									+ "</td>"
-
-									+ "<td style='vertical-align: top'>"
-									+ downvotes
-									+ "</td></tr>";
+						upButton = "<button type='button' onclick='loginToRate()' class='btn btn-link btn-arrow'>";
+						downButton = "<button type='button' onclick='loginToRate()' class='btn btn-link btn-arrow'>";
 					}
 
 					if (yelp_url) {
@@ -497,14 +409,17 @@ function addMarkers(map, markers) {
 
 						var content = "<table style='text-align: left; width: 100%'><tr>"
 
-									+ "<th>"
-									+ attraction_name_url 
-									+ "</th>"
-
-									
+									+ "<th>" + attraction_name_url + "</th>"
 
 									+ "<td id='upArrow' padding-right: 5px;'>"
+									+ "<form action='/upvote/" + checkin_id + "' method='POST' class='form-arrow'>"
 									+ upButton
+									+ "<span class='glyphicon glyphicon-arrow-up' aria-hidden='true'></span>"
+									+ "</button>"
+									+ "</form>" 
+									+ "</td>"
+
+									+ "<td>" + upVoteNum + "</td></tr>"
 
 									+ "<tr><td style='padding-bottom: 5px'>"
 									+ "<span style='margin-right: 5px; padding-right: 5px;'>" 
@@ -513,13 +428,18 @@ function addMarkers(map, markers) {
 									+ "</td>"
 
 									+ "<td id='downArrow' style='vertical-align: top;'>"
+									+ "<form action='/downvote/" + checkin_id + "' method='POST' class='form-arrow'>"
 									+ downButton
+									+ "<span class='glyphicon glyphicon-arrow-down' aria-hidden='true'></span>"
+									+ "</button>"
+									+ "</form>"
+									+ "</td>"
+
+									+ "<td style='vertical-align: top'>" + downVoteNum + "</td></tr>"
 
 									+ "<tr><td colspan='3'><span style='margin-right: 1px'>"
 									+ yelp_ratings_img
-									
 									+ yelp_ratings_count
-									
 									+ powered_by_yelp 
 									+ "</span>"
 									+ "</td></tr>"
@@ -534,7 +454,6 @@ function addMarkers(map, markers) {
 									+ "<option value='TRANSIT'>Transit</option>"
 									+ "</select>"
 									+ "</span></td></tr>"
-
 
 									+ "</table>";
 

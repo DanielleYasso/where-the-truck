@@ -535,7 +535,6 @@ def update_vote(checkin_id, vote):
 	"""Gets a user's up or down vote and updates checkins table record"""
 	# get attraction's checkin
 	checkin = model.db.session.query(model.Checkin).get(checkin_id)
-	print g.user
 
 	# ONLY LOGGED IN USERS CAN VOTE --> taken care of in map.js
 	
@@ -647,6 +646,7 @@ def get_votes(checkin_id):
 	# is a user signed in?
 	if g.user.is_authenticated():
 		votes.append(True) # [2]
+		print votes
 
 		if checkin.user_id == g.user.id:
 			votes.append(True) # [3]
