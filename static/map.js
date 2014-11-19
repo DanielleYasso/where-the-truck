@@ -538,45 +538,18 @@ function addMarkers(map, markers) {
 	$("input:checkbox").change(
 		function() {
 			if (this.id == "showOldCheckins") {
-				if ($(this).is(":checked")) {
-					showOld = true;
-				}
-				else {
-					showOld = false;
-				}
+				showOld = $(this).is(":checked");
 			}
 			else if (this.id == "showBadRatings") {
-				if ($(this).is(":checked")) {
-					showBad = true;
-				}
-				else {
-					showBad = false;
-				}
+				showBad = $(this).is(":checked");
 			}
 			else if (this.id == "showNonUserCheckins") {
-				if ($(this).is(":checked")) {
-					showNonUserCheckins = true;
-				}
-				else {
-					showNonUserCheckins = false;
-				}
+				showNonUserCheckins = $(this).is(":checked");
 			}
 			else if (this.id == "rememberMeLogin") {
 				// do nothing
 			}
-			else {
-				var attractionId = this.id;
-				if ($(this).is(":checked")) {
-					// checked: update status to true
-					checkedAttractions[attractionId] = true;
-				} else {
-					// unchecked: update status to false
-					checkedAttractions[attractionId] = false;
-				}
-				setOrDeleteMarkers();
-				return;
-				
-			}
+			
 			setOptionChecks();
 			setOrDeleteMarkers();
 
