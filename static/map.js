@@ -196,11 +196,8 @@ function addMarkers(map, markers) {
 			// Show old checkins on the map?
 			showOld = $("#showOldCheckins").is(":checked");
 			if (marker.get("timeout") == "old") {
-				if (iconType == "food_truck") {
-					icon = "static/truck6.png";
-					if (!showOld) {
-						removeMarker = true; // don't add the poorly rated checkin to the markersArray
-					}
+				if (!showOld) {
+					removeMarker = true; // don't add the poorly rated checkin to the markersArray
 				}
 			}
 
@@ -240,9 +237,6 @@ function addMarkers(map, markers) {
 		if (timeout == "old") {
 			if (iconType == "food_truck") {
 				icon = "static/truck6.png";
-				if (!showOld) {
-					removeMarker = true; // don't add the poorly rated checkin to the markersArray
-				}
 			}
 		}
 		else if (timeout == "six_hours") {
