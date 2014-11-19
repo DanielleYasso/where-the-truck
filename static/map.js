@@ -271,15 +271,19 @@ function addMarkers(map, markers) {
 		// Focus on an attraction when it's name is clicked in the checkbox area
 		$(".attractionFocus").click( function(evt) {
 			var name = $(this).attr("id");
+			var matchFound = false;
 			for (var i = 0; i < markersArray.length; i++) {
 				marker = markersArray[i];
 				if (marker.get("name") == name && checkedAttractions[marker.get("id")]) {
-					marker.setAnimation(google.maps.Animation.BOUNCE);	
+					marker.setAnimation(google.maps.Animation.BOUNCE);
+					matchFound = true;	
 					break;
 				}
 			}
-			marker.setAnimation(null);
-			map.setCenter(marker.getPosition());	
+			if (matchFound) {
+				marker.setAnimation(null);
+				map.setCenter(marker.getPosition());
+			}	
 		});
 
 		// Drag event
