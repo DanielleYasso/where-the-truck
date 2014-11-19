@@ -2,6 +2,11 @@
 google.maps.event.addDomListener(window, "load", initialize());
 
 $(document).ready(function() {
+	
+	//////////////////////////////////
+	//////// DROPDOWN CHECKIN ////////
+	//////////////////////////////////
+
 	// on click, get user's geolocation
 	$("#checkinButton").click(
 		function(evt) {
@@ -20,6 +25,10 @@ $(document).ready(function() {
 
 /////////////////////////////////
 
+/////////////////////////////////
+//////// GET GEOLOCATION ////////
+/////////////////////////////////
+var markersArray;
 
 function getGeolocation(attraction_id) {
 	var browserSupportFlag = new Boolean();
@@ -54,6 +63,10 @@ function getGeolocation(attraction_id) {
 	}
 }
 
+///////////////////////////////////////////
+//////// VALIDATE CHECKIN LOCATION ////////
+///////////////////////////////////////////
+
 function isValidCheckin(attraction_id, lat,lng) {
 
 	$.get(
@@ -69,13 +82,25 @@ function isValidCheckin(attraction_id, lat,lng) {
 			}
 			else {
 				alert("Is this truck a boat? Because you're putting it in the " + result.ocean.name);
-				initialize();
+				// put the attraction back where it was
+				for (i = 0; i < markersArray.length; i++) {
+					marker = markersArray[i];
+					if (marker.get("id") == attraction_id) {
+						latLng = new google.maps.LatLng(marker.get("lat"), marker.get("lng"));
+						console.log(latLng);
+						marker.setPosition(latLng);
+					}
+				}
 			}
 		}
 		);
 
 
 }
+
+/////////////////////////////////////////
+//////// SET CHECKIN IN DATABASE ////////
+/////////////////////////////////////////
 
 function setCheckin(attraction_id, lat, lng) {
 	$.post(
@@ -88,6 +113,19 @@ function setCheckin(attraction_id, lat, lng) {
 		
 		// reload the map
 		function(result) {
+			// initialize();
+			// marker already in markersArray?
+			for (i = 0; i < markersArray.length; i++) {
+				marker = markersArray[i];
+				if (marker.get("id") == attraction_id) {
+					// marker exists in array, just update position on map
+					latLng = new google.maps.LatLng(lat, lng);
+					console.log(latLng);
+					marker.setPosition(latLng);
+					return;
+				}
+			}
+			// marker not in array. add marker to array and add to map
 			initialize();
 		}
 
@@ -130,7 +168,7 @@ function getMarkers(map) {
 function addMarkers(map, markers) {
 	
 	// create array to hold all markers
-	var markersArray = [];
+	markersArray = [];
 
 	///////////////////////////////////////////////////////////
 	//////// INITIALIZE CHECKED ATTRACTIONS DICTIONARY ////////
@@ -282,6 +320,8 @@ function addMarkers(map, markers) {
 		//////// MARKER EVENTS ////////
 
 		///////////////////////////////
+
+
 
 		////////////////////////////
 		//////// NAME CLICK ////////
