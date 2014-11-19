@@ -170,7 +170,7 @@ function addMarkers(map, markers) {
 				showNonUserCheckins = false;
 			}
 			// Don't show a maker if it doesn't have a user associated with it
-			if (marker.get("non-user-checkin") && !showNonUserCheckins) {
+			if (marker.get("non_user_checkin") && !showNonUserCheckins) {
 				removeMarker = true; // don't add the non-user checkin to the markersArray
 			}
 
@@ -182,7 +182,7 @@ function addMarkers(map, markers) {
 				showBad = false;
 			}
 			// Don't show a marker with bad ratings if user doesn't want to see them
-			if (marker.get("bad-rating") && !showBad) {
+			if (marker.get("bad_rating") && !showBad) {
 				removeMarker = true; // don't add the poorly rated checkin to the markersArray
 			}
 
@@ -277,8 +277,8 @@ function addMarkers(map, markers) {
 		marker.set("lat", markerObject["lat"]);
 		marker.set("lng", markerObject["lng"]);
 		marker.set("timeout", markerObject["timeout"]);
-		marker.set("non-user-checkin", markerObject["non-user-checkin"]);
-		marker.set("bad-rating", markerObject["bad_rating"]);
+		marker.set("non_user_checkin", markerObject["non_user_checkin"]);
+		marker.set("bad_rating", markerObject["bad_rating"]);
 
 		// set Yelp data, if available
 		if (markerObject["ratings_img"]) {
