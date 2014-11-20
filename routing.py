@@ -499,7 +499,7 @@ def get_markers():
 									"ratings_count": ratings_count,
 									"url": url #,
 									#"trusted_user": trusted_user #,
-									#"last_good_checkin_obj": last_good_checkin
+									# "last_good_checkin_obj": last_good_checkin
 									})
 	if attraction_list == []:
 		return convert_to_JSON("noMarkers")
@@ -538,7 +538,7 @@ def checkin():
 	model.db.session.commit()
 
 	# Use checkin record to update attraction's checkin_id
-	attraction_rec = new_checkin.attraction
+	attraction = new_checkin.attraction
 
 	# # if current attraction checkin is "good", then move it to last_good_checkin
 	# previous_checkin = model.db.session.query(model.Checkin).get(attraction_rec.checkin_id)
@@ -556,10 +556,86 @@ def checkin():
 	# 		else:
 	# 			attraction_rec.last_good_checkin_id = attraction_rec.checkin_id
 
-	attraction_rec.checkin_id = new_checkin.id
+	# get yelp ratings if they exist
+	if attraction.biz_id:
+		ratings_data = get_yelp_ratings(attraction.biz_id)
+
+		ratings_img = str(ratings_data["rating_img_url_small"])
+		ratings_count = str(ratings_data["review_count"])
+		url = "http://www.yelp.com/biz/{0}".format(attraction.biz_id)
+	else:
+		ratings_img = None
+		ratings_count = None
+		url = None
+
+	def getTimeout(this):
+		# check how old timestamp is
+		time_diff = datetime.now() - this.timestamp
+		# older than a day?
+		if time_diff.days >= 1:
+			timeout = "old"
+		# older than 6 hours?
+		elif time_diff.seconds >= 21600:
+			timeout = "six_hours"
+		# older than 3 hours?
+		elif time_diff.seconds >= 10800:
+			timeout = "three_hours"
+		# older than 1 hour?
+		elif time_diff.seconds >= 3600:
+			timeout = "one_hour"
+		# # temp for testing
+		# elif time_diff.seconds >= 30:
+		# 	timeout = "six_hours"
+		else:
+			timeout = False
+		return timeout
+
+	timeout = getTimeout(new_checkin)
+
+	# Check if attraction checkin has a really bad rating
+	bad_rating = False;
+	# if there are X total votes and/or X downvotes:
+	if new_checkin.downvotes > new_checkin.upvotes: # COMPARISON VALUES TO CHANGE
+		bad_rating = True
+		# if calculated_rating is below a certain number:
+			# bad_rating = True;
+
+		## if it has a bad rating: get its last_good_checkin_id if it has one
+		# if attraction.last_good_checkin_id:
+			# last_good_checkin = getLastGood(attraction);
+
+	non_user_checkin = True
+	trusted_user = True
+	# made by logged in and trusted user?
+	if new_checkin.user_id != None:
+		non_user_checkin = False
+		# # trusted user?
+		# trusted_user = checkin.user.trusted_user;
+
+		## if made by a non-user: get its last_good_checkin_id
+		# if !last_good_checkin and attraction.last_good_checkin_id:
+			# last_good_checkin = getLastGood(attraction);
+		
+
+	markerData = {"id": attraction.id, 
+							"name": attraction.name,
+							"lat": new_checkin.lat,
+							"lng": new_checkin.lng,
+							"timestamp": dump_datetime(new_checkin.timestamp),
+							"timeout": timeout,
+							"checkin_id": new_checkin.id,
+							"type": attraction.att_type,
+							"bad_rating": bad_rating,
+							"non_user_checkin": non_user_checkin,
+							"ratings_img": ratings_img,
+							"ratings_count": ratings_count,
+							"url": url #,
+							}
+
+	attraction.checkin_id = new_checkin.id
 	model.db.session.commit()
 
- 	return ""
+ 	return convert_to_JSON(markerData)
 
 
 ################

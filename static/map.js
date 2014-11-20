@@ -123,12 +123,23 @@ function setCheckin(attraction_id, lat, lng) {
 
 					marker.setPosition(latLng);
 					marker.setIcon(icon);
-					marker.set("lat", lat);
-					marker.set("lng", lng);
+
+					getMarkerData(result);
+
+					
+					// marker.set("lat", lat);
+					// marker.set("lng", lng);
 					return;
+
 				}
 			}
-			// marker not in array. add marker to array and add to map
+
+
+			
+
+
+
+
 			initialize();
 		}
 
@@ -166,6 +177,27 @@ function getMarkers(map) {
 //////// ADD MARKERS ////////
 
 //////////////////////////////
+
+function getMarkerData(markerObject) {
+	marker.set("id", markerObject["id"]);
+	marker.set("name", markerObject["name"]);
+	marker.set("time", markerObject["timestamp"]);
+	marker.set("checkin_id", markerObject["checkin_id"]);
+	marker.set("lat", markerObject["lat"]);
+	marker.set("lng", markerObject["lng"]);
+	marker.set("timeout", markerObject["timeout"]);
+	marker.set("type", markerObject["type"]);
+	marker.set("non_user_checkin", markerObject["non_user_checkin"]);
+	marker.set("bad_rating", markerObject["bad_rating"]);
+
+	// set Yelp data, if available
+	if (markerObject["ratings_img"]) {
+		marker.set("ratings_img", markerObject["ratings_img"]);
+		marker.set("ratings_count", markerObject["ratings_count"]);
+		marker.set("url", markerObject["url"]);
+	}
+
+}
 
 function getIconTypeForTimeout(timeout, iconType) {
 	if (timeout == "old") {
@@ -225,12 +257,20 @@ function addMarkers(map, markers) {
 
 			if (checkedAttractions[marker.get("id")] == false) {
 				marker.setMap(null);
-				// // if there's a last_good_checkin, then use that instead
-				// // unless it's old and they don't want to see that
-				// last_good_checkin_obj = marker.get("last_good_checkin_obj");
 
+				marker.get("last")
+				// // get the last_good_checkin if there is one
+				// if (needsBackup[marker.get("id") && marker.get("last_good_checkin_obj")) {
+				
+
+				// marker.setMap(map);
+				// }
 			}
 			else {
+				// // are you showing a marker that was hidden before?
+				// if (marker.get("hidden_marker")) {
+				// 	marker = marker.get("hidden_marker");
+				// }
 				marker.setMap(map);
 			}
 		}
@@ -278,8 +318,11 @@ function addMarkers(map, markers) {
 			attractionId = "#" + marker.get("id");
 			var showAttraction = $(attractionId).is(":checked");
 
-			// remove markers
+			// update marker status for display
 			checkedAttractions[marker.get("id")] = !(removeMarker || !showAttraction);
+
+			// if being removed
+			// needsBackup[marker.get("id")] = (removeMarker && (marker.get("timeout") != "old");
 			
 		}
 	} // end of setOptionChecks function
@@ -328,6 +371,8 @@ function addMarkers(map, markers) {
 			// marker.set("last_good_checkin_obj", markerObject["last_good_checkin_obj"]);
 		// }
 
+		
+
 		// set Yelp data, if available
 		if (markerObject["ratings_img"]) {
 			marker.set("ratings_img", markerObject["ratings_img"]);
@@ -338,7 +383,14 @@ function addMarkers(map, markers) {
 		
 		// add the marker to the markers array 
 		markersArray.push(marker);
+
+
+
+
 		
+		
+			
+
 
 		///////////////////////////////
 
