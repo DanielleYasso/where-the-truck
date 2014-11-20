@@ -119,7 +119,10 @@ function setCheckin(attraction_id, lat, lng) {
 					// marker exists in array, just update position on map
 					latLng = new google.maps.LatLng(lat, lng);
 					console.log(latLng);
+					var icon = getIconTypeForTimeout("new", marker.get("type"));
+
 					marker.setPosition(latLng);
+					marker.setIcon(icon);
 					marker.set("lat", lat);
 					marker.set("lng", lng);
 					return;
@@ -157,12 +160,41 @@ function getMarkers(map) {
 }
 
 
+
 //////////////////////////////
 
 //////// ADD MARKERS ////////
 
 //////////////////////////////
 
+function getIconTypeForTimeout(timeout, iconType) {
+	if (timeout == "old") {
+		if (iconType == "food_truck") {
+			icon = "static/truck6.png";
+		}
+	}
+	else if (timeout == "six_hours") {
+		if (iconType == "food_truck") {
+			icon = "static/truck6.png";
+		}
+	}
+	else if (timeout == "three_hours") {
+		if (iconType == "food_truck") {
+			icon = "static/truck3.png";
+		}
+	}
+	else if (timeout == "one_hour") {
+		if (iconType == "food_truck") {
+			icon = "static/truck1.png";
+		}
+	}
+	else {
+		if (iconType == "food_truck") {
+			icon = "static/truck.png";
+		}
+	}
+	return icon;
+}
 
 // Gets all current checkin markers and puts them on the map
 function addMarkers(map, markers) {
@@ -193,6 +225,10 @@ function addMarkers(map, markers) {
 
 			if (checkedAttractions[marker.get("id")] == false) {
 				marker.setMap(null);
+				// // if there's a last_good_checkin, then use that instead
+				// // unless it's old and they don't want to see that
+				// last_good_checkin_obj = marker.get("last_good_checkin_obj");
+
 			}
 			else {
 				marker.setMap(map);
@@ -247,6 +283,8 @@ function addMarkers(map, markers) {
 			
 		}
 	} // end of setOptionChecks function
+
+
 	
 
 	/////////////////////////////////////
@@ -264,31 +302,7 @@ function addMarkers(map, markers) {
 
 		// Set marker icons based on how old they are
 		var timeout = markerObject["timeout"];
-		if (timeout == "old") {
-			if (iconType == "food_truck") {
-				icon = "static/truck6.png";
-			}
-		}
-		else if (timeout == "six_hours") {
-			if (iconType == "food_truck") {
-				icon = "static/truck6.png";
-			}
-		}
-		else if (timeout == "three_hours") {
-			if (iconType == "food_truck") {
-				icon = "static/truck3.png";
-			}
-		}
-		else if (timeout == "one_hour") {
-			if (iconType == "food_truck") {
-				icon = "static/truck1.png";
-			}
-		}
-		else {
-			if (iconType == "food_truck") {
-				icon = "static/truck.png";
-			}
-		}
+		icon = getIconTypeForTimeout(timeout, iconType);
 
 		var marker = new google.maps.Marker({
 			position: myLatLng,
@@ -306,9 +320,13 @@ function addMarkers(map, markers) {
 		marker.set("lat", markerObject["lat"]);
 		marker.set("lng", markerObject["lng"]);
 		marker.set("timeout", markerObject["timeout"]);
+		marker.set("type", markerObject["type"]);
 		marker.set("non_user_checkin", markerObject["non_user_checkin"]);
 		marker.set("bad_rating", markerObject["bad_rating"]);
 		// marker.set("trusted_user", markerObject["trusted_user"]);
+		// if (markerObject["last_good_checkin_obj"]) {
+			// marker.set("last_good_checkin_obj", markerObject["last_good_checkin_obj"]);
+		// }
 
 		// set Yelp data, if available
 		if (markerObject["ratings_img"]) {

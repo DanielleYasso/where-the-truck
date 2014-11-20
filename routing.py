@@ -412,11 +412,9 @@ def get_markers():
 			ratings_count = None
 			url = None
 
-		if attraction.checkin_id:
-			checkin = model.db.session.query(model.Checkin).get(attraction.checkin_id)
-			
+		def getTimeout(this):
 			# check how old timestamp is
-			time_diff = datetime.now() - checkin.timestamp
+			time_diff = datetime.now() - this.timestamp
 			# older than a day?
 			if time_diff.days >= 1:
 				timeout = "old"
@@ -429,8 +427,38 @@ def get_markers():
 			# older than 1 hour?
 			elif time_diff.seconds >= 3600:
 				timeout = "one_hour"
+			# # temp for testing
+			# elif time_diff.seconds >= 30:
+			# 	timeout = "six_hours"
 			else:
 				timeout = False
+			return timeout
+
+		def getLastGood(attraction):
+			last_good = model.db.session.query(model.Checkin).get(attraction.last_good_checkin_id)
+
+			timeout = getTimeout(last_good)
+			lgObject = {"id": attraction.id, 
+						"name": attraction.name,
+						"lat": last_good.lat,
+						"lng": last_good.lng,
+						"timestamp": dump_datetime(last_good.timestamp),
+						"timeout": timeout,
+						"checkin_id": last_good_checkin_id,
+						"type": attraction.att_type,
+						"bad_rating": False,
+						"non_user_checkin": False,
+						"ratings_img": ratings_img,
+						"ratings_count": ratings_count,
+						"url": url #,
+						#"trusted_user": trusted_user
+						}
+			return lgObject
+
+		if attraction.checkin_id:
+			checkin = model.db.session.query(model.Checkin).get(attraction.checkin_id)
+			
+			timeout = getTimeout(checkin)
 
 			# Check if attraction checkin has a really bad rating
 			bad_rating = False;
@@ -440,7 +468,9 @@ def get_markers():
 				# if calculated_rating is below a certain number:
 					# bad_rating = True;
 
-				# if it has a bad rating: store its last good user checkin_id in new column
+				## if it has a bad rating: get its last_good_checkin_id if it has one
+				# if attraction.last_good_checkin_id:
+					# last_good_checkin = getLastGood(attraction);
 
 			non_user_checkin = True
 			trusted_user = True
@@ -450,9 +480,10 @@ def get_markers():
 				# # trusted user?
 				# trusted_user = checkin.user.trusted_user;
 
-				# if made by non-user, store last trusted user checkin in new column
-					#last_user_checkin
-					# or just send info for the last good user checkin (will require another db query though)
+				## if made by a non-user: get its last_good_checkin_id
+				# if !last_good_checkin and attraction.last_good_checkin_id:
+					# last_good_checkin = getLastGood(attraction);
+				
 
 			attraction_list.append({"id": attraction.id, 
 									"name": attraction.name,
@@ -467,7 +498,8 @@ def get_markers():
 									"ratings_img": ratings_img,
 									"ratings_count": ratings_count,
 									"url": url #,
-									#"trusted_user": trusted_user
+									#"trusted_user": trusted_user #,
+									#"last_good_checkin_obj": last_good_checkin
 									})
 	if attraction_list == []:
 		return convert_to_JSON("noMarkers")
@@ -485,7 +517,6 @@ def checkin():
 
 	# get attraction id
 	attraction_id = request.form.get("attraction_id")
-
 
 	# get geolocation data from user
 	lat = request.form.get("latitude")
