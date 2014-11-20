@@ -442,15 +442,15 @@ def get_markers():
 
 				# if it has a bad rating: store its last good user checkin_id in new column
 
-			# made by logged in user?
+			non_user_checkin = True
+			trusted_user = True
+			# made by logged in and trusted user?
 			if checkin.user_id != None:
 				non_user_checkin = False
 				# # trusted user?
 				# trusted_user = checkin.user.trusted_user;
-			else:
-				non_user_checkin = True
 
-				# if made by non-user, store last good user checkin in new column
+				# if made by non-user, store last trusted user checkin in new column
 					#last_user_checkin
 					# or just send info for the last good user checkin (will require another db query though)
 
@@ -508,6 +508,23 @@ def checkin():
 
 	# Use checkin record to update attraction's checkin_id
 	attraction_rec = new_checkin.attraction
+
+	# # if current attraction checkin is "good", then move it to last_good_checkin
+	# previous_checkin = model.db.session.query(model.Checkin).get(attraction_rec.checkin_id)
+
+	# # made by a user?
+	# if previous_checkin.user_id:
+	# 	# a trusted user?
+	# 	if previous_checkin.user.trusted_user:
+	# 		# did it have a rating?
+	# 		if -1 < previous_checkin.calculated_rating < 1:
+	# 			# if it wasn't a bad rating, add it
+	# 			if previous_checkin.calculated_rating > 0:
+	# 				attraction_rec.last_good_checkin_id = attraction_rec.checkin_id
+	# 		# unrated, but made by a trusted user
+	# 		else:
+	# 			attraction_rec.last_good_checkin_id = attraction_rec.checkin_id
+
 	attraction_rec.checkin_id = new_checkin.id
 	model.db.session.commit()
 
