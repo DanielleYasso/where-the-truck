@@ -434,19 +434,13 @@ def getLastGood(attraction):
 	last_good = model.db.session.query(model.Checkin).get(attraction.last_good_checkin_id)
 
 	timeout = getTimeout(last_good)
-	lgDict = {"id": attraction.id, 
-				"name": attraction.name,
-				"lat": last_good.lat,
+	lgDict = {"lat": last_good.lat,
 				"lng": last_good.lng,
 				"timestamp": dump_datetime(last_good.timestamp),
 				"timeout": timeout,
 				"checkin_id": last_good_checkin_id,
-				"type": attraction.att_type,
 				"bad_rating": False,
 				"non_user_checkin": False,
-				"ratings_img": ratings_img,
-				"ratings_count": ratings_count,
-				"url": url,
 				"trusted_user": True
 				}
 	return lgDict
@@ -491,6 +485,8 @@ def getCheckinData(checkin):
 		url = None
 
 
+	last_good_checkin = False
+	
 	# Check if attraction checkin has a really bad rating
 	bad_rating = False;
 	# if there are X total votes and/or X downvotes:
@@ -515,21 +511,25 @@ def getCheckinData(checkin):
 		# if !last_good_checkin and attraction.last_good_checkin_id:
 			# last_good_checkin = getLastGood(attraction)
 
+	current_checkin = {"lat": checkin.lat,
+						"lng": checkin.lng,
+						"timestamp": dump_datetime(checkin.timestamp),
+						"timeout": timeout,
+						"checkin_id": checkin.id,
+						"bad_rating": bad_rating,
+						"non_user_checkin": non_user_checkin,
+						"trusted_user": trusted_user
+						}
+
+
 	checkin_data = {"id": checkin.attraction.id, 
 					"name": checkin.attraction.name,
-					"lat": checkin.lat,
-					"lng": checkin.lng,
-					"timestamp": dump_datetime(checkin.timestamp),
-					"timeout": timeout,
-					"checkin_id": checkin.id,
 					"type": checkin.attraction.att_type,
-					"bad_rating": bad_rating,
-					"non_user_checkin": non_user_checkin,
 					"ratings_img": ratings_img,
 					"ratings_count": ratings_count,
 					"url": url,
-					"trusted_user": trusted_user #,
-					# "last_good_checkin_obj": last_good_checkin
+					"current": current_checkin,
+					"previous": last_good_checkin
 					}
 
 	return checkin_data

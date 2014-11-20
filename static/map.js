@@ -124,7 +124,7 @@ function setCheckin(attraction_id, lat, lng) {
 					marker.setPosition(latLng);
 					marker.setIcon(icon);
 
-					getMarkerData(result);
+					getMarkerData(marker, result);
 
 					
 					// marker.set("lat", lat);
@@ -178,18 +178,27 @@ function getMarkers(map) {
 
 //////////////////////////////
 
-function getMarkerData(markerObject) {
+function getMarkerData(marker, markerObject) {
 	marker.set("id", markerObject["id"]);
 	marker.set("name", markerObject["name"]);
-	marker.set("time", markerObject["timestamp"]);
-	marker.set("checkin_id", markerObject["checkin_id"]);
-	marker.set("lat", markerObject["lat"]);
-	marker.set("lng", markerObject["lng"]);
-	marker.set("timeout", markerObject["timeout"]);
+	marker.set("time", markerObject["current"]["timestamp"]);
 	marker.set("type", markerObject["type"]);
-	marker.set("non_user_checkin", markerObject["non_user_checkin"]);
-	marker.set("bad_rating", markerObject["bad_rating"]);
 
+	marker.set("checkin_id", markerObject["current"]["checkin_id"]);
+	marker.set("lat", markerObject["current"]["lat"]);
+	marker.set("lng", markerObject["current"]["lng"]);
+	marker.set("timeout", markerObject["current"]["timeout"]);
+
+	marker.set("non_user_checkin", markerObject["current"]["non_user_checkin"]);
+	marker.set("bad_rating", markerObject["current"]["bad_rating"]);
+	marker.set("trusted_user", markerObject["current"]["trusted_user"]);
+
+	marker.set("using_update", "current");
+	marker.set("current", markerObject["current"]);
+
+	if (markerObject["previous"]) {
+		marker.set("previous", markerObject["previous"]);
+	}
 	// set Yelp data, if available
 	if (markerObject["ratings_img"]) {
 		marker.set("ratings_img", markerObject["ratings_img"]);
@@ -258,7 +267,6 @@ function addMarkers(map, markers) {
 			if (checkedAttractions[marker.get("id")] == false) {
 				marker.setMap(null);
 
-				marker.get("last")
 				// // get the last_good_checkin if there is one
 				// if (needsBackup[marker.get("id") && marker.get("last_good_checkin_obj")) {
 				
@@ -302,11 +310,11 @@ function addMarkers(map, markers) {
 				removeMarker = true; 
 			}
 
-			// // Show checkins made by un-trusted users?
-			// showUntrusted = $("#showUntrusted").is(":checked");
-			// if (!marker.get("trusted_user") && !showUntrusted) {
-			// 	removeMarker = true;
-			// }
+			// Show checkins made by un-trusted users?
+			showUntrusted = $("#showUntrusted").is(":checked");
+			if (!marker.get("trusted_user") && !showUntrusted) {
+				removeMarker = true;
+			}
 
 			// Show old checkins on the map?
 			showOld = $("#showOldCheckins").is(":checked");
@@ -321,9 +329,6 @@ function addMarkers(map, markers) {
 			// update marker status for display
 			checkedAttractions[marker.get("id")] = !(removeMarker || !showAttraction);
 
-			// if being removed
-			// needsBackup[marker.get("id")] = (removeMarker && (marker.get("timeout") != "old");
-			
 		}
 	} // end of setOptionChecks function
 
@@ -338,13 +343,13 @@ function addMarkers(map, markers) {
 	console.log("in create markers");
 	for (var i = 0; i < markers.length; i++) {
 		markerObject = markers[i];
-		var myLatLng = new google.maps.LatLng(markerObject["lat"], markerObject["lng"]);
+		var myLatLng = new google.maps.LatLng(markerObject["current"]["lat"], markerObject["current"]["lng"]);
 		console.log(myLatLng);
 
 		var iconType = markerObject["type"];
 
 		// Set marker icons based on how old they are
-		var timeout = markerObject["timeout"];
+		var timeout = markerObject["current"]["timeout"];
 		icon = getIconTypeForTimeout(timeout, iconType);
 
 		var marker = new google.maps.Marker({
@@ -356,40 +361,37 @@ function addMarkers(map, markers) {
 			// animation: google.maps.Animation.DROP
 		});
 
-		marker.set("id", markerObject["id"]);
-		marker.set("name", markerObject["name"]);
-		marker.set("time", markerObject["timestamp"]);
-		marker.set("checkin_id", markerObject["checkin_id"]);
-		marker.set("lat", markerObject["lat"]);
-		marker.set("lng", markerObject["lng"]);
-		marker.set("timeout", markerObject["timeout"]);
-		marker.set("type", markerObject["type"]);
-		marker.set("non_user_checkin", markerObject["non_user_checkin"]);
-		marker.set("bad_rating", markerObject["bad_rating"]);
-		// marker.set("trusted_user", markerObject["trusted_user"]);
-		// if (markerObject["last_good_checkin_obj"]) {
-			// marker.set("last_good_checkin_obj", markerObject["last_good_checkin_obj"]);
+		getMarkerData(marker, markerObject);
+
+		// marker.set("id", markerObject["id"]);
+		// marker.set("name", markerObject["name"]);
+		// marker.set("time", markerObject["current"]["timestamp"]);
+		// marker.set("checkin_id", markerObject["current"]["checkin_id"]);
+		// marker.set("lat", markerObject["current"]["lat"]);
+		// marker.set("lng", markerObject["current"]["lng"]);
+		// marker.set("timeout", markerObject["current"]["timeout"]);
+		// marker.set("type", markerObject["type"]);
+		// marker.set("non_user_checkin", markerObject["current"]["non_user_checkin"]);
+		// marker.set("bad_rating", markerObject["current"]["bad_rating"]);
+		// marker.set("trusted_user", markerObject["current"]["trusted_user"]);
+
+		// marker.set("using_update", "current");
+		// marker.set("current", markerObject["current"]);
+
+		// if (markerObject["previous"]) {
+		// 	marker.set("previous", markerObject["previous"]);
 		// }
 
-		
-
-		// set Yelp data, if available
-		if (markerObject["ratings_img"]) {
-			marker.set("ratings_img", markerObject["ratings_img"]);
-			marker.set("ratings_count", markerObject["ratings_count"]);
-			marker.set("url", markerObject["url"]);
-		}
+		// // set Yelp data, if available
+		// if (markerObject["ratings_img"]) {
+		// 	marker.set("ratings_img", markerObject["ratings_img"]);
+		// 	marker.set("ratings_count", markerObject["ratings_count"]);
+		// 	marker.set("url", markerObject["url"]);
+		// }
 
 		
 		// add the marker to the markers array 
 		markersArray.push(marker);
-
-
-
-
-		
-		
-			
 
 
 		///////////////////////////////
