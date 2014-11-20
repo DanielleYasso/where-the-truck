@@ -412,100 +412,127 @@ def get_markers():
 			ratings_count = None
 			url = None
 
-		def getTimeout(this):
-			# check how old timestamp is
-			time_diff = datetime.now() - this.timestamp
-			# older than a day?
-			if time_diff.days >= 1:
-				timeout = "old"
-			# older than 6 hours?
-			elif time_diff.seconds >= 21600:
-				timeout = "six_hours"
-			# older than 3 hours?
-			elif time_diff.seconds >= 10800:
-				timeout = "three_hours"
-			# older than 1 hour?
-			elif time_diff.seconds >= 3600:
-				timeout = "one_hour"
-			# # temp for testing
-			# elif time_diff.seconds >= 30:
-			# 	timeout = "six_hours"
-			else:
-				timeout = False
-			return timeout
-
-		def getLastGood(attraction):
-			last_good = model.db.session.query(model.Checkin).get(attraction.last_good_checkin_id)
-
-			timeout = getTimeout(last_good)
-			lgObject = {"id": attraction.id, 
-						"name": attraction.name,
-						"lat": last_good.lat,
-						"lng": last_good.lng,
-						"timestamp": dump_datetime(last_good.timestamp),
-						"timeout": timeout,
-						"checkin_id": last_good_checkin_id,
-						"type": attraction.att_type,
-						"bad_rating": False,
-						"non_user_checkin": False,
-						"ratings_img": ratings_img,
-						"ratings_count": ratings_count,
-						"url": url #,
-						#"trusted_user": trusted_user
-						}
-			return lgObject
-
 		if attraction.checkin_id:
 			checkin = model.db.session.query(model.Checkin).get(attraction.checkin_id)
 			
-			timeout = getTimeout(checkin)
+			checkin_data = getCheckinData(checkin)
 
-			# Check if attraction checkin has a really bad rating
-			bad_rating = False;
-			# if there are X total votes and/or X downvotes:
-			if checkin.downvotes > checkin.upvotes: # COMPARISON VALUES TO CHANGE
-				bad_rating = True
-				# if calculated_rating is below a certain number:
-					# bad_rating = True;
-
-				## if it has a bad rating: get its last_good_checkin_id if it has one
-				# if attraction.last_good_checkin_id:
-					# last_good_checkin = getLastGood(attraction);
-
-			non_user_checkin = True
-			trusted_user = True
-			# made by logged in and trusted user?
-			if checkin.user_id != None:
-				non_user_checkin = False
-				# # trusted user?
-				# trusted_user = checkin.user.trusted_user;
-
-				## if made by a non-user: get its last_good_checkin_id
-				# if !last_good_checkin and attraction.last_good_checkin_id:
-					# last_good_checkin = getLastGood(attraction);
-				
-
-			attraction_list.append({"id": attraction.id, 
-									"name": attraction.name,
-									"lat": checkin.lat,
-									"lng": checkin.lng,
-									"timestamp": dump_datetime(checkin.timestamp),
-									"timeout": timeout,
-									"checkin_id": checkin.id,
-									"type": attraction.att_type,
-									"bad_rating": bad_rating,
-									"non_user_checkin": non_user_checkin,
-									"ratings_img": ratings_img,
-									"ratings_count": ratings_count,
-									"url": url #,
-									#"trusted_user": trusted_user #,
-									# "last_good_checkin_obj": last_good_checkin
-									})
+			attraction_list.append(checkin_data)
+			
+									
 	if attraction_list == []:
 		return convert_to_JSON("noMarkers")
 
 	return convert_to_JSON(attraction_list)
 
+
+###################
+# GET MARKER DATA #
+###################
+
+def getLastGood(attraction):
+	last_good = model.db.session.query(model.Checkin).get(attraction.last_good_checkin_id)
+
+	timeout = getTimeout(last_good)
+	lgDict = {"id": attraction.id, 
+				"name": attraction.name,
+				"lat": last_good.lat,
+				"lng": last_good.lng,
+				"timestamp": dump_datetime(last_good.timestamp),
+				"timeout": timeout,
+				"checkin_id": last_good_checkin_id,
+				"type": attraction.att_type,
+				"bad_rating": False,
+				"non_user_checkin": False,
+				"ratings_img": ratings_img,
+				"ratings_count": ratings_count,
+				"url": url,
+				"trusted_user": True
+				}
+	return lgDict
+
+def getTimeout(checkin):
+	# check how old timestamp is
+	time_diff = datetime.now() - checkin.timestamp
+	# older than a day?
+	if time_diff.days >= 1:
+		timeout = "old"
+	# older than 6 hours?
+	elif time_diff.seconds >= 21600:
+		timeout = "six_hours"
+	# older than 3 hours?
+	elif time_diff.seconds >= 10800:
+		timeout = "three_hours"
+	# older than 1 hour?
+	elif time_diff.seconds >= 3600:
+		timeout = "one_hour"
+	# # temp for testing
+	# elif time_diff.seconds >= 30:
+	# 	timeout = "six_hours"
+	else:
+		timeout = False
+	return timeout
+
+
+def getCheckinData(checkin):
+	
+	timeout = getTimeout(checkin)
+
+	# get yelp ratings if they exist
+	if checkin.attraction.biz_id:
+		ratings_data = get_yelp_ratings(checkin.attraction.biz_id)
+
+		ratings_img = str(ratings_data["rating_img_url_small"])
+		ratings_count = str(ratings_data["review_count"])
+		url = "http://www.yelp.com/biz/{0}".format(checkin.attraction.biz_id)
+	else:
+		ratings_img = None
+		ratings_count = None
+		url = None
+
+
+	# Check if attraction checkin has a really bad rating
+	bad_rating = False;
+	# if there are X total votes and/or X downvotes:
+	if checkin.downvotes > checkin.upvotes: # COMPARISON VALUES TO CHANGE
+		bad_rating = True
+		# if calculated_rating is below a certain number:
+			# bad_rating = True;
+
+		## if it has a bad rating: get its last_good_checkin_id if it has one
+		# if attraction.last_good_checkin_id:
+			# last_good_checkin = getLastGood(attraction)
+
+	non_user_checkin = True
+	trusted_user = True
+	# made by logged in and trusted user?
+	if checkin.user_id != None:
+		non_user_checkin = False
+		# trusted user?
+		trusted_user = checkin.user.is_trusted()
+
+		## if made by a non-user: get its last_good_checkin_id
+		# if !last_good_checkin and attraction.last_good_checkin_id:
+			# last_good_checkin = getLastGood(attraction)
+
+	checkin_data = {"id": checkin.attraction.id, 
+					"name": checkin.attraction.name,
+					"lat": checkin.lat,
+					"lng": checkin.lng,
+					"timestamp": dump_datetime(checkin.timestamp),
+					"timeout": timeout,
+					"checkin_id": checkin.id,
+					"type": checkin.attraction.att_type,
+					"bad_rating": bad_rating,
+					"non_user_checkin": non_user_checkin,
+					"ratings_img": ratings_img,
+					"ratings_count": ratings_count,
+					"url": url,
+					"trusted_user": trusted_user #,
+					# "last_good_checkin_obj": last_good_checkin
+					}
+
+	return checkin_data
 
 ########################
 # CREATE A NEW CHECKIN #
@@ -556,86 +583,13 @@ def checkin():
 	# 		else:
 	# 			attraction_rec.last_good_checkin_id = attraction_rec.checkin_id
 
-	# get yelp ratings if they exist
-	if attraction.biz_id:
-		ratings_data = get_yelp_ratings(attraction.biz_id)
-
-		ratings_img = str(ratings_data["rating_img_url_small"])
-		ratings_count = str(ratings_data["review_count"])
-		url = "http://www.yelp.com/biz/{0}".format(attraction.biz_id)
-	else:
-		ratings_img = None
-		ratings_count = None
-		url = None
-
-	def getTimeout(this):
-		# check how old timestamp is
-		time_diff = datetime.now() - this.timestamp
-		# older than a day?
-		if time_diff.days >= 1:
-			timeout = "old"
-		# older than 6 hours?
-		elif time_diff.seconds >= 21600:
-			timeout = "six_hours"
-		# older than 3 hours?
-		elif time_diff.seconds >= 10800:
-			timeout = "three_hours"
-		# older than 1 hour?
-		elif time_diff.seconds >= 3600:
-			timeout = "one_hour"
-		# # temp for testing
-		# elif time_diff.seconds >= 30:
-		# 	timeout = "six_hours"
-		else:
-			timeout = False
-		return timeout
-
-	timeout = getTimeout(new_checkin)
-
-	# Check if attraction checkin has a really bad rating
-	bad_rating = False;
-	# if there are X total votes and/or X downvotes:
-	if new_checkin.downvotes > new_checkin.upvotes: # COMPARISON VALUES TO CHANGE
-		bad_rating = True
-		# if calculated_rating is below a certain number:
-			# bad_rating = True;
-
-		## if it has a bad rating: get its last_good_checkin_id if it has one
-		# if attraction.last_good_checkin_id:
-			# last_good_checkin = getLastGood(attraction);
-
-	non_user_checkin = True
-	trusted_user = True
-	# made by logged in and trusted user?
-	if new_checkin.user_id != None:
-		non_user_checkin = False
-		# # trusted user?
-		# trusted_user = checkin.user.trusted_user;
-
-		## if made by a non-user: get its last_good_checkin_id
-		# if !last_good_checkin and attraction.last_good_checkin_id:
-			# last_good_checkin = getLastGood(attraction);
-		
-
-	markerData = {"id": attraction.id, 
-							"name": attraction.name,
-							"lat": new_checkin.lat,
-							"lng": new_checkin.lng,
-							"timestamp": dump_datetime(new_checkin.timestamp),
-							"timeout": timeout,
-							"checkin_id": new_checkin.id,
-							"type": attraction.att_type,
-							"bad_rating": bad_rating,
-							"non_user_checkin": non_user_checkin,
-							"ratings_img": ratings_img,
-							"ratings_count": ratings_count,
-							"url": url #,
-							}
+	# Get marker details
+	checkin_data = getCheckinData(new_checkin)
 
 	attraction.checkin_id = new_checkin.id
 	model.db.session.commit()
 
- 	return convert_to_JSON(markerData)
+ 	return convert_to_JSON(checkin_data)
 
 
 ################

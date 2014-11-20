@@ -121,9 +121,8 @@ class User(db.Model):
 	email = Column(String(75), nullable = False)
 	password = Column(String, nullable = False)
 	average_rating = Column(Float, nullable = True)
-	# trusted_user = Column(Boolean(), default=True, nullable=False)
 	preferences = Column(MutableDict.as_mutable(PickleType), nullable = True)
-	# active = Column(Boolean())
+	active = Column(Boolean())
 	confirmed_at = Column(DateTime())
 	role_id = Column(Integer(), ForeignKey("roles.id"))
 
@@ -146,6 +145,26 @@ class User(db.Model):
 	def is_anonymous(self):
 		"""False, as anonymous users aren't supported"""
 		return False
+
+	def is_trusted(self):
+		"""Return whether user is 'trusted' based on average_rating and # of checkins"""
+		# count all existing and non-zero rated checkins
+		count = 0
+		for checkin in self.checkins:
+			if checkin.calculated_rating:
+				count += 1
+
+		# if no checkins or ratings, return True
+		if count == 0:
+			return True
+
+		# does user have an average rating?
+		if -1 < self.average_rating < 1:
+			if count >= 10 and self.average_rating < 0:
+				print "**** untrusted user"
+				return False
+			
+		return True
 
 
 	def get_token(self, expiration=1800):
@@ -170,13 +189,6 @@ class User(db.Model):
 		if count != 0:
 			self.average_rating = total/count
 
-		# set bad_user to True or False
-		if self.average_rating:
-			if count >= 10 and self.average_rating < 0:
-				print "**** bad user"
-				# self.trusted_user = False
-			#else:
-				# self.trusted_user = True
 
 ##############
 # ROLE CLASS #
