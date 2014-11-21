@@ -431,23 +431,30 @@ def get_markers():
 ###################
 
 def getLastGood(attraction):
-	last_good = model.db.session.query(model.Checkin).get(attraction.last_good_checkin_id)
+	# last_good = model.db.session.query(model.Checkin).get(attraction.last_good_checkin_id)
 
-	timeout = getTimeout(last_good)
-	lgDict = {"lat": last_good.lat,
-				"lng": last_good.lng,
-				"timestamp": dump_datetime(last_good.timestamp),
-				"timeout": timeout,
-				"checkin_id": last_good_checkin_id,
-				"bad_rating": False,
-				"non_user_checkin": False,
-				"trusted_user": True
-				}
-	return lgDict
+	# if last_good:
+	# 	print "**** last_good", last_good
+	# 	print "*** last_good id", last_good.id
+	# else:
+	# 	return False	
 
-def getTimeout(checkin):
+	# timeout = getTimeout(last_good)
+	# lgDict = {"lat": last_good.lat,
+	# 			"lng": last_good.lng,
+	# 			"timestamp": dump_datetime(last_good.timestamp),
+	# 			"timeout": timeout,
+	# 			"checkin_id": last_good_checkin_id,
+	# 			"bad_rating": False,
+	# 			"non_user_checkin": False,
+	# 			"trusted_user": True
+	# 			}
+	# return lgDict
+	return False
+
+def getTimeout(this):
 	# check how old timestamp is
-	time_diff = datetime.now() - checkin.timestamp
+	time_diff = datetime.now() - this.timestamp
 	# older than a day?
 	if time_diff.days >= 1:
 		timeout = "old"
@@ -486,7 +493,7 @@ def getCheckinData(checkin):
 
 
 	last_good_checkin = False
-	
+
 	# Check if attraction checkin has a really bad rating
 	bad_rating = False;
 	# if there are X total votes and/or X downvotes:
@@ -495,9 +502,8 @@ def getCheckinData(checkin):
 		# if calculated_rating is below a certain number:
 			# bad_rating = True;
 
-		## if it has a bad rating: get its last_good_checkin_id if it has one
-		# if attraction.last_good_checkin_id:
-			# last_good_checkin = getLastGood(attraction)
+		# if it has a bad rating: get its last_good_checkin
+		last_good_checkin = getLastGood(checkin.attraction)
 
 	non_user_checkin = True
 	trusted_user = True
@@ -507,9 +513,9 @@ def getCheckinData(checkin):
 		# trusted user?
 		trusted_user = checkin.user.is_trusted()
 
-		## if made by a non-user: get its last_good_checkin_id
-		# if !last_good_checkin and attraction.last_good_checkin_id:
-			# last_good_checkin = getLastGood(attraction)
+		# if made by a non-user: get its last_good_checkin
+		if not last_good_checkin:
+			last_good_checkin = getLastGood(checkin.attraction)
 
 	current_checkin = {"lat": checkin.lat,
 						"lng": checkin.lng,
@@ -564,29 +570,29 @@ def checkin():
 	model.db.session.add(new_checkin)
 	model.db.session.commit()
 
+
 	# Use checkin record to update attraction's checkin_id
 	attraction = new_checkin.attraction
 
-	# # if current attraction checkin is "good", then move it to last_good_checkin
-	# previous_checkin = model.db.session.query(model.Checkin).get(attraction_rec.checkin_id)
+	# UPDATE LAST_GOOD_CHECKIN_ID
+	previous_checkin = model.db.session.query(model.Checkin).get(attraction.checkin_id)
+	# made by a user? a trusted user?
+	if previous_checkin.user_id and previous_checkin.user.is_trusted():
+		# did it have a rating?
+		if previous_checkin.calculated_rating != None:
+			# if it wasn't a bad rating, add it
+			if previous_checkin.calculated_rating > 0:
+				attraction.last_good_checkin_id = attraction.checkin_id
+		# unrated, but made by a trusted user, so add it
+		else:
+			attraction.last_good_checkin_id = attraction.checkin_id
 
-	# # made by a user?
-	# if previous_checkin.user_id:
-	# 	# a trusted user?
-	# 	if previous_checkin.user.trusted_user:
-	# 		# did it have a rating?
-	# 		if -1 < previous_checkin.calculated_rating < 1:
-	# 			# if it wasn't a bad rating, add it
-	# 			if previous_checkin.calculated_rating > 0:
-	# 				attraction_rec.last_good_checkin_id = attraction_rec.checkin_id
-	# 		# unrated, but made by a trusted user
-	# 		else:
-	# 			attraction_rec.last_good_checkin_id = attraction_rec.checkin_id
+	# update attraction's checkin_id with the new_checkin
+	attraction.checkin_id = new_checkin.id
 
 	# Get marker details
 	checkin_data = getCheckinData(new_checkin)
-
-	attraction.checkin_id = new_checkin.id
+	
 	model.db.session.commit()
 
  	return convert_to_JSON(checkin_data)

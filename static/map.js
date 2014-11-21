@@ -126,20 +126,10 @@ function setCheckin(attraction_id, lat, lng) {
 
 					getMarkerData(marker, result);
 
-					
-					// marker.set("lat", lat);
-					// marker.set("lng", lng);
 					return;
 
 				}
 			}
-
-
-			
-
-
-
-
 			initialize();
 		}
 
@@ -363,33 +353,6 @@ function addMarkers(map, markers) {
 
 		getMarkerData(marker, markerObject);
 
-		// marker.set("id", markerObject["id"]);
-		// marker.set("name", markerObject["name"]);
-		// marker.set("time", markerObject["current"]["timestamp"]);
-		// marker.set("checkin_id", markerObject["current"]["checkin_id"]);
-		// marker.set("lat", markerObject["current"]["lat"]);
-		// marker.set("lng", markerObject["current"]["lng"]);
-		// marker.set("timeout", markerObject["current"]["timeout"]);
-		// marker.set("type", markerObject["type"]);
-		// marker.set("non_user_checkin", markerObject["current"]["non_user_checkin"]);
-		// marker.set("bad_rating", markerObject["current"]["bad_rating"]);
-		// marker.set("trusted_user", markerObject["current"]["trusted_user"]);
-
-		// marker.set("using_update", "current");
-		// marker.set("current", markerObject["current"]);
-
-		// if (markerObject["previous"]) {
-		// 	marker.set("previous", markerObject["previous"]);
-		// }
-
-		// // set Yelp data, if available
-		// if (markerObject["ratings_img"]) {
-		// 	marker.set("ratings_img", markerObject["ratings_img"]);
-		// 	marker.set("ratings_count", markerObject["ratings_count"]);
-		// 	marker.set("url", markerObject["url"]);
-		// }
-
-		
 		// add the marker to the markers array 
 		markersArray.push(marker);
 

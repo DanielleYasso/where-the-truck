@@ -57,7 +57,7 @@ class Attraction(db.Model):
 	checkin_id = Column(Integer, nullable = True)
 	att_type = Column(String(50), nullable = True)
 	biz_id = Column(String, nullable = True) # for use with yelp api
-	# last_good_checkin_id = Column(Integer, nullable = True)
+	last_good_checkin_id = Column(Integer, nullable = True)
 
 
 #################
