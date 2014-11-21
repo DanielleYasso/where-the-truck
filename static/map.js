@@ -28,7 +28,7 @@ $(document).ready(function() {
 /////////////////////////////////
 //////// GET GEOLOCATION ////////
 /////////////////////////////////
-var markersArray;
+var markersArray = [];
 
 function getGeolocation(attraction_id) {
 	var browserSupportFlag = new Boolean();
@@ -185,10 +185,10 @@ function getMarkerData(marker, markerObject) {
 
 	marker.set("using_update", "current");
 	marker.set("current", markerObject["current"]);
+	marker.set("previous", markerObject["previous"]);
 
-	if (markerObject["previous"]) {
-		marker.set("previous", markerObject["previous"]);
-	}
+	console.log("markerObject['previous']" + markerObject["previous"]);
+
 	// set Yelp data, if available
 	if (markerObject["ratings_img"]) {
 		marker.set("ratings_img", markerObject["ratings_img"]);
@@ -248,6 +248,26 @@ function addMarkers(map, markers) {
 	//////// SET OR DELETE MARKERS ////////
 	///////////////////////////////////////
 
+	function updateMarkerSettingsPosition(marker, using_update) {
+		latLng = new google.maps.LatLng(marker[using_update]["lat"], marker[using_update]["lng"]);
+		var icon = getIconTypeForTimeout(marker[using_update]["timeout"], marker.get("type"));
+
+		marker.setPosition(latLng);
+		marker.setIcon(icon);
+		marker.setMap(map);
+
+		marker.set("checkin_id", markerObject[using_update]["checkin_id"]);
+		marker.set("lat", markerObject[using_update]["lat"]);
+		marker.set("lng", markerObject[using_update]["lng"]);
+		marker.set("timeout", markerObject[using_update]["timeout"]);
+
+		marker.set("non_user_checkin", markerObject[using_update]["non_user_checkin"]);
+		marker.set("bad_rating", markerObject[using_update]["bad_rating"]);
+		marker.set("trusted_user", markerObject[using_update]["trusted_user"]);
+
+		marker.set(using_update, using_update);
+	}
+
 	// only show on map if checkbox is selected
 	function setOrDeleteMarkers() {
 		console.log(checkedAttractions);
@@ -258,17 +278,16 @@ function addMarkers(map, markers) {
 				marker.setMap(null);
 
 				// // get the last_good_checkin if there is one
-				// if (needsBackup[marker.get("id") && marker.get("last_good_checkin_obj")) {
+				if (marker.get("using_update") == "current" && marker.get("previous")) {
 				
-
-				// marker.setMap(map);
-				// }
+					// update marker settings
+					updateMarkerSettingsPosition(marker, "previous");
+					
+				}
+				
 			}
 			else {
-				// // are you showing a marker that was hidden before?
-				// if (marker.get("hidden_marker")) {
-				// 	marker = marker.get("hidden_marker");
-				// }
+				
 				marker.setMap(map);
 			}
 		}
@@ -524,7 +543,7 @@ function addMarkers(map, markers) {
 									+ "<td id='upArrow' padding-right: 5px;'>"
 									+ "<form action='/upvote/" + checkin_id + "' method='POST' class='form-arrow'>"
 									+ upButton
-									+ "<span class='glyphicon glyphicon-arrow-up' aria-hidden='true'></span>"
+									+ "<span class='glyphicon glyphicon-map-marker' style='color: green' aria-hidden='true'></span>"
 									+ "</button></form>" 
 									+ "</td>"
 
@@ -539,7 +558,7 @@ function addMarkers(map, markers) {
 									+ "<td id='downArrow' style='vertical-align: top;'>"
 									+ "<form action='/downvote/" + checkin_id + "' method='POST' class='form-arrow'>"
 									+ downButton
-									+ "<span class='glyphicon glyphicon-arrow-down' aria-hidden='true'></span>"
+									+ "<span class='glyphicon glyphicon-flag' style='color: red' aria-hidden='true'></span>"
 									+ "</button></form>"
 									+ "</td>"
 
@@ -613,6 +632,22 @@ function addMarkers(map, markers) {
 			}
 			else if (this.id == "rememberMeLogin" || this.id == "rememberMeSignup") {
 				// do nothing
+			}
+			else {
+				var attractionId = this.id;
+				for (i = 0; i < markersArray.length; i++) {
+					marker = markersArray[i];
+					if (marker.get("id") == attractionId) {
+						checkedAttractions[attractionId] = $(this).is(":checked");
+						if (checkedAttractions[attractionId]) {
+							marker.setMap(map);
+						}
+						else {
+							marker.setMap(null);
+						}
+					}
+				}
+				return;
 			}
 			
 			setOptionChecks();

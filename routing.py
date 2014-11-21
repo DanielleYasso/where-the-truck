@@ -106,6 +106,7 @@ def get_yelp_ratings(business_id):
 		access_token_secret = TOKEN_SECRET)
 
 	url = "http://api.yelp.com/v2/business/{0}".format(business_id)
+	print "**** url", url
 
 	request = session.get(url)
 
@@ -400,18 +401,6 @@ def get_markers():
 	attraction_list = []
 	for attraction in attractions:
 
-		# get yelp ratings if they exist
-		if attraction.biz_id:
-			ratings_data = get_yelp_ratings(attraction.biz_id)
-
-			ratings_img = str(ratings_data["rating_img_url_small"])
-			ratings_count = str(ratings_data["review_count"])
-			url = "http://www.yelp.com/biz/{0}".format(attraction.biz_id)
-		else:
-			ratings_img = None
-			ratings_count = None
-			url = None
-
 		if attraction.checkin_id:
 			checkin = model.db.session.query(model.Checkin).get(attraction.checkin_id)
 			
@@ -431,26 +420,27 @@ def get_markers():
 ###################
 
 def getLastGood(attraction):
-	# last_good = model.db.session.query(model.Checkin).get(attraction.last_good_checkin_id)
 
-	# if last_good:
-	# 	print "**** last_good", last_good
-	# 	print "*** last_good id", last_good.id
-	# else:
-	# 	return False	
+	if attraction.last_good_checkin_id:
+		last_good = model.db.session.query(model.Checkin).get(attraction.last_good_checkin_id)
+	else:
+		return False
 
-	# timeout = getTimeout(last_good)
-	# lgDict = {"lat": last_good.lat,
-	# 			"lng": last_good.lng,
-	# 			"timestamp": dump_datetime(last_good.timestamp),
-	# 			"timeout": timeout,
-	# 			"checkin_id": last_good_checkin_id,
-	# 			"bad_rating": False,
-	# 			"non_user_checkin": False,
-	# 			"trusted_user": True
-	# 			}
-	# return lgDict
-	return False
+	if not last_good:
+		return False	
+
+	timeout = getTimeout(last_good)
+	lgDict = {"lat": last_good.lat,
+				"lng": last_good.lng,
+				"timestamp": dump_datetime(last_good.timestamp),
+				"timeout": timeout,
+				"checkin_id": last_good.id,
+				"bad_rating": False,
+				"non_user_checkin": False,
+				"trusted_user": True
+				}
+	return lgDict
+	# return False
 
 def getTimeout(this):
 	# check how old timestamp is
@@ -495,7 +485,7 @@ def getCheckinData(checkin):
 	last_good_checkin = False
 
 	# Check if attraction checkin has a really bad rating
-	bad_rating = False;
+	bad_rating = False
 	# if there are X total votes and/or X downvotes:
 	if checkin.downvotes > checkin.upvotes: # COMPARISON VALUES TO CHANGE
 		bad_rating = True
@@ -503,7 +493,7 @@ def getCheckinData(checkin):
 			# bad_rating = True;
 
 		# if it has a bad rating: get its last_good_checkin
-		last_good_checkin = getLastGood(checkin.attraction)
+	last_good_checkin = getLastGood(checkin.attraction)
 
 	non_user_checkin = True
 	trusted_user = True
@@ -513,9 +503,6 @@ def getCheckinData(checkin):
 		# trusted user?
 		trusted_user = checkin.user.is_trusted()
 
-		# if made by a non-user: get its last_good_checkin
-		if not last_good_checkin:
-			last_good_checkin = getLastGood(checkin.attraction)
 
 	current_checkin = {"lat": checkin.lat,
 						"lng": checkin.lng,
@@ -573,19 +560,21 @@ def checkin():
 
 	# Use checkin record to update attraction's checkin_id
 	attraction = new_checkin.attraction
+	print attraction.id
+	print attraction.name
+	print attraction.checkin_id
 
 	# UPDATE LAST_GOOD_CHECKIN_ID
-	previous_checkin = model.db.session.query(model.Checkin).get(attraction.checkin_id)
-	# made by a user? a trusted user?
-	if previous_checkin.user_id and previous_checkin.user.is_trusted():
-		# did it have a rating?
-		if previous_checkin.calculated_rating != None:
-			# if it wasn't a bad rating, add it
-			if previous_checkin.calculated_rating > 0:
+	if attraction.checkin_id:
+		previous_checkin = model.db.session.query(model.Checkin).get(attraction.checkin_id)
+		# made by a user? a trusted user?
+		if previous_checkin.user_id and previous_checkin.user.is_trusted():
+			# did it have a rating? that wasn't bad?
+			if previous_checkin.calculated_rating != None and previous_checkin.calculated_rating > 0:
 				attraction.last_good_checkin_id = attraction.checkin_id
-		# unrated, but made by a trusted user, so add it
-		else:
-			attraction.last_good_checkin_id = attraction.checkin_id
+			# unrated, but made by a trusted user, so add it
+			else:
+				attraction.last_good_checkin_id = attraction.checkin_id
 
 	# update attraction's checkin_id with the new_checkin
 	attraction.checkin_id = new_checkin.id
