@@ -2,6 +2,8 @@ $(document).ready(function() {
 
 	// load the map
 	google.maps.event.addDomListener(window, "load", initialize());
+
+	directionsService = new google.maps.DirectionsService();
 	
 	//////////////////////////////////
 	//////// DROPDOWN CHECKIN ////////
@@ -265,7 +267,7 @@ function addMarkers(map, markers) {
 		marker.set("bad_rating", markerObject[using_update]["bad_rating"]);
 		marker.set("trusted_user", markerObject[using_update]["trusted_user"]);
 
-		marker.set(using_update, using_update);
+		marker.set("using_update", using_update);
 	}
 
 	// only show on map if checkbox is selected
@@ -274,6 +276,10 @@ function addMarkers(map, markers) {
 		for (i = 0; i < markersArray.length; i++) {
 			marker = markersArray[i];
 
+			if (checkedAttractions[marker.get("id")] == "hide") {
+				marker.setMap(null);
+				continue;
+			}
 			if (checkedAttractions[marker.get("id")] == false) {
 				marker.setMap(null);
 
@@ -282,12 +288,18 @@ function addMarkers(map, markers) {
 				
 					// update marker settings
 					updateMarkerSettingsPosition(marker, "previous");
+					marker.setMap(map);
 					
 				}
+
 				
 			}
 			else {
-				
+				if (marker.get("using_update") == "previous") {
+					// remove "previous" marker, and update marker to "current"
+					marker.setMap(null);
+					updateMarkerSettingsPosition(marker, "current");
+				}
 				marker.setMap(map);
 			}
 		}
@@ -309,25 +321,26 @@ function addMarkers(map, markers) {
 
 			// Show checkins made by non-users?
 			showNonUserCheckins = $("#showNonUserCheckins").is(":checked");
-			if (marker.get("non_user_checkin") && !showNonUserCheckins) {
+			if (marker["current"]["non_user_checkin"] && !showNonUserCheckins) {
+				console.log("remove non user");
 				removeMarker = true; 
 			}
 
 			// Show checkins with established bad ratings on the map?
 			showBad = $("#showBadRatings").is(":checked");
-			if (marker.get("bad_rating") && !showBad) {
+			if (marker["current"]["bad_rating"] && !showBad) {
 				removeMarker = true; 
 			}
 
 			// Show checkins made by un-trusted users?
 			showUntrusted = $("#showUntrusted").is(":checked");
-			if (!marker.get("trusted_user") && !showUntrusted) {
+			if (!marker["current"]["trusted_user"] && !showUntrusted) {
 				removeMarker = true;
 			}
 
 			// Show old checkins on the map?
 			showOld = $("#showOldCheckins").is(":checked");
-			if (marker.get("timeout") == "old" && !showOld) {
+			if (marker["current"]["timeout"] == "old" && !showOld) {
 				removeMarker = true; 
 			}
 
@@ -336,7 +349,10 @@ function addMarkers(map, markers) {
 			var showAttraction = $(attractionId).is(":checked");
 
 			// update marker status for display
-			checkedAttractions[marker.get("id")] = !(removeMarker || !showAttraction);
+			checkedAttractions[marker.get("id")] = !removeMarker
+			if (!showAttraction) {
+				checkedAttractions[marker.get("id")] = "hide";
+			}
 
 		}
 	} // end of setOptionChecks function
@@ -543,7 +559,7 @@ function addMarkers(map, markers) {
 									+ "<td id='upArrow' padding-right: 5px;'>"
 									+ "<form action='/upvote/" + checkin_id + "' method='POST' class='form-arrow'>"
 									+ upButton
-									+ "<span class='glyphicon glyphicon-map-marker' style='color: green' aria-hidden='true'></span>"
+									+ "<span class='glyphicon glyphicon-ok-sign' style='color: green' aria-hidden='true'></span>"
 									+ "</button></form>" 
 									+ "</td>"
 
@@ -558,7 +574,7 @@ function addMarkers(map, markers) {
 									+ "<td id='downArrow' style='vertical-align: top;'>"
 									+ "<form action='/downvote/" + checkin_id + "' method='POST' class='form-arrow'>"
 									+ downButton
-									+ "<span class='glyphicon glyphicon-flag' style='color: red' aria-hidden='true'></span>"
+									+ "<span class='glyphicon glyphicon-minus-sign' style='color: red' aria-hidden='true'></span>"
 									+ "</button></form>"
 									+ "</td>"
 
@@ -658,7 +674,7 @@ function addMarkers(map, markers) {
 
 
 function loginToRate() {
-	alert("Signup or login to rate this checkin.");
+	alert("Signup or login to vote if this truck is here.");
 }
 
 
@@ -669,7 +685,7 @@ function loginToRate() {
 ////////////////////////////////
 
 var directionsDisplay;
-var directionsService = new google.maps.DirectionsService();
+var directionsService;
 var map;
 var startMarkerArray = [];
 
