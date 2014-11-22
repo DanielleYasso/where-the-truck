@@ -112,14 +112,33 @@ ul.nav li {
 
 ****************************/
 
-#upArrow a:link, #upArrow a:visited {
-	color: black;
-	text-decoration: none;
+.btn-arrow, .form-arrow {
+	padding: 0!important;
+	padding-right: 1px!important;
+	margin: 0!important;
+	border: 0;
+	text-align: right;
 }
 
-#downArrow a:link, #downArrow a:visited {
-	color: black;
-	text-decoration: none;
+button.btn-arrow.disabled {
+	color: gray;
+}
+
+.btn-link.upvote {
+	
+	color: #00A300;
+}
+
+.btn-link.upvote:hover {
+	color: #00CC00;
+}
+
+.btn-link.downvote {
+	color: #E60000;
+}
+
+.btn-link.downvote:hover {
+	color: #FF1919;
 }
 
 
@@ -133,11 +152,6 @@ ul.nav li {
 	display: none;
 }
 
-.btn-arrow, .form-arrow {
-	padding: 0!important;
-	margin: 0!important;
-	border: 0;
-	text-align: right;
-}
+
 
 

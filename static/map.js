@@ -173,13 +173,13 @@ function getMarkers(map) {
 function getMarkerData(marker, markerObject) {
 	marker.set("id", markerObject["id"]);
 	marker.set("name", markerObject["name"]);
-	marker.set("time", markerObject["current"]["timestamp"]);
 	marker.set("type", markerObject["type"]);
 
 	marker.set("checkin_id", markerObject["current"]["checkin_id"]);
 	marker.set("lat", markerObject["current"]["lat"]);
 	marker.set("lng", markerObject["current"]["lng"]);
 	marker.set("timeout", markerObject["current"]["timeout"]);
+	marker.set("time", markerObject["current"]["timestamp"]);
 
 	marker.set("non_user_checkin", markerObject["current"]["non_user_checkin"]);
 	marker.set("bad_rating", markerObject["current"]["bad_rating"]);
@@ -188,8 +188,6 @@ function getMarkerData(marker, markerObject) {
 	marker.set("using_update", "current");
 	marker.set("current", markerObject["current"]);
 	marker.set("previous", markerObject["previous"]);
-
-	console.log("markerObject['previous']" + markerObject["previous"]);
 
 	// set Yelp data, if available
 	if (markerObject["ratings_img"]) {
@@ -233,7 +231,10 @@ function getIconTypeForTimeout(timeout, iconType) {
 function addMarkers(map, markers) {
 	
 	// create array to hold all markers
+
 	markersArray = [];
+	// Info Window
+	var infoWindow;
 
 	///////////////////////////////////////////////////////////
 	//////// INITIALIZE CHECKED ATTRACTIONS DICTIONARY ////////
@@ -262,6 +263,7 @@ function addMarkers(map, markers) {
 		marker.set("lat", marker[using_update]["lat"]);
 		marker.set("lng", marker[using_update]["lng"]);
 		marker.set("timeout", marker[using_update]["timeout"]);
+		marker.set("time", marker[using_update]["timestamp"]);
 
 		marker.set("non_user_checkin", marker[using_update]["non_user_checkin"]);
 		marker.set("bad_rating", marker[using_update]["bad_rating"]);
@@ -273,6 +275,10 @@ function addMarkers(map, markers) {
 	// only show on map if checkbox is selected
 	function setOrDeleteMarkers() {
 		console.log(checkedAttractions);
+		// close any open windows
+		if (infoWindow) {
+			infoWindow.close();
+		}
 		for (i = 0; i < markersArray.length; i++) {
 			marker = markersArray[i];
 
@@ -448,8 +454,7 @@ function addMarkers(map, markers) {
 		//////// INFOWINDOW EVENT ///////
 		/////////////////////////////////
 
-		// Info Window
-		var infoWindow;
+		
 		google.maps.event.addListener(
 			marker,
 			"click",
@@ -501,10 +506,10 @@ function addMarkers(map, markers) {
 					var voteType = votes[4];
 					
 					// create content and set defaults for info window
-					var upButton = "<button type='submit' class='btn btn-link btn-arrow'>";
-					var downButton = "<button type='submit' class='btn btn-link btn-arrow'>";
-					var upButtonDisabled = "<button class='btn btn-link btn-arrow' disabled>";
-					var downButtonDisabled = "<button class='btn btn-link btn-arrow' disabled>";
+					var upButton = "<button type='submit' class='btn btn-link btn-arrow upvote'>";
+					var downButton = "<button type='submit' class='btn btn-link btn-arrow downvote'>";
+					var upButtonDisabled = "<button class='btn btn-link btn-arrow upvote disabled'>";
+					var downButtonDisabled = "<button class='btn btn-link btn-arrow downvote disabled'>";
 					var upVoteNum = upvotes;
 					var downVoteNum = downvotes;
 
@@ -532,8 +537,8 @@ function addMarkers(map, markers) {
 					}
 					// not logged in --> buttons show login to rate alert
 					else {
-						upButton = "<button type='button' onclick='loginToRate()' class='btn btn-link btn-arrow'>";
-						downButton = "<button type='button' onclick='loginToRate()' class='btn btn-link btn-arrow'>";
+						upButton = "<button type='button' onclick='loginToRate()' class='btn btn-link btn-arrow upvote'>";
+						downButton = "<button type='button' onclick='loginToRate()' class='btn btn-link btn-arrow downvote'>";
 					}
 
 					if (yelp_url) {
@@ -559,7 +564,7 @@ function addMarkers(map, markers) {
 									+ "<td id='upArrow' padding-right: 5px;'>"
 									+ "<form action='/upvote/" + checkin_id + "' method='POST' class='form-arrow'>"
 									+ upButton
-									+ "<span class='glyphicon glyphicon-ok-sign' style='color: green' aria-hidden='true'></span>"
+									+ "<span class='glyphicon glyphicon-ok-sign' aria-hidden='true'></span>"
 									+ "</button></form>" 
 									+ "</td>"
 
@@ -574,7 +579,7 @@ function addMarkers(map, markers) {
 									+ "<td id='downArrow' style='vertical-align: top;'>"
 									+ "<form action='/downvote/" + checkin_id + "' method='POST' class='form-arrow'>"
 									+ downButton
-									+ "<span class='glyphicon glyphicon-minus-sign' style='color: red' aria-hidden='true'></span>"
+									+ "<span class='glyphicon glyphicon-remove-sign' aria-hidden='true'></span>"
 									+ "</button></form>"
 									+ "</td>"
 
