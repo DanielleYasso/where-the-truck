@@ -696,11 +696,6 @@ function addMarkers(map, markers) {
 }
 
 
-function loginToRate() {
-	alert("Signup or login to vote if this truck is here.");
-}
-
-
 ////////////////////////////////
 
 //////// GET DIRECTIONS ////////
