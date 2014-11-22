@@ -4,7 +4,7 @@ $(document).ready(function() {
 	google.maps.event.addDomListener(window, "load", initialize());
 
 	directionsService = new google.maps.DirectionsService();
-	
+
 	//////////////////////////////////
 	//////// DROPDOWN CHECKIN ////////
 	//////////////////////////////////
@@ -18,6 +18,9 @@ $(document).ready(function() {
 			}
 		}
 	);
+
+
+
 }); // end document load
 
 
@@ -83,7 +86,7 @@ function isValidCheckin(attraction_id, lat,lng) {
 				setCheckin(attraction_id, lat, lng);
 			}
 			else {
-				alert("Is this truck a boat? Because you're putting it in the " + result.ocean.name);
+				alert("Is this truck a boat?\nBecause you're putting it in the " + result.ocean.name);
 				// put the attraction back where it was
 				for (i = 0; i < markersArray.length; i++) {
 					marker = markersArray[i];
@@ -537,8 +540,19 @@ function addMarkers(map, markers) {
 					}
 					// not logged in --> buttons show login to rate alert
 					else {
-						upButton = "<button type='button' onclick='loginToRate()' class='btn btn-link btn-arrow upvote'>";
-						downButton = "<button type='button' onclick='loginToRate()' class='btn btn-link btn-arrow downvote'>";
+						// upButton = "<button type='button' onclick='loginToRate()' class='btn btn-link btn-arrow upvote'>";
+						// upButton = "<button type='button' id='upPop' class='btn btn-link btn-arrow upvote'>";
+
+						upButton = "<button type='button' class='btn btn-link btn-arrow upvote' "
+									+ "data-container='body' data-toggle='popover' "
+									+ "data-placement='right' "
+									+ "data-title='Is this truck here?'"
+									+ "data-content='&#x2713; for yes, &#x2717; for no.'>";
+						downButton = "<button type='button' class='btn btn-link btn-arrow downvote' "
+									+ "data-container='body' data-toggle='popover' "
+									+ "data-placement='right' "
+									+ "data-title='Is this truck here?'"
+									+ "data-content='&#x2713; for yes, &#x2717; for no.'>";
 					}
 
 					if (yelp_url) {
@@ -619,6 +633,10 @@ function addMarkers(map, markers) {
 					});
 
 					infoWindow.open(map, marker);
+					
+					// turn popover windows on
+					$('[data-toggle="popover"]').popover()
+
 				}
 						
 					
