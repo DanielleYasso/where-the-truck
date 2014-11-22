@@ -258,14 +258,14 @@ function addMarkers(map, markers) {
 		marker.setIcon(icon);
 		marker.setMap(map);
 
-		marker.set("checkin_id", markerObject[using_update]["checkin_id"]);
-		marker.set("lat", markerObject[using_update]["lat"]);
-		marker.set("lng", markerObject[using_update]["lng"]);
-		marker.set("timeout", markerObject[using_update]["timeout"]);
+		marker.set("checkin_id", marker[using_update]["checkin_id"]);
+		marker.set("lat", marker[using_update]["lat"]);
+		marker.set("lng", marker[using_update]["lng"]);
+		marker.set("timeout", marker[using_update]["timeout"]);
 
-		marker.set("non_user_checkin", markerObject[using_update]["non_user_checkin"]);
-		marker.set("bad_rating", markerObject[using_update]["bad_rating"]);
-		marker.set("trusted_user", markerObject[using_update]["trusted_user"]);
+		marker.set("non_user_checkin", marker[using_update]["non_user_checkin"]);
+		marker.set("bad_rating", marker[using_update]["bad_rating"]);
+		marker.set("trusted_user", marker[using_update]["trusted_user"]);
 
 		marker.set("using_update", using_update);
 	}
@@ -479,13 +479,13 @@ function addMarkers(map, markers) {
 
 				marker = this;
 
+
 				// get upvotes and downvotes
 				$.get(
 					"/get_votes/"+checkin_id,
 					function(votes) {
 						var content = getContent(attraction_name, votes);
 						createInfoWindow(marker, content);
-						
 				}); // end of $.get function
 
 
