@@ -713,7 +713,7 @@ function addMarkers(map, markers) {
 									+ "data-trigger='hover' "
 									+ "data-title='Is this truck here?'"
 									+ "data-content='Login or Signup to vote!'>";
-									
+
 						downButton = "<button type='button' class='btn btn-link btn-arrow downvote' "
 									+ "data-container='body' data-toggle='popover' "
 									+ "data-placement='right' "
@@ -802,7 +802,13 @@ function addMarkers(map, markers) {
 					infoWindow.open(map, marker);
 					
 					// turn popover windows on
-					$('[data-toggle="popover"]').popover()
+					$('[data-toggle="popover"]').popover();
+
+					// to close mobile popovers
+					$('[data-toggle="popover"]').click(function(evt) {
+						$(this).popover("hide");
+					});
+
 
 				}
 						
