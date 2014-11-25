@@ -1,5 +1,7 @@
 //////////////////////////////////
+
 //////// GLOBAL VARIABLES ////////
+
 //////////////////////////////////
 
 // for accessing markers and marker settings
@@ -88,6 +90,25 @@ $(document).ready(function() {
 					}
 				}
 			}
+	});
+
+	////////////////////////////////////////
+	//////// CLOSE DIRECTIONS EVENT ////////
+	////////////////////////////////////////
+
+	$("#closeDirections").click( function(evt) {
+		directionsDisplay.setMap(null);
+
+		// hide directions div on close
+		if (!$("#directionsWrapper").hasClass("hidden")) {
+			$("#directionsWrapper").addClass("hidden");
+		}
+
+		// reset startMarkerArray (should hold no markers when no directions present)
+		if (startMarkerArray.length >= 1) {
+			startMarkerArray[0].setMap(null);
+			startMarkerArray = [];
+		}
 	});
 
 }); // end document load
@@ -800,14 +821,19 @@ function addMarkers(map, markers) {
 }
 
 
+/////////////////////////////////////
+
+//////// GENERATE DIRECTIONS ////////
+
+/////////////////////////////////////
+
 ////////////////////////////////
-
 //////// GET DIRECTIONS ////////
-
 ////////////////////////////////
 
 function getDirections(toLat,toLng) {
 
+	// reset startMarkerArray (should hold no markers when no directions present)
 	if (startMarkerArray.length >= 1) {
 		startMarkerArray[0].setMap(null);
 		startMarkerArray = [];
@@ -892,10 +918,14 @@ function getDirections(toLat,toLng) {
 }
 
 
+///////////////////////////////////////////////////////
+
+//////// INITIALIZE MAP AND DIRECTIONS DISPLAY ////////
+
+///////////////////////////////////////////////////////
+
 ////////////////////////////
-
 //////// INITIALIZE ////////
-
 ////////////////////////////
 
 // Creates the map to show on the page
@@ -931,25 +961,6 @@ function initialize() {
 	directionsDisplay.setPanel(document.getElementById("directionsDiv"));
 
 	getMarkers(map);
-
-
-	//////////////////////////////////
-	//////// CLOSE DIRECTIONS ////////
-	//////////////////////////////////
-
-	$("#closeDirections").click( function(evt) {
-		directionsDisplay.setMap(null);
-
-		if (!$("#directionsWrapper").hasClass("hidden")) {
-			$("#directionsWrapper").addClass("hidden");
-		}
-
-		if (startMarkerArray.length >= 1) {
-			startMarkerArray[0].setMap(null);
-			startMarkerArray = [];
-		}
-	});
-
 }
 
 
