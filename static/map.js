@@ -76,6 +76,24 @@ function isValidCheckin(attraction_id, lat,lng) {
 
 	// check if they are putting it outside of the Bay Area
 	console.log("lat + lng " + lat + " " + lng);
+	// top limit = 37.831996427393186
+	// right limit = -122.36208379274905
+	// bottom limit = 37.6870546150663 (Daly City on map)
+	// left limit = -122.52653539187014
+	if (lat > 37.831996427393186 || lat < 37.6870546150663) {
+		// out of lat range
+		alert("Hey - that's not in SF!");
+		putMarkerBack();
+		// don't check geonames for ocean
+		return;
+	}
+	if (lng > -122.36208379274905 || lng < -122.52653539187014) {
+		// out of lng range
+		alert("Hey - that's not in SF!");
+		putMarkerBack();
+		// don't check geonames for ocean
+		return;
+	}
 
 	// check if they are putting it in the water around SF
 	$.get(
@@ -91,18 +109,26 @@ function isValidCheckin(attraction_id, lat,lng) {
 			}
 			else {
 				alert("Is this truck a boat?\nBecause you're putting it in the " + result.ocean.name);
-				// put the attraction back where it was
-				for (i = 0; i < markersArray.length; i++) {
-					marker = markersArray[i];
-					if (marker.get("id") == attraction_id) {
-						latLng = new google.maps.LatLng(marker.get("lat"), marker.get("lng"));
-						console.log(latLng);
-						marker.setPosition(latLng);
-					}
-				}
+				putMarkerBack();
 			}
 		}
-		);
+	);
+
+	//////////////////////////////////////////////
+	//////// PUT MARKER BACK WHERE IT WAS ////////
+	//////////////////////////////////////////////
+	
+	function putMarkerBack() {
+		// put the attraction back where it was
+		for (i = 0; i < markersArray.length; i++) {
+			marker = markersArray[i];
+			if (marker.get("id") == attraction_id) {
+				latLng = new google.maps.LatLng(marker.get("lat"), marker.get("lng"));
+				console.log(latLng);
+				marker.setPosition(latLng);
+			}
+		}
+	}
 }
 
 /////////////////////////////////////////
