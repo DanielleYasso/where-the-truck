@@ -45,6 +45,12 @@
 					<li id="loginOpenButton" class="btn navbar-btn btn-default">Login</li>
 					<li id="signupOpenButton" class="btn navbar-btn btn-default">Signup</li>
 				{% endif %}
+				<li>
+					<!-- Link to toggle help modal - coded at bottom -->
+					<button type="button" class="btn navbar-btn btn-link" data-toggle="modal" data-target="#helpModal">
+					  ?
+					</button>
+				</li>
 			</ul>
 		</div> <!-- end navbar collapse -->
 	</div> <!-- end container -->
@@ -235,19 +241,15 @@
 	</div>
 	<!-- Button trigger modal -->
 
-	<div class="row col-sm-12">
-		<button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">
-		  ?
-		</button>
-	</div>
+	
 
-	<!-- Modal -->
-	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<!-- HELP MODAL -->
+	<div class="modal fade" id="helpModal" tabindex="-1" role="dialog" aria-labelledby="helpModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-					<h4 class="modal-title" id="myModalLabel">What the truck... I need help!</h4>
+					<h4 class="modal-title" id="helpModalLabel">What the truck... I need help!</h4>
 				</div>
 				<div class="modal-body">
 
@@ -280,7 +282,7 @@
 						    <div class="panel-heading" role="tab" id="headingTwo">
 						    	<h4 class="panel-title">
 							        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-							          Voting
+							          Voting on accuracy with <span class='glyphicon glyphicon-ok-sign help-glyph-up' aria-hidden='true'></span> and <span class='glyphicon glyphicon-remove-sign help-glyph-down' aria-hidden='true'></span>
 							        </a>
 						    	</h4>
 						    </div>
@@ -332,6 +334,10 @@
 
 					</div><!-- /.panel-group -->
 				<div class="modal-footer">
+					<p>
+						Don't see a food truck you love listed here?
+						<a href="mailto:dbyasso@gmail.com">Email me</a> and maybe I'll add it!
+					</p>
 			  	</div>
 			</div><!-- /.modal-content -->
 		</div><!-- /.modal-dialog -->
