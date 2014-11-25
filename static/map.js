@@ -1,8 +1,35 @@
+//////////////////////////////////
+//////// GLOBAL VARIABLES ////////
+//////////////////////////////////
+
+// for accessing markers and marker settings
+var markersArray = [];
+var checkedAttractions;
+
+// Info Window
+var infoWindow;
+
+// for google map
+var map;
+
+// for directions
+var directionsDisplay;
+var directionsService;
+var startMarkerArray = [];
+
+
+/////////////////////////////////////////
+
+//////// DOCUMENT READY FUNCITON ////////
+
+/////////////////////////////////////////
+
 $(document).ready(function() {
 
 	// load the map
 	google.maps.event.addDomListener(window, "load", initialize());
 
+	// create directions service
 	directionsService = new google.maps.DirectionsService();
 
 	//////////////////////////////////
@@ -19,9 +46,52 @@ $(document).ready(function() {
 		}
 	);
 
+	//////////////////////////////////////
+	//////// GET CHECKBOX CHANGES ////////
+	//////////////////////////////////////
+	
+	// get checkbox changes
+	$("input:checkbox").change(
+		function() {
+			if (this.id == "showOldCheckins" 
+				|| this.id == "showBadRatings"
+				|| this.id == "showNonUserCheckins" 
+				|| this.id == "showUntrusted") {
+				
+				setOptionChecks();
+				setOrDeleteMarkers();
+			}
+			else if (this.id == "rememberMeLogin" || this.id == "rememberMeSignup") {
+				// do nothing
+			}
+			else {
+				var attractionId = this.id;
+				for (i = 0; i < markersArray.length; i++) {
+					marker = markersArray[i];
+					if (marker.get("id") == attractionId) {
 
+						var aLink = "#span_" + attractionId + " a";
+
+						checkedAttractions[attractionId] = $(this).is(":checked");
+						if (checkedAttractions[attractionId]) {
+							marker.setMap(map);
+
+							// enable link to focus on marker
+							$(aLink).removeClass("disabled");
+						}
+						else {
+							marker.setMap(null);
+							
+							// disable link to focus on marker
+							$(aLink).addClass("disabled");
+						}
+					}
+				}
+			}
+	});
 
 }); // end document load
+
 
 
 /////////////////////////////////
@@ -30,10 +100,10 @@ $(document).ready(function() {
 
 /////////////////////////////////
 
+
 /////////////////////////////////
 //////// GET GEOLOCATION ////////
 /////////////////////////////////
-var markersArray = [];
 
 function getGeolocation(attraction_id) {
 	var browserSupportFlag = new Boolean();
@@ -58,6 +128,10 @@ function getGeolocation(attraction_id) {
 		browserSupportFlag = false;
 		handleNoGeolocation(browserSupportFlag);
 	}
+
+	//////////////////////////////////////
+	//////// HANDLE NO GELOCATION ////////
+	//////////////////////////////////////
 
 	function handleNoGeolocation(errorFlag) {
 		if (errorFlag) {
@@ -159,7 +233,7 @@ function setCheckin(attraction_id, lat, lng) {
 					marker.setPosition(latLng);
 					marker.setIcon(icon);
 
-					getMarkerData(marker, result);
+					setMarkerData(marker, result);
 
 					return;
 
@@ -171,13 +245,16 @@ function setCheckin(attraction_id, lat, lng) {
 	);
 }
 
+//////////////////////////////////////////////////
+
+//////// GET MARKERS AND SET RELATED DATA ////////
+
+//////////////////////////////////////////////////
+
 
 /////////////////////////////
-
 //////// GET MARKERS ////////
-
 /////////////////////////////
-
 
 function getMarkers(map) {
 	$.get(
@@ -197,10 +274,10 @@ function getMarkers(map) {
 
 
 /////////////////////////////////
-//////// GET MARKER DATA ////////
+//////// SET MARKER DATA ////////
 /////////////////////////////////
 
-function getMarkerData(marker, markerObject) {
+function setMarkerData(marker, markerObject) {
 	marker.set("id", markerObject["id"]);
 	marker.set("name", markerObject["name"]);
 	marker.set("type", markerObject["type"]);
@@ -261,19 +338,23 @@ function getIconTypeForTimeout(timeout, iconType) {
 	return icon;
 }
 
-// Info Window
-var infoWindow;
-var checkedAttractions;
+
+/////////////////////////////////
+
+//////// (RE)SET MARKERS ////////
+
+/////////////////////////////////
 
 /////////////////////////////////////
 //////// SET DISPLAY OPTIONS ////////
 /////////////////////////////////////
 
-var showNonUserCheckins;
-var showBad;
-var showOld;
-
 function setOptionChecks() {
+
+	var showNonUserCheckins;
+	var showBad;
+	var showOld;
+
 	for (i = 0; i < markersArray.length; i++) {
 		marker = markersArray[i];
 
@@ -318,14 +399,6 @@ function setOptionChecks() {
 
 	}
 } // end of setOptionChecks function
-
-
-
-/////////////////////////////////
-
-//////// (RE)SET MARKERS ////////
-
-/////////////////////////////////
 
 
 ///////////////////////////////////////
@@ -414,7 +487,6 @@ function addMarkers(map, markers) {
 	// initialize array to hold all markers
 	markersArray = [];
 	
-
 	///////////////////////////////////////////////////////////
 	//////// INITIALIZE CHECKED ATTRACTIONS DICTIONARY ////////
 
@@ -452,7 +524,8 @@ function addMarkers(map, markers) {
 			// animation: google.maps.Animation.DROP
 		});
 
-		getMarkerData(marker, markerObject);
+		// set data for markers
+		setMarkerData(marker, markerObject);
 
 		// add the marker to the markers array 
 		markersArray.push(marker);
@@ -463,7 +536,6 @@ function addMarkers(map, markers) {
 		//////// MARKER EVENTS ////////
 
 		///////////////////////////////
-
 
 
 		////////////////////////////
@@ -514,7 +586,6 @@ function addMarkers(map, markers) {
 		//////// INFOWINDOW EVENT ///////
 		/////////////////////////////////
 
-		
 		google.maps.event.addListener(
 			marker,
 			"click",
@@ -726,50 +797,6 @@ function addMarkers(map, markers) {
 	setOptionChecks();
 	setOrDeleteMarkers();
 
-
-	//////////////////////////////////////
-	//////// GET CHECKBOX CHANGES ////////
-	//////////////////////////////////////
-	
-	// get checkbox changes
-	$("input:checkbox").change(
-		function() {
-			if (this.id == "showOldCheckins" 
-				|| this.id == "showBadRatings"
-				|| this.id == "showNonUserCheckins" 
-				|| this.id == "showUntrusted") {
-				
-				setOptionChecks();
-				setOrDeleteMarkers();
-			}
-			else if (this.id == "rememberMeLogin" || this.id == "rememberMeSignup") {
-				// do nothing
-			}
-			else {
-				var attractionId = this.id;
-				for (i = 0; i < markersArray.length; i++) {
-					marker = markersArray[i];
-					if (marker.get("id") == attractionId) {
-
-						var aLink = "#span_" + attractionId + " a";
-
-						checkedAttractions[attractionId] = $(this).is(":checked");
-						if (checkedAttractions[attractionId]) {
-							marker.setMap(map);
-
-							// enable link to focus on marker
-							$(aLink).removeClass("disabled");
-						}
-						else {
-							marker.setMap(null);
-							
-							// disable link to focus on marker
-							$(aLink).addClass("disabled");
-						}
-					}
-				}
-			}
-	});
 }
 
 
@@ -779,11 +806,6 @@ function addMarkers(map, markers) {
 
 ////////////////////////////////
 
-var directionsDisplay;
-var directionsService;
-var map;
-var startMarkerArray = [];
-
 function getDirections(toLat,toLng) {
 
 	if (startMarkerArray.length >= 1) {
@@ -791,15 +813,18 @@ function getDirections(toLat,toLng) {
 		startMarkerArray = [];
 	}
 
+	// get mode of travel
 	var selectedMode = document.getElementById("transportMode").value; 
 	if (!selectedMode) {
 		return;
 	}
+
+	// set destination
 	var toLatLng = new google.maps.LatLng(toLat, toLng);
 
 	var browserSupportFlag = new Boolean();
 
-	// Try W3C Geolocation (Preferred)
+	// Get geolocation with W3C Geolocation
 	if(navigator.geolocation) {
 		browserSupportFlag = true;
 		navigator.geolocation.getCurrentPosition(function(position) {
@@ -815,6 +840,7 @@ function getDirections(toLat,toLng) {
 				
 			};
 
+			// put the directions on the map
 			directionsService.route(request, function(response, status) {
 				if (status == google.maps.DirectionsStatus.OK) {
 					directionsDisplay.setDirections(response);
@@ -822,8 +848,7 @@ function getDirections(toLat,toLng) {
 				}
 			});
 
-			// var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter_withshadow&chld=A|00FF00");
-
+			// create start marker for whereever user is currently
 			startMarker = new google.maps.Marker({
 				position: fromLatLng,
 				map: map,
@@ -832,9 +857,11 @@ function getDirections(toLat,toLng) {
 				// icon: pinImage
 			});
 
+			// set start location marker
 			startMarkerArray.push(startMarker);
 			startMarker.setMap(map);
 
+			// display written directions
 			if ($("#directionsWrapper").hasClass("hidden")) {
 				$("#directionsWrapper").removeClass("hidden");
 			}
@@ -850,6 +877,10 @@ function getDirections(toLat,toLng) {
 		handleNoGeolocation(browserSupportFlag);
 		return null;
 	}
+
+	///////////////////////////////////////
+	//////// HANDLE NO GEOLOCATION ////////
+	///////////////////////////////////////
 
 	function handleNoGeolocation(errorFlag) {
 		if (errorFlag) {
