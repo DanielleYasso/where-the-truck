@@ -359,7 +359,7 @@ function addMarkers(map, markers) {
 
 			// update marker status for display
 			checkedAttractions[marker.get("id")] = !removeMarker
-			if (!showAttraction) {
+			if (!showAttraction || !showOld) {
 				checkedAttractions[marker.get("id")] = "hide";
 			}
 
@@ -546,6 +546,7 @@ function addMarkers(map, markers) {
 						upButton = "<button type='button' class='btn btn-link btn-arrow upvote' "
 									+ "data-container='body' data-toggle='popover' "
 									+ "data-placement='right' "
+									+ "data-trigger='hover' "
 									+ "data-title='Is this truck here? &#x2713; for yes, &#x2717; for no.'"
 									+ "data-content='Login or Signup to vote!'>";
 						downButton = "<button type='button' class='btn btn-link btn-arrow downvote' "

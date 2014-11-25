@@ -190,9 +190,9 @@
 
 			<!-- SHOW CHECKINS BY USERS WITH BAD RATINGS -->
 			{% if session.get("user_id", False) and g.user.preferences["show_untrusted"] %}
-				<input type="checkbox" id="showUntrusted" name="showUntrusted" value="True" checked>Show potentially unreliable updates<br>
+				<input type="checkbox" id="showUntrusted" name="showUntrusted" value="True" checked>Show potentially inaccurate updates<br>
 			{% else %}
-				<input type="checkbox" id="showUntrusted" name="showUntrusted" value="True">Show potentially unreliable updates<br>
+				<input type="checkbox" id="showUntrusted" name="showUntrusted" value="True">Show potentially inaccurate updates<br>
 			{% endif %}
 
 			<!-- SHOW CHECKINS BY NON USERS -->
@@ -231,7 +231,7 @@
 		<div id="directionsDiv"></div>
 	</div>
 
-	
+
 
 </div>
 
