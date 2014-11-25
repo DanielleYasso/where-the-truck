@@ -741,6 +741,8 @@ def get_votes(checkin_id):
 					vote_type = checkin.users_who_rated[g.user.id]
 
 					votes_data.append(vote_type) # [4]
+			else:
+				votes_data.append(False) # [4], placeholder for vote_type
 
 			# has user ever voted?
 			votes_data.append(g.user.has_voted) # [5], has user ever voted?
