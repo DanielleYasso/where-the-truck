@@ -613,6 +613,10 @@ def update_vote(checkin_id, vote):
 	checkin = model.db.session.query(model.Checkin).get(checkin_id)
 
 	# ONLY LOGGED IN USERS CAN VOTE --> taken care of in map.js
+
+	# update user vote status so popovers don't show anymore
+	if not g.user.has_voted:
+		g.user.has_voted = True
 	
 	# IF NO RATINGS YET
 	if checkin.users_who_rated == None or checkin.users_who_rated == {}:
@@ -717,17 +721,17 @@ def get_votes(checkin_id):
 	# get checkin from db
 	checkin = model.db.session.query(model.Checkin).get(checkin_id)
 
-	votes = [checkin.upvotes, checkin.downvotes] # [0, 1]
+	votes_data = [checkin.upvotes, checkin.downvotes] # [0, 1]
 
 	# is a user signed in?
 	if g.user.is_authenticated():
-		votes.append(True) # [2]
-		print votes
+		votes_data.append(True) # [2], user is signed in
+		print votes_data
 
 		if checkin.user_id == g.user.id:
-			votes.append(True) # [3]
+			votes_data.append(True) # [3], this is the user's own checkin
 		else:
-			votes.append(False) # [3]
+			votes_data.append(False) # [3], not this user's checkin
 
 			# get user vote (if it exists)
 			if checkin.users_who_rated != None:
@@ -736,9 +740,13 @@ def get_votes(checkin_id):
 					# vote_type is "up" or "down" or 0
 					vote_type = checkin.users_who_rated[g.user.id]
 
-					votes.append(vote_type) # [4]
+					votes_data.append(vote_type) # [4]
 
-	return convert_to_JSON(votes)
+			# has user ever voted?
+			votes_data.append(g.user.has_voted) # [5], has user ever voted?
+
+
+	return convert_to_JSON(votes_data)
 
 
 ###################

@@ -125,6 +125,7 @@ class User(db.Model):
 	active = Column(Boolean())
 	confirmed_at = Column(DateTime())
 	role_id = Column(Integer(), ForeignKey("roles.id"))
+	has_voted = Column(Boolean(), default=False)
 
 	# define relationship with Role table
 	role = relationship("Role", backref=backref("users", order_by=id))

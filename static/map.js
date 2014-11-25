@@ -327,6 +327,7 @@ function addMarkers(map, markers) {
 			marker = markersArray[i];
 
 			var removeMarker = false;
+			var hideOld = false;
 
 			// Show checkins made by non-users?
 			showNonUserCheckins = $("#showNonUserCheckins").is(":checked");
@@ -351,6 +352,7 @@ function addMarkers(map, markers) {
 			showOld = $("#showOldCheckins").is(":checked");
 			if (marker["current"]["timeout"] == "old" && !showOld) {
 				removeMarker = true; 
+				hideOld = true;
 			}
 
 			// attraction is checked for display
@@ -359,7 +361,7 @@ function addMarkers(map, markers) {
 
 			// update marker status for display
 			checkedAttractions[marker.get("id")] = !removeMarker
-			if (!showAttraction || !showOld) {
+			if (!showAttraction || hideOld) {
 				checkedAttractions[marker.get("id")] = "hide";
 			}
 
@@ -507,6 +509,7 @@ function addMarkers(map, markers) {
 					var loggedIn = votes[2];
 					var yourCheckin = votes[3];
 					var voteType = votes[4];
+					var hasVoted = votes[5];
 					
 					// create content and set defaults for info window
 					var upButton = "<button type='submit' class='btn btn-link btn-arrow upvote'>";
@@ -521,7 +524,24 @@ function addMarkers(map, markers) {
 					var yelp_ratings = "";
 					var powered_by_yelp = "";
 
+
 					if (loggedIn && !yourCheckin) {
+						// user has never voted --> show popover instructions
+						if (!hasVoted) {
+							upButton = "<button type='submit' class='btn btn-link btn-arrow upvote' "
+										+ "data-container='body' data-toggle='popover' "
+										+ "data-placement='right' "
+										+ "data-trigger='hover' "
+										+ "data-title='Is this truck here? '"
+										+ "data-content='&#x2713; for yes, &#x2717; for no.'>";
+							downButton = "<button type='submit' class='btn btn-link btn-arrow downvote' "
+										+ "data-container='body' data-toggle='popover' "
+										+ "data-placement='right' "
+										+ "data-trigger='hover' "
+										+ "data-title='Is this truck here? '"
+										+ "data-content='&#x2713; for yes, &#x2717; for no.'>";
+						}
+
 						// upvote --> down button disabled
 						if (voteType == "up") {
 							upVoteNum =	"<strong>" + upvotes + "</strong";
