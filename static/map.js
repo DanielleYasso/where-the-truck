@@ -707,20 +707,18 @@ function addMarkers(map, markers) {
 					}
 					// not logged in --> buttons show login to rate alert
 					else {
-						// upButton = "<button type='button' onclick='loginToRate()' class='btn btn-link btn-arrow upvote'>";
-						// upButton = "<button type='button' id='upPop' class='btn btn-link btn-arrow upvote'>";
-
 						upButton = "<button type='button' class='btn btn-link btn-arrow upvote' "
 									+ "data-container='body' data-toggle='popover' "
 									+ "data-placement='right' "
 									+ "data-trigger='hover' "
-									+ "data-title='Is this truck here? &#x2713; for yes, &#x2717; for no.'"
+									+ "data-title='Is this truck here?'"
 									+ "data-content='Login or Signup to vote!'>";
+									
 						downButton = "<button type='button' class='btn btn-link btn-arrow downvote' "
 									+ "data-container='body' data-toggle='popover' "
 									+ "data-placement='right' "
 									+ "data-trigger='hover' "
-									+ "data-title='Is this truck here? &#x2713; for yes, &#x2717; for no.'"
+									+ "data-title='Is this truck here?'"
 									+ "data-content='Login or Signup to vote!'>";
 					}
 
@@ -740,53 +738,53 @@ function addMarkers(map, markers) {
 										+ "</a>";
 					}
 
-						var content = "<table style='text-align: left; width: 100%'><tr>"
+					var content = "<table style='text-align: left; width: 100%'><tr>"
 
-									+ "<th>" + attraction_name_url + "</th>"
+								+ "<th>" + attraction_name_url + "</th>"
 
-									+ "<td id='upArrow' padding-right: 5px;'>"
-									+ "<form action='/upvote/" + checkin_id + "' method='POST' class='form-arrow'>"
-									+ upButton
-									+ "<span class='glyphicon glyphicon-ok-sign' aria-hidden='true'></span>"
-									+ "</button></form>" 
-									+ "</td>"
+								+ "<td id='upArrow' padding-right: 5px;'>"
+								+ "<form action='/upvote/" + checkin_id + "' method='POST' class='form-arrow'>"
+								+ upButton
+								+ "<span class='glyphicon glyphicon-ok-sign' aria-hidden='true'></span>"
+								+ "</button></form>" 
+								+ "</td>"
 
-									+ "<td>" + upVoteNum + "</td></tr>"
+								+ "<td>" + upVoteNum + "</td></tr>"
 
-									+ "<tr><td style='padding-bottom: 5px'>"
-									+ "<span style='margin-right: 5px; padding-right: 5px;'>" 
-									+ jQuery.timeago(time) 
-									+ "</span>"
-									+ "</td>"
+								+ "<tr><td style='padding-bottom: 5px'>"
+								+ "<span style='margin-right: 5px; padding-right: 5px;'>" 
+								+ jQuery.timeago(time) 
+								+ "</span>"
+								+ "</td>"
 
-									+ "<td id='downArrow' style='vertical-align: top;'>"
-									+ "<form action='/downvote/" + checkin_id + "' method='POST' class='form-arrow'>"
-									+ downButton
-									+ "<span class='glyphicon glyphicon-remove-sign' aria-hidden='true'></span>"
-									+ "</button></form>"
-									+ "</td>"
+								+ "<td id='downArrow' style='vertical-align: top;'>"
+								+ "<form action='/downvote/" + checkin_id + "' method='POST' class='form-arrow'>"
+								+ downButton
+								+ "<span class='glyphicon glyphicon-remove-sign' aria-hidden='true'></span>"
+								+ "</button></form>"
+								+ "</td>"
 
-									+ "<td style='vertical-align: top'>" + downVoteNum + "</td></tr>"
+								+ "<td style='vertical-align: top'>" + downVoteNum + "</td></tr>"
 
-									+ "<tr><td colspan='3'><span style='margin-right: 1px'>"
-									+ yelp_ratings_img
-									+ yelp_ratings_count
-									+ powered_by_yelp 
-									+ "</span>"
-									+ "</td></tr>"
+								+ "<tr><td colspan='3'><span style='margin-right: 1px'>"
+								+ yelp_ratings_img
+								+ yelp_ratings_count
+								+ powered_by_yelp 
+								+ "</span>"
+								+ "</td></tr>"
 
-									+ "<tr><td colspan='3'>"
-									+ "<span style='margin-right: 1px'>"
-									+ "Get directions: <select id='transportMode' onchange='getDirections(" + latLngList + ")'>"
-									+ "<option value=''>--</option>"
-									+ "<option value='DRIVING'>Drive</option>"
-									+ "<option value='WALKING'>Walk</option>"
-									+ "<option value='BICYCLING'>Bicycle</option>"
-									+ "<option value='TRANSIT'>Transit</option>"
-									+ "</select>"
-									+ "</span></td></tr>"
+								+ "<tr><td colspan='3'>"
+								+ "<span style='margin-right: 1px'>"
+								+ "Get directions: <select id='transportMode' onchange='getDirections(" + latLngList + ")'>"
+								+ "<option value=''>--</option>"
+								+ "<option value='DRIVING'>Drive</option>"
+								+ "<option value='WALKING'>Walk</option>"
+								+ "<option value='BICYCLING'>Bicycle</option>"
+								+ "<option value='TRANSIT'>Transit</option>"
+								+ "</select>"
+								+ "</span></td></tr>"
 
-									+ "</table>";
+								+ "</table>";
 
 					return content;
 				}
