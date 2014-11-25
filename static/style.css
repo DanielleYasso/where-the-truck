@@ -141,6 +141,14 @@ button.btn-arrow.disabled {
 	color: #FF1919;
 }
 
+.help-glyph-up {
+	color: #00A300!important;
+}
+
+.help-glyph-down {
+	color: #E60000!important;
+}
+
 
 /****************************
 
@@ -154,6 +162,11 @@ button.btn-arrow.disabled {
 
 .attractionFocus.btn {
 	padding: 0;
+}
+
+.panel-list{
+	list-style-type: none;
+	padding-left: 0;
 }
 
 

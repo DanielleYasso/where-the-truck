@@ -247,7 +247,7 @@
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-					<h4 class="modal-title" id="myModalLabel">Help</h4>
+					<h4 class="modal-title" id="myModalLabel">What the truck... I need help!</h4>
 				</div>
 				<div class="modal-body">
 
@@ -265,17 +265,68 @@
 							<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
 								<div class="panel-body">
 									
-									<p>You can update the location of a food truck in 2 ways:
+									<p>You can update the location of a SF food truck in 2 ways:
 									<ol>
-										<li>To update a truck's location to where you are right now, select the truck name from the drop-down list, and click 'Update Location'</li>
-										<li>Or, just find the truck on the map, and drag it's marker on the map to it's accurate location</li>
-									<ol>
+										<li>To update its location to where you are right now, select the truck name from the drop-down list, and click 'Update Location'</li>
+										<li>Or, just find the truck on the map, and drag its marker to its accurate location on the map</li>
+									</ol>
+									Just remember - food trucks can't swim!</p>
 								</div>
 							</div><!-- /.panel-collapse -->
 						</div><!-- /.panel -->
 
 						<!-- Second panel -->
+						<div class="panel panel-default">
+						    <div class="panel-heading" role="tab" id="headingTwo">
+						    	<h4 class="panel-title">
+							        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+							          Voting
+							        </a>
+						    	</h4>
+						    </div>
+						    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+						    	<div class="panel-body">
+						        	<p>
+						        		Voting is simple.  
+							        	<br>
+							        	If a truck is where someone says it is, click <span class='glyphicon glyphicon-ok-sign help-glyph-up' aria-hidden='true'></span> to upvote that update. 
+							        	<br>
+							        	If a truck isn't where someone says it is, click <span class='glyphicon glyphicon-remove-sign help-glyph-down' aria-hidden='true'></span> to downvote that update.
+						        	</p>
+						        	<p>
+							        	Updates with too many downvotes won't be shown.  And users who have too many downvoted updates will have their updates automatically hidden, unless their accuracy improves!
+							        </p>
 
+						    	</div>
+						    </div>
+						</div>
+
+						<!-- Third panel -->
+						<div class="panel panel-default">
+						    <div class="panel-heading" role="tab" id="headingTwo">
+						    	<h4 class="panel-title">
+							        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+							          What are the all these truck colors?
+							        </a>
+						    	</h4>
+						    </div>
+						    <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+						    	<div class="panel-body">
+						        	<ul class="panel-list">
+						        		<li>
+						        			<img src="static/truck.png" title="Red truck - new update" alt="Red truck - new update"> New update (updated less than 1 hour ago)
+						        		</li>
+						        		<li>
+						        			<img src="static/truck1.png" title="Somewhat faded red truck, > 1 hour old" alt="Somewhat faded red truck, > 1 hour old"> Location updated more than 1 hour ago
+						        		</li>
+						        			<img src="static/truck3.png" title="Faded red truck, > 3 hour old" alt="Faded red truck, > 3 hour old"> Location updated more than 3 hours ago
+						        		<li>
+						        			<img src="static/truck6.png" title="Grey truck, > 1 hour old" alt="Grey red truck, > 1 hour old"> Location updated more than 6 hour ago
+						        		</li>
+					        		</ul>
+						    	</div>
+						    </div>
+						</div>
 
 
 
