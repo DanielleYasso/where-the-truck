@@ -74,6 +74,10 @@ function getGeolocation(attraction_id) {
 
 function isValidCheckin(attraction_id, lat,lng) {
 
+	// check if they are putting it outside of the Bay Area
+	console.log("lat + lng " + lat + " " + lng);
+
+	// check if they are putting it in the water around SF
 	$.get(
 		"/api/geonames",
 		{
@@ -840,7 +844,7 @@ function initialize() {
 	}
 
 	// create the map object
-	var startLatLng = new google.maps.LatLng(37.7796292,-122.4324726);
+	var startLatLng = new google.maps.LatLng(37.7829292,-122.4324726);
 	var mapOptions = {
 		// start on San Francisco
 		center: startLatLng,
