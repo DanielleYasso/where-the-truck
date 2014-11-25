@@ -552,6 +552,7 @@ function addMarkers(map, markers) {
 						downButton = "<button type='button' class='btn btn-link btn-arrow downvote' "
 									+ "data-container='body' data-toggle='popover' "
 									+ "data-placement='right' "
+									+ "data-trigger='hover' "
 									+ "data-title='Is this truck here? &#x2713; for yes, &#x2717; for no.'"
 									+ "data-content='Login or Signup to vote!'>";
 					}
