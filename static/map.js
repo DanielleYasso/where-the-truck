@@ -699,12 +699,21 @@ function addMarkers(map, markers) {
 				for (i = 0; i < markersArray.length; i++) {
 					marker = markersArray[i];
 					if (marker.get("id") == attractionId) {
+
+						var aLink = "#span_" + attractionId + " a";
+
 						checkedAttractions[attractionId] = $(this).is(":checked");
 						if (checkedAttractions[attractionId]) {
 							marker.setMap(map);
+
+							// enable link to focus on marker
+							$(aLink).removeClass("disabled");
 						}
 						else {
 							marker.setMap(null);
+							
+							// disable link to focus on marker
+							$(aLink).addClass("disabled");
 						}
 					}
 				}

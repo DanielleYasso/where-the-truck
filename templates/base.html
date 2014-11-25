@@ -148,24 +148,26 @@
 			{% if attraction.id == 1 or attraction.id == 5 %}
 			<div class="col-sm-6">
 			{% endif %}
+			<span id="span_{{attraction.id}}">
 
 				<!-- If user is signed in and has saved preferences -->
 				{% if session.get("user_id", False) and g.user.preferences != {}%}
 
 						<!-- user has checked this attraction -->
 						{% if g.user.preferences[attraction.id] %}
-							<input type="checkbox" id="{{attraction.id}}" name="attractionsDisplayed" value="{{attraction.id}}" checked><a href="#" class="attractionFocus" id="{{attraction.name}}">{{attraction.name}}</a><br>
+							<input type="checkbox" id="{{attraction.id}}" name="attractionsDisplayed" value="{{attraction.id}}" checked><a href="#" class="attractionFocus btn btn-link" id="{{attraction.name}}">{{attraction.name}}</a><br>
 						{% else %}
-							<input type="checkbox" id="{{attraction.id}}" name="attractionsDisplayed" value="{{attraction.id}}"><a href="#" class="attractionFocus" id="{{attraction.name}}">{{attraction.name}}</a><br>
+							<input type="checkbox" id="{{attraction.id}}" name="attractionsDisplayed" value="{{attraction.id}}"><a href="#" class="attractionFocus btn btn-link" id="{{attraction.name}}">{{attraction.name}}</a><br>
 						{% endif %}
 
 				<!-- no user or user has no preferences -->
 				{% else %}  
-					<input type="checkbox" id="{{attraction.id}}" name="attractionsDisplayed" value="{{attraction.id}}" checked><a href="#" class="attractionFocus" id="{{attraction.name}}">{{attraction.name}}</a><br>
+					<input type="checkbox" id="{{attraction.id}}" name="attractionsDisplayed" value="{{attraction.id}}" checked><a href="#" class="attractionFocus btn btn-link" id="{{attraction.name}}">{{attraction.name}}</a><br>
 				{% endif %}
 			{% if attraction.id == 4 or attraction.id == 6 %}
 			</div>
 			{% endif %}
+			</span>
 
 			{% endfor %}
 		</div>
@@ -231,6 +233,24 @@
 		<button id="closeDirections" class="btn btn-default">Close directions</button>
 		<div id="directionsDiv"></div>
 	</div>
+
+	<div class="modal fade">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+					<h4 class="modal-title">Modal title</h4>
+				</div>
+				<div class="modal-body">
+					<p>One fine body&hellip;</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary">Save changes</button>
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
 
 
 

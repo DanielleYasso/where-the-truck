@@ -152,6 +152,10 @@ button.btn-arrow.disabled {
 	display: none;
 }
 
+.attractionFocus.btn {
+	padding: 0;
+}
+
 
 
 
