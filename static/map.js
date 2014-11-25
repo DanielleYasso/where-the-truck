@@ -117,7 +117,7 @@ function isValidCheckin(attraction_id, lat,lng) {
 	//////////////////////////////////////////////
 	//////// PUT MARKER BACK WHERE IT WAS ////////
 	//////////////////////////////////////////////
-	
+
 	function putMarkerBack() {
 		// put the attraction back where it was
 		for (i = 0; i < markersArray.length; i++) {
@@ -196,12 +196,9 @@ function getMarkers(map) {
 }
 
 
-
-//////////////////////////////
-
-//////// ADD MARKERS ////////
-
-//////////////////////////////
+/////////////////////////////////
+//////// GET MARKER DATA ////////
+/////////////////////////////////
 
 function getMarkerData(marker, markerObject) {
 	marker.set("id", markerObject["id"]);
@@ -230,6 +227,10 @@ function getMarkerData(marker, markerObject) {
 	}
 
 }
+
+///////////////////////////////////////////
+//////// GET ICON TYPE FOR TIMEOUT ////////
+///////////////////////////////////////////
 
 function getIconTypeForTimeout(timeout, iconType) {
 	if (timeout == "old") {
@@ -260,146 +261,170 @@ function getIconTypeForTimeout(timeout, iconType) {
 	return icon;
 }
 
+// Info Window
+var infoWindow;
+var checkedAttractions;
+
+/////////////////////////////////////
+//////// SET DISPLAY OPTIONS ////////
+/////////////////////////////////////
+
+var showNonUserCheckins;
+var showBad;
+var showOld;
+
+function setOptionChecks() {
+	for (i = 0; i < markersArray.length; i++) {
+		marker = markersArray[i];
+
+		var removeMarker = false;
+		var hideOld = false;
+
+		// Show checkins made by non-users?
+		showNonUserCheckins = $("#showNonUserCheckins").is(":checked");
+		if (marker["current"]["non_user_checkin"] && !showNonUserCheckins) {
+			console.log("remove non user");
+			removeMarker = true; 
+		}
+
+		// Show checkins with established bad ratings on the map?
+		showBad = $("#showBadRatings").is(":checked");
+		if (marker["current"]["bad_rating"] && !showBad) {
+			removeMarker = true; 
+		}
+
+		// Show checkins made by un-trusted users?
+		showUntrusted = $("#showUntrusted").is(":checked");
+		if (!marker["current"]["trusted_user"] && !showUntrusted) {
+			removeMarker = true;
+		}
+
+		// Show old checkins on the map?
+		showOld = $("#showOldCheckins").is(":checked");
+		if (marker["current"]["timeout"] == "old" && !showOld) {
+			removeMarker = true; 
+			hideOld = true;
+		}
+
+		// attraction is checked for display
+		attractionId = "#" + marker.get("id");
+		var showAttraction = $(attractionId).is(":checked");
+
+		// update marker status for display
+		checkedAttractions[marker.get("id")] = !removeMarker
+		if (!showAttraction || hideOld) {
+			checkedAttractions[marker.get("id")] = "hide";
+		}
+
+	}
+} // end of setOptionChecks function
+
+
+
+/////////////////////////////////
+
+//////// (RE)SET MARKERS ////////
+
+/////////////////////////////////
+
+
+///////////////////////////////////////
+//////// SET OR DELETE MARKERS ////////
+///////////////////////////////////////
+
+// only show on map if checkbox is selected
+function setOrDeleteMarkers() {
+	console.log(checkedAttractions);
+	// close any open windows
+	if (infoWindow) {
+		infoWindow.close();
+	}
+	for (i = 0; i < markersArray.length; i++) {
+		marker = markersArray[i];
+
+		if (checkedAttractions[marker.get("id")] == "hide") {
+			marker.setMap(null);
+			continue;
+		}
+		if (checkedAttractions[marker.get("id")] == false) {
+			marker.setMap(null);
+
+			// // get the last_good_checkin if there is one
+			if (marker.get("using_update") == "current" && marker.get("previous")) {
+			
+				// update marker settings
+				updateMarkerSettingsPosition(marker, "previous");
+				marker.setMap(map);
+				
+			}
+
+			
+		}
+		else {
+			if (marker.get("using_update") == "previous") {
+				// remove "previous" marker, and update marker to "current"
+				marker.setMap(null);
+				updateMarkerSettingsPosition(marker, "current");
+			}
+			marker.setMap(map);
+		}
+	}
+}
+
+////////////////////////////////////////
+//////// UPDATE MARKER SETTINGS ////////
+////////////////////////////////////////
+
+function updateMarkerSettingsPosition(marker, using_update) {
+	latLng = new google.maps.LatLng(marker[using_update]["lat"], marker[using_update]["lng"]);
+	var icon = getIconTypeForTimeout(marker[using_update]["timeout"], marker.get("type"));
+
+	marker.setPosition(latLng);
+	marker.setIcon(icon);
+	marker.setMap(map);
+
+	marker.set("checkin_id", marker[using_update]["checkin_id"]);
+	marker.set("lat", marker[using_update]["lat"]);
+	marker.set("lng", marker[using_update]["lng"]);
+	marker.set("timeout", marker[using_update]["timeout"]);
+	marker.set("time", marker[using_update]["timestamp"]);
+
+	marker.set("non_user_checkin", marker[using_update]["non_user_checkin"]);
+	marker.set("bad_rating", marker[using_update]["bad_rating"]);
+	marker.set("trusted_user", marker[using_update]["trusted_user"]);
+
+	marker.set("using_update", using_update);
+}
+
+
+////////////////////////////////////////////////////////
+
+//////// ADD MARKERS --> INCLUDES MARKER EVENTS ////////
+
+////////////////////////////////////////////////////////
+
+
+/////////////////////////////
+//////// ADD MARKERS ////////
+/////////////////////////////
+
 // Gets all current checkin markers and puts them on the map
 function addMarkers(map, markers) {
 	
-	// create array to hold all markers
-
+	// initialize array to hold all markers
 	markersArray = [];
-	// Info Window
-	var infoWindow;
+	
 
 	///////////////////////////////////////////////////////////
 	//////// INITIALIZE CHECKED ATTRACTIONS DICTIONARY ////////
 
 	// initialize dictionary of checked markers, key = id, value = true or false
-	var checkedAttractions = {};
+	checkedAttractions = {};
 	for (var i = 0; i < markers.length; i++) {
 		markerObject = markers[i];
 		attractionId = "#" + markerObject["id"];
 		checkedAttractions[markerObject["id"]] = $(attractionId).is(":checked");
 	}
-
-	///////////////////////////////////////
-	//////// SET OR DELETE MARKERS ////////
-	///////////////////////////////////////
-
-	function updateMarkerSettingsPosition(marker, using_update) {
-		latLng = new google.maps.LatLng(marker[using_update]["lat"], marker[using_update]["lng"]);
-		var icon = getIconTypeForTimeout(marker[using_update]["timeout"], marker.get("type"));
-
-		marker.setPosition(latLng);
-		marker.setIcon(icon);
-		marker.setMap(map);
-
-		marker.set("checkin_id", marker[using_update]["checkin_id"]);
-		marker.set("lat", marker[using_update]["lat"]);
-		marker.set("lng", marker[using_update]["lng"]);
-		marker.set("timeout", marker[using_update]["timeout"]);
-		marker.set("time", marker[using_update]["timestamp"]);
-
-		marker.set("non_user_checkin", marker[using_update]["non_user_checkin"]);
-		marker.set("bad_rating", marker[using_update]["bad_rating"]);
-		marker.set("trusted_user", marker[using_update]["trusted_user"]);
-
-		marker.set("using_update", using_update);
-	}
-
-	// only show on map if checkbox is selected
-	function setOrDeleteMarkers() {
-		console.log(checkedAttractions);
-		// close any open windows
-		if (infoWindow) {
-			infoWindow.close();
-		}
-		for (i = 0; i < markersArray.length; i++) {
-			marker = markersArray[i];
-
-			if (checkedAttractions[marker.get("id")] == "hide") {
-				marker.setMap(null);
-				continue;
-			}
-			if (checkedAttractions[marker.get("id")] == false) {
-				marker.setMap(null);
-
-				// // get the last_good_checkin if there is one
-				if (marker.get("using_update") == "current" && marker.get("previous")) {
-				
-					// update marker settings
-					updateMarkerSettingsPosition(marker, "previous");
-					marker.setMap(map);
-					
-				}
-
-				
-			}
-			else {
-				if (marker.get("using_update") == "previous") {
-					// remove "previous" marker, and update marker to "current"
-					marker.setMap(null);
-					updateMarkerSettingsPosition(marker, "current");
-				}
-				marker.setMap(map);
-			}
-		}
-	}
-
-	/////////////////////////////////////
-	//////// SET DISPLAY OPTIONS ////////
-	/////////////////////////////////////
-
-	var showNonUserCheckins;
-	var showBad;
-	var showOld;
-
-	function setOptionChecks() {
-		for (i = 0; i < markersArray.length; i++) {
-			marker = markersArray[i];
-
-			var removeMarker = false;
-			var hideOld = false;
-
-			// Show checkins made by non-users?
-			showNonUserCheckins = $("#showNonUserCheckins").is(":checked");
-			if (marker["current"]["non_user_checkin"] && !showNonUserCheckins) {
-				console.log("remove non user");
-				removeMarker = true; 
-			}
-
-			// Show checkins with established bad ratings on the map?
-			showBad = $("#showBadRatings").is(":checked");
-			if (marker["current"]["bad_rating"] && !showBad) {
-				removeMarker = true; 
-			}
-
-			// Show checkins made by un-trusted users?
-			showUntrusted = $("#showUntrusted").is(":checked");
-			if (!marker["current"]["trusted_user"] && !showUntrusted) {
-				removeMarker = true;
-			}
-
-			// Show old checkins on the map?
-			showOld = $("#showOldCheckins").is(":checked");
-			if (marker["current"]["timeout"] == "old" && !showOld) {
-				removeMarker = true; 
-				hideOld = true;
-			}
-
-			// attraction is checked for display
-			attractionId = "#" + marker.get("id");
-			var showAttraction = $(attractionId).is(":checked");
-
-			// update marker status for display
-			checkedAttractions[marker.get("id")] = !removeMarker
-			if (!showAttraction || hideOld) {
-				checkedAttractions[marker.get("id")] = "hide";
-			}
-
-		}
-	} // end of setOptionChecks function
-
-
-	
 
 	/////////////////////////////////////
 	//////// CREATE MARKERS LOOP ////////
@@ -709,17 +734,13 @@ function addMarkers(map, markers) {
 	// get checkbox changes
 	$("input:checkbox").change(
 		function() {
-			if (this.id == "showOldCheckins") {
-				showOld = $(this).is(":checked");
-			}
-			else if (this.id == "showBadRatings") {
-				showBad = $(this).is(":checked");
-			}
-			else if (this.id == "showNonUserCheckins") {
-				showNonUserCheckins = $(this).is(":checked");
-			}
-			else if (this.id == "showUntrusted") {
-				showUntrusted = $(this).is(":checked");
+			if (this.id == "showOldCheckins" 
+				|| this.id == "showBadRatings"
+				|| this.id == "showNonUserCheckins" 
+				|| this.id == "showUntrusted") {
+				
+				setOptionChecks();
+				setOrDeleteMarkers();
 			}
 			else if (this.id == "rememberMeLogin" || this.id == "rememberMeSignup") {
 				// do nothing
@@ -747,12 +768,7 @@ function addMarkers(map, markers) {
 						}
 					}
 				}
-				return;
 			}
-			
-			setOptionChecks();
-			setOrDeleteMarkers();
-
 	});
 }
 
