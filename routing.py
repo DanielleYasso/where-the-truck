@@ -108,10 +108,13 @@ def get_yelp_ratings(business_id):
 	url = "http://api.yelp.com/v2/business/{0}".format(business_id)
 	print "**** url", url
 
-	request = session.get(url)
-
-	# transform json api response into dictionary
-	data = request.json()
+	try:
+		request = session.get(url)
+		# transform json api response into dictionary
+		data = request.json()
+	except ValueError:
+		return False
+		
 	session.close()
 
 	return data
@@ -470,16 +473,17 @@ def getCheckinData(checkin):
 	timeout = getTimeout(checkin)
 
 	# get yelp ratings if they exist
+	ratings_img = None
+	ratings_count = None
+	url = None
+
 	if checkin.attraction.biz_id:
 		ratings_data = get_yelp_ratings(checkin.attraction.biz_id)
 
-		ratings_img = str(ratings_data["rating_img_url_small"])
-		ratings_count = str(ratings_data["review_count"])
-		url = "http://www.yelp.com/biz/{0}".format(checkin.attraction.biz_id)
-	else:
-		ratings_img = None
-		ratings_count = None
-		url = None
+		if ratings_data:
+			ratings_img = str(ratings_data["rating_img_url_small"])
+			ratings_count = str(ratings_data["review_count"])
+			url = "http://www.yelp.com/biz/{0}".format(checkin.attraction.biz_id)
 
 
 	last_good_checkin = False

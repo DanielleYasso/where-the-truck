@@ -5,9 +5,9 @@ html, body, .container {
 	padding: 0;
 }
 
-/*body {
-	background-color: #F5F6F7!important;
-}*/
+body {
+	background-color: #A9C1E3!important;
+}
 
 #map-canvas {
 	margin: 0;
@@ -43,7 +43,7 @@ ul.nav li {
 }
 
 .navbar {
-	background-color: #64D10A!important;
+	background-color: #4A5564!important;
 }
 
 #helpButton {
@@ -55,7 +55,7 @@ ul.nav li {
 }
 
 .navbar-brand {		
-	color: white!important;
+	/*color: white!important;*/
 }
 
 .btn-default {

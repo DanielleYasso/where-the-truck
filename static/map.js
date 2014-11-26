@@ -7,6 +7,7 @@
 // for accessing markers and marker settings
 var markersArray = [];
 var checkedAttractions;
+var showOld;
 
 // Info Window
 var infoWindow;
@@ -374,7 +375,7 @@ function setOptionChecks() {
 
 	var showNonUserCheckins;
 	var showBad;
-	var showOld;
+	
 
 	for (i = 0; i < markersArray.length; i++) {
 		marker = markersArray[i];
@@ -414,7 +415,7 @@ function setOptionChecks() {
 
 		// update marker status for display
 		checkedAttractions[marker.get("id")] = !removeMarker
-		if (!showAttraction || hideOld) {
+		if (!showAttraction) {
 			checkedAttractions[marker.get("id")] = "hide";
 		}
 
@@ -435,6 +436,7 @@ function setOrDeleteMarkers() {
 	}
 	for (i = 0; i < markersArray.length; i++) {
 		marker = markersArray[i];
+		
 
 		if (checkedAttractions[marker.get("id")] == "hide") {
 			marker.setMap(null);
@@ -446,9 +448,14 @@ function setOrDeleteMarkers() {
 			// // get the last_good_checkin if there is one
 			if (marker.get("using_update") == "current" && marker.get("previous")) {
 			
-				// update marker settings
-				updateMarkerSettingsPosition(marker, "previous");
-				marker.setMap(map);
+				if (marker["previous"]["timeout"] == "old" && !showOld) {
+					// don't use the old previous marker
+				}
+				else {
+					// update marker settings
+					updateMarkerSettingsPosition(marker, "previous");
+					marker.setMap(map);
+				}
 				
 			}
 
