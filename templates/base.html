@@ -42,15 +42,11 @@
 					</li>
 
 				{% else %}
-					<li id="loginOpenButton" class="btn navbar-btn btn-default">Login</li>
-					<li id="signupOpenButton" class="btn navbar-btn btn-default">Signup</li>
+					<li id="loginOpenButton" class="btn navbar-btn btn-link">Login</li>
+					<li id="signupOpenButton" class="btn navbar-btn btn-link">Signup</li>
 				{% endif %}
-				<li>
-					<!-- Link to toggle help modal - coded at bottom -->
-					<button id="helpButton" type="button" class="btn navbar-btn btn-link" data-toggle="modal" data-target="#helpModal">
-					  ?
-					</button>
-				</li>
+				<!-- Link to toggle help modal - coded at bottom -->
+				<li id="helpButton" type="button" class="btn navbar-btn btn-link" data-toggle="modal" data-target="#helpModal">?</li>
 			</ul>
 		</div> <!-- end navbar collapse -->
 	</div> <!-- end container -->
@@ -132,7 +128,7 @@
 				<option value="{{ attraction.id }}">{{ attraction.name }}</option>
 				{% endfor %}
 			</select>
-			<button id="checkinButton" type="button" class="btn btn-default">Update Location</button>
+			<button id="checkinButton" type="button" class="btn btn-link">Update Location</button>
 		</form>
 	</div>
 

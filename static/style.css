@@ -7,12 +7,16 @@ html, body, .container {
 
 body {
 	background-color: #2E343E!important;
-	color: gray!important;
+	color: #BCE9FE!important;
 }
 
 #map-canvas {
 	margin: 0;
 	padding: 0;
+}
+
+.modal-content {
+	color: black;
 }
 
 
@@ -37,6 +41,18 @@ ul.nav li {
 	margin-right: 5px;
 	padding-left: 10px!important;
 	padding-right: 10px!important;
+	margin: 0!important;
+	color: white!important;
+	display: block!important;
+	line-height: 40px!important;
+	min-height: 40px!important;
+}
+
+.navbar-btn:hover {
+	background-color: #BCE9FE!important;
+	color: #2E343E!important;
+	text-decoration: none!important;
+
 }
 
 #collapsedNav {
@@ -44,36 +60,30 @@ ul.nav li {
 }
 
 .navbar {
-	background-color: #5D6B7D!important;
+	background-color: #4EA0C7!important;
+	border: none!important;
+
+}
+
+.navbar-toggle {
+	border: none!important;
+	background-color: #BCE9FE!important;
 }
 
 #helpButton {
+	margin: auto!important;
+}
+
+
+.navbar-brand {		
 	color: white!important;
 }
 
-#helpButton:hover {
-	/*color: red!important;*/
-}
-
-.navbar-brand {		
-	/*color: white!important;*/
-}
-
-.btn-default {
-	/*background-color: #007000!important;
-	border-color: #006400!important;
-	color: white!important;*/
-}
-
-.btn-default:hover {
-	background-color: #0F9BAD;
-}
 
 .attractionFocus {
-	color: #10AEC2!important;
-	/*color: #548EE0!important;*/
+	color: #62C9FA!important;
+	
 }
-
 .attractionFocus:hover {
 	color: #0B7582!important;
 }
