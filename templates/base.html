@@ -34,7 +34,7 @@
 		<div class="navbar-collapse collapse" id="collapsedNav">
 			<ul class="nav navbar-nav navbar-right">
 				{% if session.get("user_id", False) %}
-					<li><p class="navbar-text">{{ g.user.username }}</p></li>
+					<li class="btn navbar-btn disabled">{{ g.user.username }}</li>
 					<li>
 						<form action="/logout">
 							<button type="submit" id="logoutButton" class="btn navbar-btn btn-link">Logout</button>
@@ -166,7 +166,7 @@
 
 					<!-- no user or user has no preferences -->
 					{% else %}  
-						<input type="checkbox" id="{{attraction.id}}" name="attractionsDisplayed" value="{{attraction.id}}" checked><label for="{{attraction.id}}"><span></span></label><a href="#" class="attractionFocus btn btn-link" id="{{attraction.name}}">{{attraction.name}}</a><br>
+						<input type="checkbox" id="{{attraction.id}}" name="attractionsDisplayed" value="{{attraction.id}}" checked><label for="{{attraction.id}}"><span class="unchecked"><span class="glyphicon glyphicon-ok check-glyph"></span></span></label><a href="#" class="attractionFocus btn btn-link" id="{{attraction.name}}">{{attraction.name}}</a><br>
 					{% endif %}
 					{% if attraction.id == 4 or attraction.id == 6 %}
 						</div>
