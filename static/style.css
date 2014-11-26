@@ -6,7 +6,8 @@ html, body, .container {
 }
 
 body {
-	background-color: #A9C1E3!important;
+	background-color: #2E343E!important;
+	color: gray!important;
 }
 
 #map-canvas {
@@ -43,7 +44,7 @@ ul.nav li {
 }
 
 .navbar {
-	background-color: #4A5564!important;
+	background-color: #5D6B7D!important;
 }
 
 #helpButton {

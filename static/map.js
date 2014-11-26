@@ -77,11 +77,20 @@ $(document).ready(function() {
 
 						checkedAttractions[attractionId] = $(this).is(":checked");
 						if (checkedAttractions[attractionId]) {
-							marker.setMap(map);
+							if ((marker["timeout"] == "old" && !showOld)
+								|| (marker["non_user_checkin"] && !showNonUserCheckins)
+								|| (marker["bad_rating"] && !showBad)
+								|| (!marker["trusted_user"] && !showUntrusted)) {
 
-							// enable link to focus on marker
-							$(aLink).removeClass("disabled");
-						}
+								// don't set it
+							}
+							else {
+								marker.setMap(map);
+
+								// enable link to focus on marker
+								$(aLink).removeClass("disabled");
+							}
+						} 
 						else {
 							marker.setMap(null);
 							
@@ -370,43 +379,42 @@ function getIconTypeForTimeout(timeout, iconType) {
 /////////////////////////////////////
 //////// SET DISPLAY OPTIONS ////////
 /////////////////////////////////////
+var showNonUserCheckins;
+var showBad;
+var showAttraction;
 
 function setOptionChecks() {
-
-	var showNonUserCheckins;
-	var showBad;
-	
 
 	for (i = 0; i < markersArray.length; i++) {
 		marker = markersArray[i];
 
 		var removeMarker = false;
-		var hideOld = false;
+		// var hideOld = false;
+		var using_update = marker.get("using_update");
 
 		// Show checkins made by non-users?
 		showNonUserCheckins = $("#showNonUserCheckins").is(":checked");
-		if (marker["current"]["non_user_checkin"] && !showNonUserCheckins) {
-			console.log("remove non user");
+		if (marker[using_update]["non_user_checkin"] && !showNonUserCheckins) {
 			removeMarker = true; 
 		}
 
 		// Show checkins with established bad ratings on the map?
 		showBad = $("#showBadRatings").is(":checked");
-		if (marker["current"]["bad_rating"] && !showBad) {
+		if (marker[using_update]["bad_rating"] && !showBad) {
 			removeMarker = true; 
 		}
 
 		// Show checkins made by un-trusted users?
 		showUntrusted = $("#showUntrusted").is(":checked");
-		if (!marker["current"]["trusted_user"] && !showUntrusted) {
+		if (!marker[using_update]["trusted_user"] && !showUntrusted) {
 			removeMarker = true;
 		}
 
 		// Show old checkins on the map?
 		showOld = $("#showOldCheckins").is(":checked");
-		if (marker["current"]["timeout"] == "old" && !showOld) {
+		if (marker[using_update]["timeout"] == "old" && !showOld) {
 			removeMarker = true; 
-			hideOld = true;
+			// hideOld = true;
 		}
 
 		// attraction is checked for display
@@ -436,39 +444,73 @@ function setOrDeleteMarkers() {
 	}
 	for (i = 0; i < markersArray.length; i++) {
 		marker = markersArray[i];
-		
 
+		var otherUpdate;
+		var useOther;
+
+		///////////////////////////////////////////////////
+		//////// DETERMINE IF CAN USE OTHER UDPATE ////////
+		///////////////////////////////////////////////////
+		
+		function useOtherUpdate() {
+				// check other update against display options
+				if ((marker[otherUpdate]["timeout"] == "old" && !showOld)
+					|| (marker[otherUpdate]["non_user_checkin"] && !showNonUserCheckins)
+					|| (marker[otherUpdate]["bad_rating"] && !showBad)
+					|| (!marker[otherUpdate]["trusted_user"] && !showUntrusted)) {
+					// don't use the other update option marker
+					return false;
+				}
+				else {
+					// update marker settings
+					return true;
+				}
+		}
+
+		// is food truck de-selected?
 		if (checkedAttractions[marker.get("id")] == "hide") {
 			marker.setMap(null);
 			continue;
 		}
-		if (checkedAttractions[marker.get("id")] == false) {
+		// if set to false (=> remove truck from display)
+		else if (checkedAttractions[marker.get("id")] == false) {
 			marker.setMap(null);
 
-			// // get the last_good_checkin if there is one
+			// get the last_good_checkin if there is one
 			if (marker.get("using_update") == "current" && marker.get("previous")) {
-			
-				if (marker["previous"]["timeout"] == "old" && !showOld) {
-					// don't use the old previous marker
-				}
-				else {
-					// update marker settings
-					updateMarkerSettingsPosition(marker, "previous");
-					marker.setMap(map);
-				}
-				
+				// use the previous checkin, unless it violates user settings
+				otherUpdate = "previous";
+				useOther = useOtherUpdate();
+			}
+			else if (marker.get("using_update") == "previous") {
+				// show the current checkin (preferred) instead of that will work
+				otherUpdate = "current";
+				useOther = useOtherUpdate();
 			}
 
-			
-		}
-		else {
-			if (marker.get("using_update") == "previous") {
-				// remove "previous" marker, and update marker to "current"
-				marker.setMap(null);
-				updateMarkerSettingsPosition(marker, "current");
+			// Update the marker to use the other one, if possible
+			if (useOther) {
+				updateMarkerSettingsPosition(marker, otherUpdate);
+				marker.setMap(map);
 			}
+		}
+		// if set to true => do not remove marker --> set it
+		else {
+			// check if we can use current update (preferred) if using previous
+			if (marker.get("using_update") == "previous") {
+				otherUpdate = "current";
+				useOther = useOtherUpdate();
+				if (useOther) {
+					// remove "previous" marker, and update marker to "current"
+					marker.setMap(null);
+					updateMarkerSettingsPosition(marker, "current");
+				}
+			}
+			// set the marker on the map
 			marker.setMap(map);
 		}
+
+		
 	}
 }
 
