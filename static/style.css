@@ -6,8 +6,9 @@ html, body, .container {
 }
 
 body {
-	background-color: #2E343E!important;
-	color: #BCE9FE!important;
+	/*background-color: #2E343E!important;*/
+	/*color: #BCE9FE!important;*/
+
 }
 
 #map-canvas {
@@ -27,6 +28,9 @@ body {
 
 ****************************/
 
+/********************/
+/*		LINKS		*/
+/********************/
 
 ul.nav {
 	list-style-type: none;
@@ -49,8 +53,9 @@ ul.nav li {
 }
 
 .navbar-btn:hover {
-	background-color: #BCE9FE!important;
-	color: #2E343E!important;
+	/*background-color: #C9FBCC!important;*/
+	/*color: #2E343E!important;*/
+	background-color: #623145!important;
 	text-decoration: none!important;
 
 }
@@ -59,34 +64,46 @@ ul.nav li {
 	text-align: center;
 }
 
-.navbar {
-	background-color: #4EA0C7!important;
-	border: none!important;
-
-}
-
 .navbar-toggle {
 	border: none!important;
-	background-color: #BCE9FE!important;
+	/*background-color: #BCE9FE!important;*/
+	/*background-color: #BCD7FD!important;*/
+	/*background-color: white!important;*/
+}
+.icon-bar {
+	background-color: white!important;
+}
+
+.navbar-toggle:hover {
+	background-color: #7BAF7E!important;
 }
 
 #helpButton {
 	margin: auto!important;
+	/*color: #623145!important;*/
 }
 
+#helpButton:hover {
+	
+}
+
+/*********************/
+/* NAVBAR APPEARANCE */
+/*********************/
+
+.navbar {
+	/*background-color: #4EA0C7!important;*/
+	background-color: #7BAF7E!important;
+	border: none!important;
+
+}
 
 .navbar-brand {		
 	color: white!important;
 }
 
 
-.attractionFocus {
-	color: #62C9FA!important;
-	
-}
-.attractionFocus:hover {
-	color: #0B7582!important;
-}
+
 
 /*map colors*/
 /*green = #D1E2B5*/
@@ -221,6 +238,41 @@ button.btn-arrow.disabled {
 	list-style-type: none;
 	padding-left: 0;
 }
+
+
+.checkbox.row {
+	/*background-color: #C9FBCC!important;
+	width: 100%;
+	min-height: 5px;*/
+	padding: 10px;
+	padding-left: 15px;
+	margin: auto;
+}
+
+#checkinForm {
+	/*background-color: #C9FBCC!important;*/
+	padding: 15px;
+	margin-bottom: -10px!important;
+}
+
+.attractionFocus {
+	/*color: #62C9FA!important;*/
+	color: #3B623E!important;
+	
+}
+.attractionFocus:hover {
+	/*color: #0B7582!important;*/
+}
+
+#checkinButton {
+	background-color: #623145;
+	color: white!important;
+}
+
+#checkinButton:hover {
+	background-color: #AF7B8F!important;
+}
+
 
 
 
