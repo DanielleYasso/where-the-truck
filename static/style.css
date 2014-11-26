@@ -3,8 +3,11 @@ html, body, .container {
 	height: 100%;
 	margin: 0;
 	padding: 0;
-	/*color: red;*/
 }
+
+/*body {
+	background-color: #F5F6F7!important;
+}*/
 
 #map-canvas {
 	margin: 0;
@@ -38,6 +41,45 @@ ul.nav li {
 #collapsedNav {
 	text-align: center;
 }
+
+.navbar {
+	background-color: #64D10A!important;
+}
+
+#helpButton {
+	color: white!important;
+}
+
+#helpButton:hover {
+	/*color: red!important;*/
+}
+
+.navbar-brand {		
+	color: white!important;
+}
+
+.btn-default {
+	/*background-color: #007000!important;
+	border-color: #006400!important;
+	color: white!important;*/
+}
+
+.btn-default:hover {
+	background-color: #0F9BAD;
+}
+
+.attractionFocus {
+	color: #10AEC2!important;
+	/*color: #548EE0!important;*/
+}
+
+.attractionFocus:hover {
+	color: #0B7582!important;
+}
+
+/*map colors*/
+/*green = #D1E2B5*/
+/*blue = #BCD7FD*/
 
 /****************************
 
