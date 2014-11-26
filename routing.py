@@ -84,7 +84,21 @@ def convert_to_JSON(result):
 	return response
 
 def dump_datetime(value):
-    """Deserialize datetime object into string form for JSON processing."""
+    """Deserialize datetime object into string form for JSON processing.
+
+    For example, converting a date and a time:
+
+        >>> import datetime
+        >>> dump_datetime(datetime.datetime(1970, 12, 25, 15, 0, 0))
+        ['1970-12-25', '15:00:00']
+
+    But also should work if given just a date:
+
+        >>> import datetime
+        >>> dump_datetime(datetime.datetime(1970, 12, 25))
+        ['1970-12-25', '00:00:00']
+
+    """
     if value is None:
         return None
     return [value.strftime("%Y-%m-%d"), value.strftime("%H:%M:%S")]
@@ -815,4 +829,6 @@ def twilio_response():
 
 
 if __name__=="__main__":
-	app.run(debug=True)
+	import doctest
+	if doctest.testmod().failed == 0:
+		app.run(debug=True)

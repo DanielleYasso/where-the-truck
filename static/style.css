@@ -6,7 +6,7 @@ html, body, .container {
 }
 
 body {
-	/*background-color: #2E343E!important;*/
+	background-color: #FAFEFA!important;
 	/*color: #BCE9FE!important;*/
 
 }
@@ -241,9 +241,8 @@ button.btn-arrow.disabled {
 
 
 .checkbox.row {
-	/*background-color: #C9FBCC!important;
-	width: 100%;
-	min-height: 5px;*/
+	/*background-color: #C9FBCC!important;*/
+	background-color: #CCFFCF!important;
 	padding: 10px;
 	padding-left: 15px;
 	margin: auto;
@@ -258,6 +257,7 @@ button.btn-arrow.disabled {
 .attractionFocus {
 	/*color: #62C9FA!important;*/
 	color: #3B623E!important;
+	/*color: #623145!important;*/
 	
 }
 .attractionFocus:hover {
@@ -271,6 +271,34 @@ button.btn-arrow.disabled {
 
 #checkinButton:hover {
 	background-color: #AF7B8F!important;
+}
+
+input[type="checkbox"] {
+	/*display: none;*/
+}
+
+input[type="checkbox"] + label {
+	display: inline-block;
+	width: 15px;
+	padding: 0;
+	margin-right: 2px!important;
+	/*vertical-align: middle;*/
+	/*cursor: pointer;*/
+}
+
+input[type="checkbox"] + label span {
+	display: inline-block;
+	width: 12px;
+	height: 12px;
+	vertical-align: middle;
+	cursor: pointer;
+	background-color: gray;
+	border-radius: 2px;
+
+}
+
+input[type="checkbox"]:checked + label {
+
 }
 
 
