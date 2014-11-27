@@ -161,7 +161,7 @@
 							{% if g.user.preferences[attraction.id] %}
 								<input type="checkbox" id="{{attraction.id}}" name="attractionsDisplayed" value="{{attraction.id}}" checked><label for="{{attraction.id}}"><span class="unchecked"><span class="glyphicon glyphicon-ok check-glyph"></span></span></label><a href="#" class="attractionFocus btn btn-link" id="{{attraction.name}}">{{attraction.name}}</a><br>
 							{% else %}
-								<input type="checkbox" id="{{attraction.id}}" name="attractionsDisplayed" value="{{attraction.id}}"><label for="{{attraction.id}}"><span class="unchecked"><span class="glyphicon glyphicon-ok check-glyph"></span></span></label><a href="#" class="attractionFocus btn btn-link" id="{{attraction.name}}">{{attraction.name}}</a><br>
+								<input type="checkbox" id="{{attraction.id}}" name="attractionsDisplayed" value="{{attraction.id}}"><label for="{{attraction.id}}"><span class="unchecked"><span class="glyphicon glyphicon-ok check-glyph"></span></span></label><a href="#" class="attractionFocus btn btn-link disabled" id="{{attraction.name}}">{{attraction.name}}</a><br>
 							{% endif %}
 
 					<!-- no user or user has no preferences -->

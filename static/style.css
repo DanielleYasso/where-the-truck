@@ -22,6 +22,11 @@ body {
 
 #attraction_id {
 	margin-bottom: 10px;
+	margin-right: 5px;
+}
+
+.modal-title {
+	background-color: ;
 }
 
 
@@ -115,6 +120,10 @@ ul.nav li {
 /*green = #D1E2B5*/
 /*blue = #BCD7FD*/
 
+
+
+
+
 /****************************
 
 	LOGIN AND SIGNUP FORMS
@@ -182,6 +191,10 @@ ul.nav li {
 }
 
 
+
+
+
+
 /****************************
 
 		RATING ARROWS
@@ -244,6 +257,10 @@ button.btn-arrow.disabled {
 	list-style-type: none;
 	padding-left: 0;
 }
+
+
+
+
 
 
 /****************************
@@ -315,9 +332,12 @@ input[type="checkbox"]:checked + label span.check-glyph {
 }
 
 #savePreferences {
-	margin-left: -15px!important;
+	margin-left: -18px!important;
 	margin-bottom: 10px;
 }
+
+
+
 
 
 /****************************
