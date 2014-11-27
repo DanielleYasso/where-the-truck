@@ -9,13 +9,13 @@ class UtilitiesTestCase(unittest.TestCase):
 	# def tearDown(self):
 	# 	print "tearDown"
 
-	def testMath(self):
-		print "before my test"
-		self.assertEqual(2, 1+1)
-		print "after my test"
+	# def testMath(self):
+	# 	print "before my test"
+	# 	self.assertEqual(2, 1+1)
+	# 	print "after my test"
 
-	def testSubtraction(self):
-		self.assertIn(1, [3,1])
+	# def testSubtraction(self):
+	# 	self.assertIn(1, [3,1])
 
 	def testDumpDateTime(self):
 		import datetime
@@ -39,7 +39,7 @@ class DatabaseTestCase(unittest.TestCase):
 
 class FlaskTestCase(unittest.TestCase):
 	def setUp(self):
-		routing.app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///checkins_test.db'
+		# routing.app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///checkins_test.db'
 		self.app = routing.app.test_client()
 
 

@@ -7,6 +7,7 @@ html, body, .container {
 
 body {
 	background-color: #FAFEFA!important;
+	font-family: "Roboto", sans-serif!important;
 	/*color: #BCE9FE!important;*/
 
 }
@@ -27,6 +28,10 @@ body {
 
 .modal-title {
 	background-color: ;
+}
+
+.my-btn {
+	/*font-family: "Rrancois One", sans-serif!important;*/
 }
 
 
@@ -114,6 +119,7 @@ ul.nav li {
 
 .navbar-brand {		
 	color: white!important;
+	font-family: "Poiret One", sans-serif!important;
 }
 
 /*map colors*/
@@ -284,12 +290,12 @@ button.btn-arrow.disabled {
 	margin-bottom: -10px!important;
 }
 
-#checkinButton, .btn-default {
+#checkinButton, .my-btn {
 	background-color: #623145!important;
 	color: white!important;
 }
 
-#checkinButton:hover, .btn-default:hover {
+#checkinButton:hover, .my-btn:hover {
 	background-color: #AF7B8F!important;
 }
 

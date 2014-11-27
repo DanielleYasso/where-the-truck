@@ -826,6 +826,7 @@ def twilio_response():
 
 	return str(resp)
 
+# testing for checkins_test.db
 @app.route("/test_for_db")
 def get_attraction_two():
 	attractions = model.db.session.query(model.Attraction).all()
