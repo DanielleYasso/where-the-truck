@@ -266,7 +266,8 @@ button.btn-arrow.disabled {
 	
 }
 .attractionFocus:hover {
-	/*color: #0B7582!important;*/
+	color: #7BAF7E!important;
+	text-decoration: none!important;
 }
 
 #checkinButton, .btn-default {
@@ -286,7 +287,8 @@ input[type="checkbox"] + label {
 	display: inline-block;
 	width: 15px;
 	padding: 0;
-	margin-right: 2px!important;
+	margin-right: 5px!important;
+	margin-left: -7px;
 	/*vertical-align: middle;*/
 	/*cursor: pointer;*/
 }
@@ -315,11 +317,10 @@ input[type="checkbox"]:checked + label span.check-glyph {
 	font-size: 9pt!important;
 }
 
-/*input[type="checkbox"]:checked + label span.unchecked {
-	display: none;
-	width: 0;
-	height: 0;
-}*/
+#savePreferences {
+	margin-left: -15px!important;
+	margin-bottom: 10px;
+}
 
 
 
