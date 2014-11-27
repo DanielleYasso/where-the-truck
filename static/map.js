@@ -447,6 +447,7 @@ function setOrDeleteMarkers() {
 
 		var otherUpdate;
 		var useOther;
+		var aLink = "#span_" + marker.get("id") + " a";
 
 		///////////////////////////////////////////////////
 		//////// DETERMINE IF CAN USE OTHER UDPATE ////////
@@ -493,6 +494,13 @@ function setOrDeleteMarkers() {
 				updateMarkerSettingsPosition(marker, otherUpdate);
 				marker.setMap(map);
 			}
+			else {
+				// disable attractionFocus link
+				if (!$(aLink).hasClass("disabled")) {
+					$(aLink).addClass("disabled");
+				}
+			}
+
 		}
 		// if set to true => do not remove marker --> set it
 		else {
@@ -508,6 +516,10 @@ function setOrDeleteMarkers() {
 			}
 			// set the marker on the map
 			marker.setMap(map);
+
+			// make sure its attractionFocus link isn't disabled
+			
+			$(aLink).removeClass("disabled");
 		}
 
 		
