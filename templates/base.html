@@ -125,7 +125,9 @@
 <div class="container">
 	<div id="checkinBox" class="form-group row">
 		<div  class="col-sm-12">
-		<form id="checkinForm" role="form" class="img-rounded">
+		<form id="checkinForm" role="form">
+			<div class="styledSelect">
+
 			<select name="attraction_id" id="attraction_id">
 				
 				<option value="">-- Select one --</option>
@@ -134,7 +136,10 @@
 				<option value="{{ attraction.id }}">{{ attraction.name }}</option>
 				{% endfor %}
 			</select>
-			<button id="checkinButton" type="button" class="btn btn-lg">Update Location</button>
+
+			</div>
+
+			<button id="checkinButton" type="button" class="btn btn-lg">Update location</button>
 		</form>
 		</div>
 	</div>
