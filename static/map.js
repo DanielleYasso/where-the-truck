@@ -745,13 +745,13 @@ function addMarkers(map, markers) {
 						if (!hasVoted) {
 							upButton = "<button type='submit' class='btn btn-link btn-arrow upvote' "
 										+ "data-container='body' data-toggle='popover' "
-										+ "data-placement='right' "
+										+ "data-placement='bottom' "
 										+ "data-trigger='hover' "
 										+ "data-title='Is this truck here? '"
 										+ "data-content='&#x2713; for yes, &#x2717; for no.'>";
 							downButton = "<button type='submit' class='btn btn-link btn-arrow downvote' "
 										+ "data-container='body' data-toggle='popover' "
-										+ "data-placement='right' "
+										+ "data-placement='bottom' "
 										+ "data-trigger='hover' "
 										+ "data-title='Is this truck here? '"
 										+ "data-content='&#x2713; for yes, &#x2717; for no.'>";
@@ -777,14 +777,14 @@ function addMarkers(map, markers) {
 					else {
 						upButton = "<button type='button' class='btn btn-link btn-arrow upvote' "
 									+ "data-container='body' data-toggle='popover' "
-									+ "data-placement='right' "
+									+ "data-placement='bottom' "
 									+ "data-trigger='hover' "
 									+ "data-title='Is this truck here?'"
 									+ "data-content='Login or Signup to vote!'>";
 
 						downButton = "<button type='button' class='btn btn-link btn-arrow downvote' "
 									+ "data-container='body' data-toggle='popover' "
-									+ "data-placement='right' "
+									+ "data-placement='bottom' "
 									+ "data-trigger='hover' "
 									+ "data-title='Is this truck here?'"
 									+ "data-content='Login or Signup to vote!'>";
