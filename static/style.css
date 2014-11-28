@@ -94,7 +94,12 @@ body {
 ***************/
 
 .linkOnWhite {
+	color: #538A56;
+}
 
+.linkOnWhite:hover {
+	color: #7BAF7E;
+	text-decoration: none;
 }
 
 
