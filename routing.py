@@ -334,25 +334,26 @@ def signup():
 	model.db.session.commit()
 
 	# email confirmation
-	subject = "Confirm your email"
-	token = ts.dumps(new_user.email, salt="email-confirm-key")
+	if "@" in email:
+		subject = "Confirm your email"
+		token = ts.dumps(new_user.email, salt="email-confirm-key")
 
-	confirm_url = url_for(
-		"confirm_email",
-		token=token,
-		_external=True)
+		confirm_url = url_for(
+			"confirm_email",
+			token=token,
+			_external=True)
 
-	html = render_template(
-		"emails/activate.html",
-		confirm_url=confirm_url)
+		html = render_template(
+			"emails/activate.html",
+			confirm_url=confirm_url)
 
-	msg = Message(subject, 
-				sender="dbyasso@gmail.com", 
-				recipients=[new_user.email])
+		msg = Message(subject, 
+					sender="dbyasso@gmail.com", 
+					recipients=[new_user.email])
 
-	msg.html = html
+		msg.html = html
 
-	mail.send(msg)
+		mail.send(msg)
 
 	# add user to session --> LOGIN USER
 	# session["user_id"] = new_user.id
