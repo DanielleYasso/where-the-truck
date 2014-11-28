@@ -61,15 +61,21 @@ login_manager.session_protection = "strong"
 
 @login_manager.user_loader
 def load_user(user_id):
+	""" For a given logged in user id, returns the user object """
+
 	return model.User.query.get(user_id)
 
 @app.before_request
 def check_login():
+	""" Assigns g.user the current user object """
+
 	g.user = current_user
 
 
 @app.route("/")
 def home():
+	""" Loads the homepage, sending it all the food trucks in the attractions
+	table """
 
 	attractions = model.db.session.query(model.Attraction).all()
 
@@ -107,6 +113,9 @@ def dump_datetime(value):
 
 ###### YELP API FUNCTION CALL ######
 def get_yelp_ratings(business_id):
+	""" Returns yelp ratings and related yelp information for a food truck 
+	with a given business id """
+
 	# OAuth credentials
 	CONSUMER_KEY = os.environ.get('YELP_CONSUMER_KEY')
 	CONSUMER_SECRET = os.environ.get('YELP_CONSUMER_SECRET')
@@ -139,6 +148,8 @@ def get_yelp_ratings(business_id):
 ######## CORS (CROSS-ORIGIN RESOURCE SHARING) API CALLS ########
 @app.route("/api/geonames")
 def api_geonames():
+	""" For a specific latitude and longitude, calls the geonames ocean api
+	and returns the name of the ocean that coordinate is in, if applicable. """
 
 	lat = request.args.get("lat")
 	lng = request.args.get("lng")
@@ -160,6 +171,7 @@ def api_geonames():
 
 @app.route("/logout")
 def logout():
+	""" Logs out the currently logged in user """
 
 	logout_user()
 
@@ -172,6 +184,7 @@ def logout():
 
 @app.route("/login", methods=["POST"])
 def login():
+	""" Gets user login data from the login form, and logs the user in """
 
 	# get email and password from form inputs
 	email = request.form.get("email")
@@ -204,11 +217,14 @@ def login():
 
 @app.route("/forgot_password")
 def forgot_password():
+	""" Renders the forgot_password.html webpage """
 	
 	return render_template("forgot_password.html")
 
 @app.route("/recover_password", methods=["POST"])
 def recover_password():
+	""" Gets user email from forgot password page, and creates a unique token 
+	for that user, sending it to them via email as part of a unique link """
 
 	# get user email from form
 	user_email = request.form.get("recoveryEmail")
@@ -251,6 +267,8 @@ def recover_password():
 
 @app.route("/reset/<token>", methods=["GET", "POST"])
 def reset_with_token(token):
+	""" Resets a user's password, verifying that their token is correct, and 
+	then encrypting their new password and logging them in. """
 	try:
 		email = ts.loads(token, salt="recover-key", max_age=86400)
 	except:
@@ -286,6 +304,9 @@ def reset_with_token(token):
 
 @app.route("/signup", methods=["POST"])
 def signup():
+	""" Signs up a new user, making sure their email is unique. 
+	Sends a confirmation email to the user with a unique token/url """
+
 	# get user info
 	username = request.form.get("username")
 	email = request.form.get("email")
@@ -346,6 +367,7 @@ def signup():
 
 @app.route("/confirm/<token>")
 def confirm_email(token):
+	""" Confirms a user's email based on their token, from their unique link """
 	try:
 		email = ts.loads(token, salt="email-confirm-key", max_age=86400)
 	except:
@@ -368,6 +390,8 @@ def confirm_email(token):
 
 @app.route("/save_preferences", methods=["POST"])
 def save_preferences():
+	""" Saves a user's display preferences in a dictionary, based on form data,
+	and stores it in the user.preferences Pickletype """
 
 	checked_attractions = request.form.getlist("attractionsDisplayed")
 	print "***** checked attractions ", checked_attractions
@@ -437,6 +461,8 @@ def get_markers():
 ###################
 
 def getLastGood(attraction):
+	""" Gets the last good checkin (good = made by a user, not badly rated) and
+	returns all associated data in a dictionary """
 
 	if attraction.last_good_checkin_id:
 		last_good = model.db.session.query(model.Checkin).get(attraction.last_good_checkin_id)
@@ -460,6 +486,9 @@ def getLastGood(attraction):
 	# return False
 
 def getTimeout(this):
+	""" Gets the timeout for a given checkin object, by comparing that checkin's
+	timeestamp with datetime.now() """
+
 	# check how old timestamp is
 	time_diff = datetime.now() - this.timestamp
 	# older than a day?
@@ -483,6 +512,7 @@ def getTimeout(this):
 
 
 def getCheckinData(checkin):
+	""" Gets the data for a specific checkin and returns it as a dictionary """
 	
 	timeout = getTimeout(checkin)
 
@@ -700,6 +730,9 @@ def update_vote(checkin_id, vote):
 	return redirect("/")
 
 def remove_votes(checkin, vote):
+	""" Decrements either the upvote count or the downvote count in the 
+	checkins table for a given checkin object """
+
 	print "in remove votes"
 
 	# update database
@@ -714,6 +747,9 @@ def remove_votes(checkin, vote):
 	model.db.session.commit()
 
 def add_votes(checkin, vote):
+	""" Increments either the upvote count or the downvote count in the 
+	checkins table for a given checkin object """
+
 	print "in add votes"
 
 	# update checkin votes
@@ -734,7 +770,6 @@ def add_votes(checkin, vote):
 @app.route("/get_votes/<int:checkin_id>")
 def get_votes(checkin_id):
 	"""Gets all of the votes for a given checkin"""
-	# checkin_id = request.form.get("checkin_id")
 
 	# get checkin from db
 	checkin = model.db.session.query(model.Checkin).get(checkin_id)
@@ -775,6 +810,10 @@ def get_votes(checkin_id):
 
 @app.route("/twilio", methods=["GET", "POST"])
 def twilio_response():
+	""" Twilio API call. Sends text message either the link to the application. 
+	If the user texted the name of an attraction, also includes a google map 
+	link with the lat and lng of that attraction's current checkin """
+
 	# # Respond to an incoming text message with a static response
 	resp = twilio.twiml.Response()
 
@@ -829,6 +868,8 @@ def twilio_response():
 # testing for checkins_test.db
 @app.route("/test_for_db")
 def get_attraction_two():
+	""" Test route, to check which database is in use by tests.py """
+
 	attractions = model.db.session.query(model.Attraction).all()
 
 	for attraction in attractions:
