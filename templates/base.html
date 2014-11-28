@@ -28,7 +28,7 @@
 <nav class="navbar navbar-default navbar-static-top" role="navigation">
 	<div class="container">
 		<div class="navbar-header">
-			<a class="navbar-brand" href="#">where the truck?</a>
+			<a class="navbar-brand" href="/">where the truck?</a>
 			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#collapsedNav">
 		        <span class="sr-only">Toggle navigation</span>
 		        <span class="icon-bar"></span>
@@ -120,140 +120,12 @@
 </div>
 
 <!-- END LIGHTBOX CONTENT -->
-
-
 <div class="container">
-	<div id="checkinBox" class="form-group row">
-		<div  class="col-sm-12">
-		<form id="checkinForm" role="form">
-			<div class="styledSelect">
 
-			<select name="attraction_id" id="attraction_id">
-				
-				<option value="">-- Select truck --</option>
-
-				{% for attraction in attractions %}
-				<option value="{{ attraction.id }}">{{ attraction.name }}</option>
-				{% endfor %}
-			</select>
-
-			</div>
-
-			<button id="checkinButton" type="button" class="btn btn-lg">Update location</button>
-		</form>
-		</div>
-	</div>
-
-	
-	<div id="attractionOptions" class="form-group"> 
-
-		<form id="optionsForm" role="form" action="/save_preferences" method="POST">
-		
-		<div class="checkbox row img-rounded">
-
-			<!-- SHOW ATTRACTIONS CHECKBOXES -->
-			
-			<div class="col-sm-6">
-				<div class="row">
-					<h4 class="col-sm-12">Food Trucks</h4>
-				</div>
-				<div class="row">
-					{% for attraction in attractions %}
-					{% if attraction.id == 1 or attraction.id == 5 %}
-						<div class="col-sm-6">
-					{% endif %}
-					<span id="span_{{attraction.id}}">
-
-						<!-- If user is signed in and has saved preferences -->
-						{% if session.get("user_id", False) and g.user.preferences != {}%}
-
-							<!-- user has checked this attraction -->
-							{% if g.user.preferences[attraction.id] %}
-								<input type="checkbox" id="{{attraction.id}}" name="attractionsDisplayed" value="{{attraction.id}}" checked><label for="{{attraction.id}}"><span class="unchecked"><span class="glyphicon glyphicon-ok check-glyph"></span></span></label><a href="#" class="attractionFocus btn btn-link" id="{{attraction.name}}">{{attraction.name}}</a><br>
-							{% else %}
-								<input type="checkbox" id="{{attraction.id}}" name="attractionsDisplayed" value="{{attraction.id}}"><label for="{{attraction.id}}"><span class="unchecked"><span class="glyphicon glyphicon-ok check-glyph"></span></span></label><a href="#" class="attractionFocus btn btn-link disabled" id="{{attraction.name}}">{{attraction.name}}</a><br>
-							{% endif %}
-
-					<!-- no user or user has no preferences -->
-					{% else %}  
-						<input type="checkbox" id="{{attraction.id}}" name="attractionsDisplayed" value="{{attraction.id}}" checked><label for="{{attraction.id}}"><span class="unchecked"><span class="glyphicon glyphicon-ok check-glyph"></span></span></label><a href="#" class="attractionFocus btn btn-link" id="{{attraction.name}}">{{attraction.name}}</a><br>
-					{% endif %}
-					{% if attraction.id == 4 or attraction.id == 6 %}
-						</div>
-					{% endif %}
-					</span>
-
-					{% endfor %}
-				</div><!-- end row with attraction for loop -->
-			</div><!-- /.col-sm-6 for food trucks -->
-		
-			<div class="col-sm-5">
-				<h4>Display Options</h4>
-
-				<!-- SHOW OLD CHECKINS -->
-				{% if session.get("user_id", False) and g.user.preferences["show_old"] %}
-					<input type="checkbox" id="showOldCheckins" name="showOldCheckins" value="True" checked><label for="showOldCheckins"><span class="unchecked"><span class="glyphicon glyphicon-ok check-glyph"></span></span></label>Show updates older than 1 day<br>
-				{% else %}
-					<input type="checkbox" id="showOldCheckins" name="showOldCheckins" value="True"><label for="showOldCheckins"><span class="unchecked"><span class="glyphicon glyphicon-ok check-glyph"></span></span></label>Show updates older than 1 day<br>
-				{% endif %}
-
-				<!-- SHOW CHECKINS WITH BAD RATINGS -->
-				{% if session.get("user_id", False) and g.user.preferences["show_bad"] %}
-					<input type="checkbox" id="showBadRatings" name="showBadRatings" value="True" checked><label for="showBadRatings"><span class="unchecked"><span class="glyphicon glyphicon-ok check-glyph"></span></span></label>Show updates with bad ratings<br>
-				{% else %}
-					<input type="checkbox" id="showBadRatings" name="showBadRatings" value="True"><label for="showBadRatings"><span class="unchecked"><span class="glyphicon glyphicon-ok check-glyph"></span></span></label>Show updates with bad ratings<br>
-				{% endif %}
-
-				<!-- SHOW CHECKINS BY USERS WITH BAD RATINGS -->
-				{% if session.get("user_id", False) and g.user.preferences["show_untrusted"] %}
-					<input type="checkbox" id="showUntrusted" name="showUntrusted" value="True" checked><label for="showUntrusted"><span class="unchecked"><span class="glyphicon glyphicon-ok check-glyph"></span></span></label>Show potentially inaccurate updates<br>
-				{% else %}
-					<input type="checkbox" id="showUntrusted" name="showUntrusted" value="True"><label for="showUntrusted"><span class="unchecked"><span class="glyphicon glyphicon-ok check-glyph"></span></span></label>Show potentially inaccurate updates<br>
-				{% endif %}
-
-				<!-- SHOW CHECKINS BY NON USERS -->
-				{% if session.get("user_id", False) and g.user.preferences["show_non_users"] == False %}
-					<input type="checkbox" id="showNonUserCheckins" name="showNonUserCheckins" value="True"><label for="showNonUserCheckins"><span class="unchecked"><span class="glyphicon glyphicon-ok check-glyph"></span></span></label>Show updates made by non-users<br>
-				{% else %}
-					<input type="checkbox" id="showNonUserCheckins" name="showNonUserCheckins" value="True" checked><label for="showNonUserCheckins"><span class="unchecked"><span class="glyphicon glyphicon-ok check-glyph"></span></span></label>Show updates made by non-users<br>
-				{% endif %}
-
-						
-			</div><!-- /.col-sm-6 for display options -->
-			
-
-		<!-- </div> --><!-- /.checkbox end row -->
-
-		
-
-		<!-- <div class="row col-sm-12"> -->
-		<div class="col-sm-1">
-			{% if session.get("user_id", False) %}
-			<br>
-				<button type="submit" id="savePreferences" class="btn my-btn">Save</button>
-			<!-- </div> -->
-			<!-- add an empty row -->
-			<!-- <div class="row col-sm-12">&nbsp; -->
-			{% endif %}
-		</div>
-		</div><!-- /.checkbox end row -->
+	{% block body %}
+	{% endblock %}
 
 
-		</form>	
-	</div><!-- /#checkinBox END CHECKBOXES DIV -->
-
-	<div class="row col-sm-12">&nbsp;</div>
-
-	<div id="map-canvas" class="img-rounded"></div>
-
-
-	<div id="directionsWrapper" class="hidden">
-		<button id="closeDirections" class="btn btn-default">Close directions</button>
-		<div id="directionsDiv"></div>
-	</div>
-	<!-- Button trigger modal -->
-
-	
 
 	<!-- HELP MODAL -->
 	<div class="modal fade" id="helpModal" tabindex="-1" role="dialog" aria-labelledby="helpModalLabel" aria-hidden="true">

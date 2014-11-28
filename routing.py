@@ -79,7 +79,7 @@ def home():
 
 	attractions = model.db.session.query(model.Attraction).all()
 
-	return render_template("base.html", API_KEY=API_KEY, attractions=attractions)
+	return render_template("index.html", API_KEY=API_KEY, attractions=attractions)
 
 
 ###### JSON ######
