@@ -465,10 +465,11 @@ input[type="checkbox"]:checked + label span.check-glyph {
 
 @media all and (max-width: 768px) {
 	/* GOOGLE MAPS */
-
 	#mapContainer {
 		width: 100%;
 	}
+
+	/* display options checkboxes */
 	#optionsContainer {
 		width: 100%;
 		padding: 10px 0;
@@ -483,6 +484,11 @@ input[type="checkbox"]:checked + label span.check-glyph {
 	#displayOptions {
 		width: 265px;
 	}
+	#savePreferences {
+	float: right;
+	}
+
+	/* nav */
 	#collapsedNav {
 		padding: 0;
 	}
@@ -492,9 +498,7 @@ input[type="checkbox"]:checked + label span.check-glyph {
 	.navbar-btn.btn-link {
 		width: 100%;
 	}
-	#savePreferences {
-	float: right;
-	}
+	
 
 }
 
@@ -513,15 +517,12 @@ input[type="checkbox"]:checked + label span.check-glyph {
 
 @media all and (min-width: 1200px) {
 	#mapContainer {
-		width: 70%;
+		width: 68%;
 	}
 	#optionsContainer {
 		width: 30%;
 		margin-right: 0;
 		padding-right: 0;
-	}
-	#attractionOptions {
-		/*text-align: left;*/
 	}
 }
 
