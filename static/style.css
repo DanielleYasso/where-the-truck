@@ -21,12 +21,14 @@ body {
 	margin: 0;
 	padding: 0;
 	display: inline-block;
+	float: left;
 }
 
 #map-canvas {
 	width: 100%;
 	height: 100%;
 }
+
 
 #optionsContainer {
 	width: 40%;
@@ -316,8 +318,9 @@ button.btn-arrow.disabled {
 
 .hidden {
 	display: none;
-	margin: 0;
+	height: 0;
 	padding: 0;
+	margin: 0;
 }
 
 
@@ -343,6 +346,8 @@ button.btn-arrow.disabled {
 	SELECT DROPDOWN
 
 ***********************/
+
+
 
 #attraction_id {
 	margin-bottom: 10px;
@@ -392,6 +397,10 @@ button.btn-arrow.disabled {
 
 ****************************/
 
+
+#optionsTitle {
+	margin-top: 0;
+}
 
 .attractionFocus.btn {
 	padding: 0;
@@ -467,9 +476,6 @@ input[type="checkbox"]:checked + label span.check-glyph {
 	#attractionOptions {
 		width: 100%;
 	}
-	.preferences {
-		float: left;
-	}
 	#foodTrucks {
 		padding-right: 25px;
 		width: 180px;
@@ -495,6 +501,13 @@ input[type="checkbox"]:checked + label span.check-glyph {
 @media all and (max-width: 505px) {
 	#foodTrucks, #displayOptions {
 		width: 100%;
+	}
+
+}
+
+@media all and (max-width: 381px) {
+	#checkinButton {
+		margin-top: 15px;
 	}
 }
 
