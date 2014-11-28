@@ -70,19 +70,31 @@ body {
 
 /****************************
 
-		TRUCK LINKS
+			LINKS
 
 ****************************/
 
-.attractionFocus {
+/**********************
+	TRUCKS & PANELS
+**********************/
+
+.attractionFocus, .panel-title a {
 	/*color: #62C9FA!important;*/
 	color: #3B623E!important;
 	/*color: #623145!important;*/
 	
 }
-.attractionFocus:hover {
+.attractionFocus:hover, .panel-title a:hover {
 	color: #7BAF7E!important;
 	text-decoration: none!important;
+}
+
+/***************
+	GENERAL
+***************/
+
+.linkOnWhite {
+
 }
 
 
