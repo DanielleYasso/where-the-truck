@@ -39,7 +39,7 @@
 			<ul class="nav navbar-nav navbar-right">
 				{% if session.get("user_id", False) %}
 					<li class="btn navbar-btn disabled">{{ g.user.username }}</li>
-					<li>
+					<li style="display: inline-block">
 						<form action="/logout">
 							<button type="submit" id="logoutButton" class="btn navbar-btn btn-link">Logout</button>
 						</form>

@@ -133,7 +133,7 @@ ul.nav li {
 	padding-right: 10px!important;
 	margin: 0!important;
 	color: white!important;
-	display: block!important;
+	display: inline-block!important;
 	line-height: 40px!important;
 	min-height: 40px!important;
 }
@@ -144,9 +144,7 @@ ul.nav li {
 
 }
 
-#collapsedNav {
-	text-align: center;
-}
+
 
 .navbar-toggle {
 	border: none!important;
@@ -159,18 +157,7 @@ ul.nav li {
 	background-color: #7BAF7E!important;
 }
 
-#helpButton {
-	margin: auto!important;
-	/*color: #623145!important;*/
-}
 
-#helpButton:hover {
-	
-}
-
-#logoutButton {
-	margin: auto!important;
-}
 
 /*********************/
 /* NAVBAR APPEARANCE */
@@ -463,7 +450,7 @@ input[type="checkbox"]:checked + label span.check-glyph {
 ****************************/
 
 
-@media all and (max-width: 768px) {
+@media all and (max-width: 767px) {
 	/* GOOGLE MAPS */
 	#mapContainer {
 		width: 100%;
@@ -491,6 +478,7 @@ input[type="checkbox"]:checked + label span.check-glyph {
 
 	/* nav */
 	#collapsedNav {
+		text-align: center;
 		padding: 0;
 	}
 	ul.nav li {
