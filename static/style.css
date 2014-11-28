@@ -58,6 +58,19 @@ body {
 	text-decoration: none;
 }
 
+/***************
+	BUTTONS
+***************/
+
+#checkinButton, .my-btn {
+	background-color: #623145!important;
+	color: white!important;
+}
+
+#checkinButton:hover, .mybtn:hover {
+	background-color: #AF7B8F!important;
+}
+
 
 
 /****************************
@@ -369,14 +382,7 @@ button.btn-arrow.disabled {
 	margin-bottom: -10px!important;
 }
 
-#checkinButton, .btn-default {
-	background-color: #623145!important;
-	color: white!important;
-}
 
-#checkinButton:hover, .btn-default:hover {
-	background-color: #AF7B8F!important;
-}
 
 input[type="checkbox"] {
 	display: none;

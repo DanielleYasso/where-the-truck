@@ -493,6 +493,7 @@ function setOrDeleteMarkers() {
 			if (useOther) {
 				updateMarkerSettingsPosition(marker, otherUpdate);
 				marker.setMap(map);
+				checkedAttractions[marker.get("id")] = true;
 			}
 			else {
 				// disable attractionFocus link
@@ -512,6 +513,7 @@ function setOrDeleteMarkers() {
 					// remove "previous" marker, and update marker to "current"
 					marker.setMap(null);
 					updateMarkerSettingsPosition(marker, "current");
+					checkedAttractions[marker.get("id")] = true;
 				}
 			}
 			// set the marker on the map
