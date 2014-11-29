@@ -722,14 +722,20 @@ def update_vote(checkin_id, vote):
 		# increment vote
 		add_votes(checkin, vote)
 
-	# update calculated rating
-	checkin.calculate_rating()
-	model.db.session.commit()
-
-	# update checkin user's rating based on new calculated rating
-	if checkin.user:
-		checkin.user.set_average_rating()
+	# update calculated rating if checkin isn't older than 1 hour
+	# so the checkin's user's average rating isn't hurt by downvotes long after
+	timeout = getTimeout(checkin)
+	print timeout
+	if not timeout:
+		checkin.calculate_rating()
 		model.db.session.commit()
+
+		# update checkin user's rating based on new calculated rating
+		if checkin.user:
+			checkin.user.set_average_rating()
+			model.db.session.commit()
+
+	
 
 	return redirect("/")
 
