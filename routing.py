@@ -538,11 +538,9 @@ def getCheckinData(checkin):
 
 	# Check if attraction checkin has a really bad rating
 	bad_rating = False
-	# if there are X total votes and/or X downvotes:
-	if checkin.downvotes > checkin.upvotes: # COMPARISON VALUES TO CHANGE
+	# COMPARISON VALUES TO CHANGE --> set low for demo purposes
+	if checkin.downvotes > checkin.upvotes: 
 		bad_rating = True
-		# if calculated_rating is below a certain number:
-			# bad_rating = True;
 
 		# if it has a bad rating: get its last_good_checkin
 	last_good_checkin = getLastGood(checkin.attraction)
