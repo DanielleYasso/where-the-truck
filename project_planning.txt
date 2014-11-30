@@ -21,9 +21,10 @@ Users can:
 
 Technologies & Stack: 
 
-	Python, Flask, Flask-Mail, Flask-Login, Flask-WTForms, Flask-CORS, 
+	Python, Flask, Flask-Mail, Flask-Login, Flask-WTForms, Flask-CORS, Jinja,
 	passlib (encryption & verification), Flask-SQLAlchemy, SQLAlchemy, sqlite,
 	JavaScript, jQuery, jQuery plugins (lightbox_me, timeago).
+	HTML5, CSS3, Twitter Bootstrap (html/css/js framework).
 	APIs: Google Maps Javascript V3 API, Yelp API, Geonames API, Twilio API.
 	Machine learning: rating location checkins and using those ratings to rate 
 	users and predict the accuracy of their future checkins.
