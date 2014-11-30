@@ -1,52 +1,50 @@
-Project Description and Goals
-Wireframes
-ERD Diagrams
-Review with instructors / mentors
-Define MVP (minimum viable product)
-
 Project Description and Goals:
 
-	Location tracking app for public to report where specific "moving" San Francisco attractions are (think "Bushman," food trucks, sf parrots, etc.), and show this dynamically on a map, with some interactive features.
+	Location tracking app for public to report where specific San Francisco 
+	food trucks (aka attractions) are, and show this dynamically on a map, 
+	with some interactive features.
 
 The map:
-	- Shows the locations of most recent check-ins
-	- Shows the locations of previous 2 most recent check-ins for the same attraction
-	- Shows “near me”
-	- Provides routing and times/distances to attraction check-ins
+	- Shows the locations of most recent checkins for attractions
+	- Provides routing and times/distances to attraction checkins
 
 Users can:
 	- Sign in/sign up (create an account)
-	- Sign in with Twitter or Facebook
-	- Check-in the location of an attraction/thing
-	- See recent check-ins made by other users
-	- Select which things they want to see on the map (individually or by group, e.g. food, tourists
+	- Checkin the location of an attraction
+	- See recent checkins made by other users
+	- Select which things they want to see on the map 
 	- Save their preferences
 	- Get distances/times/routes to the nearest attractions
-	- Rate check-ins made by other users
-	- See check-ins even if they have bad ratings (or predicted bad ratings)
-	- Remove their check-in
-	- Edit their check-in (did they say food truck when they meant bushman?)
-	- Change their ratings of other user check-ins
-	- Create custom attractions that are important to them (careful with trolls!)
+	- Rate checkins made by other users
+	- See checkins even if they have bad ratings (or predicted bad ratings)
+	- Change their ratings of other user checkins
 
-Technologies: 
+Technologies & Stack: 
 
-	Databases, Google Maps API, machine learning (rating location check-ins and using those ratings to rate users and predict the validity of their future check-ins), javascript, maybe login with Twitter/Facebook, etc.  Maybe Twilio - text an attraction name, get a message back with a google map link -> map shows its most recent check-in.
+	Python, Flask, Flask-Mail, Flask-Login, Flask-WTForms, Flask-CORS, 
+	passlib (encryption & verification), Flask-SQLAlchemy, SQLAlchemy, sqlite,
+	JavaScript, jQuery, jQuery plugins (lightbox_me, timeago).
+	APIs: Google Maps Javascript V3 API, Yelp API, Geonames API, Twilio API.
+	Machine learning: rating location checkins and using those ratings to rate 
+	users and predict the accuracy of their future checkins.
+
+Terminology:
+	attraction = food truck
+	checkin = location update for where a truck is now
 
 
 ********** MVP **********
-
-Steps:
 
 Showing attractions on a map:
 [X]	- Show a map on a website
 [X]	- Give map one geolocation and have it display that marker
 [X]	- Give map several geolocations to display
 [X]	- Give map geolocations from a database to display
-[X]		Create databases for attractions, checkins and users
+[X]	  - Create databases for attractions, checkins and users
 [X]	- Get geolocation from a browser and give to map to display
 [X]	- Store geolocation from browser in the database
-[X]		Data modeling: Use multiple databases to store geolocation data per attraction, etc.
+[X]	  - Data modeling: Use multiple databases to store geolocation data per 
+	  attraction, etc.
 
 Updating attraction locations on a map:
 [X]	- Update geolocation and have map update with it
@@ -57,86 +55,113 @@ Updating attraction locations on a map:
 ********** END MVP **********
 
 
-********** EXTRAS **********
+********** EXTRA FEATURES IN SCOPE **********
 
 User features:
 [X]	- Allow a user to signup/login
 [X]	- Allow a user to logout
-[X]	- Allow a user to check-in an attraction
-[X]	- Create tables to associate users, their check-ins, and the attractions\
+[X]	- Allow a user to checkin an attraction
+[X]	- Create tables to associate users, their checkins, and the attractions\
 [X] - Securely store user passwords
 
-Advanced Checkin features:
-	- Allow a user to edit a check-in
-	- Delete check-in
-	- Edit attraction name
-
 Ratings:
-[X]	- Allow a user to rate a check-in up or down
-[X]	- Associate ratings with check-ins in database
+[X]	- Allow a user to rate a checkin up or down
+[X]	- Associate ratings with checkins in database
 [X]	- Allow a user to change their rating
-[X]	- Display ratings next to a check-in (up votes and down votes)
-[X]	- Prevent users from rating their own check-in
-[X]	- Hide check-ins with bad ratings
-[X]	- Allow a user to reveal hidden (bad) check-ins (show/hide)
+[X]	- Display ratings next to a checkin (up votes and down votes)
+[X]	- Prevent users from rating their own checkin
+[X]	- Hide checkins with bad ratings
+[X]	- Allow a user to reveal hidden (bad) checkins (show/hide)
 
 User Ratings:
-[X]	- Use check-in ratings to create user ratings
-	- Apply a user’s ratings to that user’s new check-in (predict whether their check-in will be good)
-
-Complicated User Ratings (for rating predictions):
-Up votes based on check-ins:
-	- For a new attraction check-in within X minutes of a previous user’s check-in, within X distance of that previous check-in, apply an up-vote to the previous user’s check-in
-	- For all previous check-ins within X min and X distance of current check-in, apply an up vote 
-Down votes based on check-ins:
-	- For a new attraction check-in within X minutes, and outside of Y distance, apply a down-vote
-		- Y distance: greater than X distance (within X is an up vote).  Some no-man’s land in between where previous check-ins get neither an up vote or down vote 
+[X]	- Use checkin ratings to create user ratings
+[X]	- Apply a user’s ratings to that user’s new checkin (predict whether their 
+	  checkin will be good)
 
 Display Options:
 Timeouts:
-[X]	- Display check-in time stamps based on time elapsed
-[X]	- Time out check-ins (check-ins disappear after X minutes/hours)
-[X]	- Change appearance of attraction icon as check-in times out
+[X]	- Display checkin time stamps based on time elapsed
+[X]	- Time out checkins (checkins disappear after X minutes/hours)
+[X]	- Change appearance of attraction icon as checkin times out
 Selecting what to display:
-[X]	- Create in-browser options to display or not display locations for specific attractions
+[X]	- Create in-browser options to display or not display locations for specific 
+	  attractions
 [X]	- Allow users to select whether they see timed-out checkins
 [X]	- Allow users to find specific attractions on the map
-[X]	- Option to only display check-ins with ratings above X
+[X]	- Option to only display checkins with ratings above X
 [X]		- Option to display all ratings, even bad ratings (normally hidden)
-		- Option to show/hide PREDICTED bad checkins - based off user ratings
-[X]	- Clicking on an attraction name in the checkbox area makes its marker on the map bounce or something
+[X]		- Option to show/hide PREDICTED bad checkins - based off user ratings
+[X]	- Clicking on an attraction name in the checkbox area makes its marker on 
+	  the map bounce or something
+[X]	- Show previous "good" checkin when display options hide the current one
 Map specific:
-	- Custom icons for different marker types
+[X]	- Custom icons for different marker types (NA for type, applicable for TIME)
 [X]		- truck icon for food trucks
-	- Limit map to show only San Francisco
+[X]	- Limit map checkins to only San Francisco
 [X]		- Keep map always default centered on San Francisco
-[X]	- Directions: Get distances/times/routes to attractions based on current location
+[X]	- Directions: Get distances/times/routes to attractions based on current 
+	  location
 [X]	- Prevent food truck checkins in the ocean
 
 Advanced User Features:
 [X]	- Save a user’s preferences
 [X]		- only show certain attractions
 [X]		- only show good ratings
+[X]		- only show checkins made by users
+[X]		- only show checkins made by users in good standing (good user rating)
 [X]	- Remember a user's login
-[X]	- Let a user recover their password
-	- Let a user change their password in user settings
+[X]	- Let a user reset their password if they forgot it
 [X]	- Confirm user emails
-	- Allow a user to create a new attraction to check-in
-		- Natural language processing… otherwise could have one attraction with several different names…
+[X]	- Allow a user to create a new attraction by emailing me to add it
+NA		- Adding it themselves => bad idea: trolling, or could have one 
+		  attraction with several different names…
 
+APIs:
+Google Maps
+[X] - Show and interact with map (key to project)
 Twilio
-[X]	- Allow a person to text the name of an attraction and get a message back with a google map link showing the most recent check-in for that
-
-Foursquare
-	- Allows a user to checkin to foursquare for that attraction/location
-
+[X]	- Allow a person to text the name of an attraction and get a message back 
+	  with a google map link showing the most recent checkin for that
 Yelp
 [X]	- Link to applicable yelp pages
 [X]	- Show yelp rating next to name
+Geonames
+[X]	- To determine if user is trying to checkin food truck in the ocean
 
-********** END EXTRAS **********
+********** END EXTRA FEATURES **********
 
 
+
+
+
+********** POSSIBLE FUTURE FEATURES FOR CONSIDERATION **********
+
+Foursquare API
+	- Allow a user to checkin to foursquare for that attraction/location
+
+User features:
+	- User settings page
+		- show them thier stats
+		- Let a user change their password in user settings
+	- Show "near me"
+
+Advanced Checkin features:
+	- Allow a user to edit a checkin
+	- Delete checkin
+
+Advanced User Ratings (for improving rating predictions):
+Up votes based on checkins:
+	- For a new attraction checkin within X minutes of a previous user’s 
+	  checkin, within X distance of that previous checkin, apply an up-vote to
+	  the previous user’s checkin
+	- For all previous checkins within X min and X distance of current checkin, apply an up vote 
+Down votes based on checkins:
+	- For a new attraction checkin within X minutes, and outside of Y distance, apply a down-vote
+		- Y distance: greater than X distance (within X is an up vote).  Some 
+		  no-man’s land in between where previous checkins get neither an 
+		  up vote or down vote 
+
+********** END POSSIBLE FUTURE FEATURES **********
 
 
 
@@ -146,10 +171,19 @@ Yelp
 
 - http://possiblywrong.wordpress.com/2011/06/05/reddits-comment-ranking-algorithm/ 
 	- tested in python interpreter
+
+Ideas:
 	- may make sense to start each user or post with a 10 ups, 10 downs, or (5,5) for greater impact of individual ratings, as default starting point
 		- small enough that single votes have an impact, large enough to create a good starting confidence #
 		- or could just start at 0,0… negative ratings only give you a negative number, once pos ratings are introduced, the numbers start changing
-		- user ratings aren’t 1 each in calculation, but added based on their own rating? so that users with crappy ratings don’t impact other ratings as much
+		- user ratings aren’t 1 each in calculation, but added based on their own rating? so that users with crappy ratings don’t impact other ratings as much?
+
+Finalized:
+- in model.py, changed the algorithm:
+	- when no upvotes, but there are downvotes, then n = downs, and I return the 
+	  NEGATIVE calculation, instead of -downs
+	  	- otherwise, -downs would have a greater impact than any upvotes could
+    - if no upvotes or downvotes, I return 0
 
 	# From /r2/r2/lib/db/_sorts.pyx
 	from math import sqrt
@@ -171,7 +205,7 @@ Yelp
 
 
 
-********** GOOGLE MAPS **********
+********** GOOGLE MAPS NOTES **********
 
 Google Maps API:
 
@@ -190,11 +224,6 @@ Google Maps JavaScript API v3:
 	- Usage Limits: non-issue. Only applies to 25k map loads per day, for more than 90 days
 
 
-
-
-
-Flask==0.10.1
-Jinja2==2.7.3
 
 
 
