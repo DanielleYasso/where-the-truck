@@ -63,7 +63,7 @@ User features:
 [X]	- Allow a user to logout
 [X]	- Allow a user to checkin an attraction
 [X]	- Create tables to associate users, their checkins, and the attractions\
-[X] - Securely store user passwords
+[X] - Securely store user passwords (encryption)
 
 Ratings:
 [X]	- Allow a user to rate a checkin up or down
@@ -78,6 +78,9 @@ User Ratings:
 [X]	- Use checkin ratings to create user ratings
 [X]	- Apply a user’s ratings to that user’s new checkin (predict whether their 
 	  checkin will be good)
+
+Help:
+[X]	- Create help section to answer common user questions
 
 Display Options:
 Timeouts:
