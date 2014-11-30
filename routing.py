@@ -720,10 +720,9 @@ def update_vote(checkin_id, vote):
 		# increment vote
 		add_votes(checkin, vote)
 
-	# update calculated rating if checkin isn't older than 1 hour
-	# so the checkin's user's average rating isn't hurt by downvotes long after
+	# update calculated rating if checkin isn't older than 1 hour, so that
+	# checkin's user's average rating isn't hurt by downvotes long after checkin
 	timeout = getTimeout(checkin)
-	print timeout
 	if not timeout:
 		checkin.calculate_rating()
 		model.db.session.commit()
