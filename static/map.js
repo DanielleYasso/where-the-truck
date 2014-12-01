@@ -963,6 +963,8 @@ function getDirections(toLat,toLng) {
 			startMarkerArray.push(startMarker);
 			startMarker.setMap(map);
 
+			directionsDisplay.setMap(map);
+
 			// display written directions
 			if ($("#directionsWrapper").hasClass("hidden")) {
 				$("#directionsWrapper").removeClass("hidden");
