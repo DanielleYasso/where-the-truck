@@ -51,4 +51,4 @@ Google Maps Javascript V3, Yelp, Geonames, Twilio.
 
 Forking?
 -----------------------
-You'll need your own API keys for Google Maps, Yelp, and Twilio! And your own username for Geonames.
+You'll need your own API keys for Google Maps, Yelp, and Twilio, and your own username for Geonames.
