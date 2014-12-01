@@ -422,7 +422,7 @@ input[type="checkbox"] {
 
 input[type="checkbox"] + label {
 	display: inline-block;
-	width: 15px;
+	/*width: 15px;*/
 	padding: 0;
 	margin-right: 5px!important;
 	/*margin-left: -10px;*/
