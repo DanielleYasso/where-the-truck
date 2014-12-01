@@ -41,7 +41,7 @@ app.config.update(dict(
 	))
 
 # secret key for session
-SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY = os.environ.get('SECRET_KEY', 'forking_placeholder')
 app.secret_key = SECRET_KEY
 
 # update Flask-Mail instance with new app config settings
