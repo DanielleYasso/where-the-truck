@@ -161,7 +161,10 @@ class User(db.Model):
 
 		# does user have an average rating?
 		if -1 < self.average_rating < 1:
-			if count >= 10 and self.average_rating < 0.05:
+
+			# if user has more than 10 rated checkins, and
+			# if user's average rating is below 0.15 (SUBJECT TO CHANGE)
+			if count >= 10 and self.average_rating < 0.15:
 				print "**** untrusted user"
 				return False
 			

@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+{% block body %}
+
+
+
+	<div id="checkinBox" class="form-group">
+
+		
+		<form id="checkinForm" role="form">
+
+			<p class="updateLocationText"><span class="h3" id="seeAFoodTruck">See a food truck nearby?</span><br><span id="checkinInstructions">Choose it from the dropwdown and click the button to update its location on the map to wherever you are!</span></p>
+			
+			<div class="selectForm">
+			
+				<div class="styledSelect">
+				<select name="attraction_id" id="attraction_id">
+					
+					<option value="">-- Select truck --</option>
+
+					{% for attraction in attractions %}
+					<option value="{{ attraction.id }}">{{ attraction.name }}</option>
+					{% endfor %}
+				</select>
+				</div>
+
+				<button id="checkinButton" type="button" class="btn btn-lg">Move truck here</button>
+			</div>
+		</form>
+	</div>
+
+	<!-- GOOGLE MAP -->
+	<div id="mapContainer">
+		<a name="google-map"></a>
+		<div id="map-canvas" class="img-rounded"></div>
+	</div>
+
+	<!-- GOOGLE DIRECTIONS -->
+	<div id="directionsWrapper" class="hidden">
+		<button id="closeDirections" class="btn my-btn">Close directions</button>
+		<div id="directionsDiv"></div>
+	</div>
+	
+
+	<!-- ATTRACTIONS LIST -->
+	<div id="optionsContainer">
+	<div id="attractionOptions" class="form-group"> 
+
+		<form id="optionsForm" role="form" action="/save_preferences" method="POST">
+		
+		<div class="checkbox img-rounded">
+
+			<h3 id="optionsTitle">On the map</h3>
+
+			<!-- SHOW ATTRACTIONS CHECKBOXES -->
+			
+			<div id="foodTrucks" class="preferences">
+					<h4>Food Trucks</h4>
+					{% for attraction in attractions %}
+					<span id="span_{{attraction.id}}">
+
+						<!-- If user is signed in and has saved preferences -->
+						{% if session.get("user_id", False) and g.user.preferences != {}%}
+
+							<!-- user has checked this attraction -->
+							{% if g.user.preferences[attraction.id] %}
+								<input type="checkbox" id="{{attraction.id}}" name="attractionsDisplayed" value="{{attraction.id}}" checked><label for="{{attraction.id}}"><span class="unchecked"><span class="glyphicon glyphicon-ok check-glyph"></span></span></label><a href="{{ url_for('home') }}#google-map" class="attractionFocus btn btn-link" id="{{attraction.name}}">{{attraction.name}}</a><br>
+							{% else %}
+								<input type="checkbox" id="{{attraction.id}}" name="attractionsDisplayed" value="{{attraction.id}}"><label for="{{attraction.id}}"><span class="unchecked"><span class="glyphicon glyphicon-ok check-glyph"></span></span></label><a href="{{ url_for('home') }}#google-map" class="attractionFocus btn btn-link disabled" id="{{attraction.name}}">{{attraction.name}}</a><br>
+							{% endif %}
+
+					<!-- no user or user has no preferences -->
+					{% else %}  
+						<input type="checkbox" id="{{attraction.id}}" name="attractionsDisplayed" value="{{attraction.id}}" checked><label for="{{attraction.id}}"><span class="unchecked"><span class="glyphicon glyphicon-ok check-glyph"></span></span></label><a href="{{ url_for('home') }}#google-map" class="attractionFocus btn btn-link" id="{{attraction.name}}">{{attraction.name}}</a><br>
+					{% endif %}
+					
+					</span>
+
+					{% endfor %}
+			</div> <!-- / food trucks -->
+		
+
+			<!-- DISPLAY OPTIONS -->
+			<div id="displayOptions" class="preferences">
+				<h4>Display Options</h4>
+
+				<!-- SHOW OLD CHECKINS -->
+				{% if session.get("user_id", False) and g.user.preferences["show_old"] %}
+					<input type="checkbox" id="showOldCheckins" name="showOldCheckins" value="True" checked><label for="showOldCheckins"><span class="unchecked"><span class="glyphicon glyphicon-ok check-glyph"></span></span> Show updates older than 1 day</label><br>
+				{% else %}
+					<input type="checkbox" id="showOldCheckins" name="showOldCheckins" value="True"><label for="showOldCheckins"><span class="unchecked"><span class="glyphicon glyphicon-ok check-glyph"></span></span> Show updates older than 1 day</label><br>
+				{% endif %}
+
+				<!-- SHOW CHECKINS WITH BAD RATINGS -->
+				{% if session.get("user_id", False) and g.user.preferences["show_bad"] %}
+					<input type="checkbox" id="showBadRatings" name="showBadRatings" value="True" checked><label for="showBadRatings"><span class="unchecked"><span class="glyphicon glyphicon-ok check-glyph"></span></span> Show updates with bad ratings</label><br>
+				{% else %}
+					<input type="checkbox" id="showBadRatings" name="showBadRatings" value="True"><label for="showBadRatings"><span class="unchecked"><span class="glyphicon glyphicon-ok check-glyph"></span></span> Show updates with bad ratings</label><br>
+				{% endif %}
+
+				<!-- SHOW CHECKINS BY USERS WITH BAD RATINGS -->
+				{% if session.get("user_id", False) and g.user.preferences["show_untrusted"] %}
+					<input type="checkbox" id="showUntrusted" name="showUntrusted" value="True" checked><label for="showUntrusted"><span class="unchecked"><span class="glyphicon glyphicon-ok check-glyph"></span></span> Show potentially inaccurate updates</label><br>
+				{% else %}
+					<input type="checkbox" id="showUntrusted" name="showUntrusted" value="True"><label for="showUntrusted"><span class="unchecked"><span class="glyphicon glyphicon-ok check-glyph"></span></span> Show potentially inaccurate updates</label><br>
+				{% endif %}
+
+				<!-- SHOW CHECKINS BY NON USERS -->
+				{% if session.get("user_id", False) and g.user.preferences["show_non_users"] == False %}
+					<input type="checkbox" id="showNonUserCheckins" name="showNonUserCheckins" value="True"><label for="showNonUserCheckins"><span class="unchecked"><span class="glyphicon glyphicon-ok check-glyph"></span></span> Show updates made by non-users</label><br>
+				{% else %}
+					<input type="checkbox" id="showNonUserCheckins" name="showNonUserCheckins" value="True" checked><label for="showNonUserCheckins"><span class="unchecked"><span class="glyphicon glyphicon-ok check-glyph"></span></span> Show updates made by non-users</label><br>
+				{% endif %}
+
+				{% if session.get("user_id", False) %}
+				<br>
+					<button type="submit" id="savePreferences" class="btn my-btn">Save preferences</button>
+				{% endif %}
+						
+			</div><!-- / display options -->
+			
+		</div><!-- /.checkbox end -->
+
+
+		</form>	
+	</div><!-- /#checkinBox END CHECKBOXES DIV -->
+	</div><!-- /#optionsContainer -->
+
+
+	
+{% endblock %}
+
+{% block scripts %}
+	<!-- Custom JS files -->
+	<script src="static/map.js"></script>
+
+	<!-- Time ago -->
+	<script src="static/jquery.timeago.js"></script>
+
+{% endblock %}
