@@ -31,7 +31,8 @@ Technologies & Stack:
 
 	Frontend:
 	JavaScript, jQuery, AJAX, jQuery plugins (lightbox_me, timeago).
-	HTML5, CSS3, Twitter Bootstrap (HTML/CSS/JS framework).
+	HTML5, CSS3, Twitter Bootstrap (HTML/CSS/JS framework), RWD (responsive web 
+	design)
 
 	APIs: 
 	Google Maps Javascript V3, Yelp, Geonames, Twilio.
