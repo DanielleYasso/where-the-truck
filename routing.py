@@ -11,7 +11,7 @@ import rauth
 import twilio.twiml
 
 import model
-from forms import PasswordForm, PasswordFormSettings
+from forms import PasswordForm, PasswordFormSettings, ForgotPassword
 
 from flask.ext.login import LoginManager, login_required
 from flask.ext.login import login_user, logout_user, current_user
@@ -216,51 +216,88 @@ def login():
 # RECOVER PASSWORD #
 ####################
 
-@app.route("/forgot_password")
+@app.route("/forgot_password", methods=["GET", "POST"])
 def forgot_password():
-	""" Renders the forgot_password.html webpage """
+	""" Renders the forgot_password.html webpage. Gets user email from forgot 
+	password page, and creates a unique token for that user, sending it to them 
+	via email as part of a unique link """
+
+	#get form data
+	form = ForgotPassword()
+	if form.validate_on_submit():
+
+		user_email = form.email.data
+
+		# check if user email exists
+		user = model.db.session.query(model.User).filter_by(email=user_email).first()
+
+		if not user:
+			flash("No user found with that email address.")
+			return redirect("/forgot_password")
+
+		# Create reset password email
+		subject = "Password reset requested"
+		token = ts.dumps(user.email, salt="recover-key")
+
+		recover_url = url_for(
+			"reset_with_token",
+			token=token,
+			_external=True)
+
+		html = render_template(
+			"emails/recover_password.html",
+			recover_url=recover_url)
+
+		# Create email message to send
+		msg = Message(subject,
+					sender="dbyasso@gmail.com",
+					recipients=[user.email])
+		msg.html = html
+
+		mail.send(msg)
+		flash("Password reset instructions sent to your email address.")
 	
-	return render_template("forgot_password.html")
+	return render_template("forgot_password.html", form=form)
 
-@app.route("/recover_password", methods=["POST"])
-def recover_password():
-	""" Gets user email from forgot password page, and creates a unique token 
-	for that user, sending it to them via email as part of a unique link """
+# @app.route("/recover_password", methods=["POST"])
+# def recover_password():
+# 	""" Gets user email from forgot password page, and creates a unique token 
+# 	for that user, sending it to them via email as part of a unique link """
 
-	# get user email from form
-	user_email = request.form.get("recoveryEmail")
-	print "***** user input", user_email
+# 	# get user email from form
+# 	user_email = request.form.get("recoveryEmail")
+# 	print "***** user input", user_email
 
-	# check if user email exists
-	user = model.db.session.query(model.User).filter_by(email=user_email).first()
+# 	# check if user email exists
+# 	user = model.db.session.query(model.User).filter_by(email=user_email).first()
 
-	if not user:
-		flash("No user found with that email address.")
-		return redirect("/forgot_password")
+# 	if not user:
+# 		flash("No user found with that email address.")
+# 		return redirect("/forgot_password")
 
-	# Create reset password email
-	subject = "Password reset requested"
-	token = ts.dumps(user.email, salt="recover-key")
+# 	# Create reset password email
+# 	subject = "Password reset requested"
+# 	token = ts.dumps(user.email, salt="recover-key")
 
-	recover_url = url_for(
-		"reset_with_token",
-		token=token,
-		_external=True)
+# 	recover_url = url_for(
+# 		"reset_with_token",
+# 		token=token,
+# 		_external=True)
 
-	html = render_template(
-		"emails/recover_password.html",
-		recover_url=recover_url)
+# 	html = render_template(
+# 		"emails/recover_password.html",
+# 		recover_url=recover_url)
 
-	# Create email message to send
-	msg = Message(subject,
-				sender="dbyasso@gmail.com",
-				recipients=[user.email])
-	msg.html = html
+# 	# Create email message to send
+# 	msg = Message(subject,
+# 				sender="dbyasso@gmail.com",
+# 				recipients=[user.email])
+# 	msg.html = html
 
-	mail.send(msg)
-	flash("Password reset instructions sent to your email address.")
+# 	mail.send(msg)
+# 	flash("Password reset instructions sent to your email address.")
 
-	return redirect("/forgot_password")
+# 	return redirect("/forgot_password")
 
 ##################
 # RESET PASSWORD #
