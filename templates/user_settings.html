@@ -21,7 +21,7 @@
         		<li>{{ error }}</li>{% endfor %}
         	</ul>
     	{% endif %}<br>
-    	
+
 	    <div class="passwordFormLabel">{{ form.confirm.label }}:</div> 
 	    {{ form.confirm(placeholder="Confirm new password") }} 
 		{% if form.confirm.errors %}
@@ -31,7 +31,10 @@
     	{% endif %}<br>
 
 	    {{ form.csrf_token }}
-	    <input type="submit" class="btn my-btn" value="Reset my password" />
+	    <div id="resetPasswordSettings">
+		    <input type="submit" class="btn my-btn"  value="Reset my password" />
+		    <a href="/" class="btn btn-default">Cancel</a>
+		</div>
 	</form>
 
 
