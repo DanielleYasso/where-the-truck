@@ -21,13 +21,21 @@ Users can:
 
 Technologies & Stack: 
 
-	Python, Flask, Flask-Mail, Flask-Login, Flask-WTForms, Flask-CORS, Jinja,
-	passlib (encryption & verification), Flask-SQLAlchemy, SQLAlchemy, sqlite,
-	JavaScript, jQuery, jQuery plugins (lightbox_me, timeago).
-	HTML5, CSS3, Twitter Bootstrap (html/css/js framework).
-	APIs: Google Maps Javascript V3 API, Yelp API, Geonames API, Twilio API.
+	Backend:
+	Python, Flask, Jinja, SQLAlchemy, sqlite, passlib (encryption & verification).
+	Flask extensions: Flask-Mail, Flask-Login, Flask-WTForms, Flask-CORS, 
+	Flask-SQLAlchemy.
 	Machine learning: rating location checkins and using those ratings to rate 
 	users and predict the accuracy of their future checkins.
+
+	Frontend:
+	JavaScript, jQuery, AJAX, jQuery plugins (lightbox_me, timeago).
+	HTML5, CSS3, Twitter Bootstrap (html/css/js framework).
+
+	APIs: 
+	Google Maps Javascript V3, Yelp, Geonames, Twilio.
+
+	
 
 Terminology:
 	attraction = food truck
@@ -153,7 +161,7 @@ Advanced Checkin features:
 	- Allow a user to edit a checkin
 	- Delete checkin
 
-Advanced User Ratings (for improving rating predictions):
+Advanced User Ratings (for possibly improving rating predictions):
 Up votes based on checkins:
 	- For a new attraction checkin within X minutes of a previous user’s 
 	  checkin, within X distance of that previous checkin, apply an up-vote to

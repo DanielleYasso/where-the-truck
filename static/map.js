@@ -965,6 +965,10 @@ function getDirections(toLat,toLng) {
 				// icon: pinImage
 			});
 
+			// close any open windows
+			if (infoWindow) {
+				infoWindow.close();
+			}
 			// set start location marker
 			startMarkerArray.push(startMarker);
 			startMarker.setMap(map);
