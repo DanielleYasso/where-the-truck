@@ -23,12 +23,12 @@ Details
 	<li>Reset their password</li>
 	<li>Update the location of a food truck</li>
 	<li>See recent location updates made by other users</li>
-	<li>Select which things they want to see on the map </li>
+	<li>Select which trucks they want to see on the map </li>
 	<li>Save their preferences</li>
 	<li>Get distances/times/routes to food trucks</li>
-	<li>Rate location updates made by other users</li>
+	<li>Vote on location updates made by other users</li>
 	<li>See location updates even if they have bad ratings (or predicted bad ratings)</li>
-	<li>Change their ratings for other user updates</li>
+	<li>Change their existing vote on another user's update</li>
 </ul>
 
 Technologies & Stack: 
