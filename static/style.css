@@ -563,7 +563,7 @@ input[type="checkbox"]:checked + label span.check-glyph {
 
 }
 
-@media all and (max-width: 430px) {
+@media all and (max-width: 400px) {
 	#checkinButton {
 		margin-top: 15px;
 	}
