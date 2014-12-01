@@ -159,6 +159,9 @@ User features:
 	- Show them thier stats on their user settings page
 	- Show "near me"
 
+Anti-hacking:
+	- Delay login requests after getting invalid combo twice.
+
 Advanced Checkin features:
 	- Allow a user to edit a checkin
 	- Delete checkin
