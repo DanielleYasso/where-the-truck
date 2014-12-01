@@ -114,6 +114,10 @@ $(document).ready(function() {
 			$("#directionsWrapper").addClass("hidden");
 		}
 
+		if ($("#optionsContainer").hasClass("hidden")) {
+			$("#optionsContainer").removeClass("hidden");
+		}
+
 		// reset startMarkerArray (should hold no markers when no directions present)
 		if (startMarkerArray.length >= 1) {
 			startMarkerArray[0].setMap(null);
@@ -962,6 +966,9 @@ function getDirections(toLat,toLng) {
 			// display written directions
 			if ($("#directionsWrapper").hasClass("hidden")) {
 				$("#directionsWrapper").removeClass("hidden");
+			}
+			if (!$("#optionsContainer").hasClass("hidden")) {
+				$("#optionsContainer").addClass("hidden");
 			}
 			
 		}, function() {

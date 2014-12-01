@@ -30,6 +30,10 @@ body {
 }
 
 #directionsWrapper {
+	width: 40%;
+	float: right;
+	margin: 0;
+	padding: 0 10px;
 	clear: right;
 }
 
@@ -470,6 +474,12 @@ input[type="checkbox"]:checked + label span.check-glyph {
 		width: 100%;
 	}
 
+	#directionsWrapper {
+		width: 100%;
+		padding: 10px 0;
+		clear: right;
+	}
+
 	/* display options checkboxes */
 	#optionsContainer {
 		width: 100%;
@@ -507,7 +517,7 @@ input[type="checkbox"]:checked + label span.check-glyph {
 }
 
 @media all and (max-width: 505px) {
-	#foodTrucks, #displayOptions {
+	#foodTrucks, #displayOptions, #directionsWrapper {
 		width: 100%;
 	}
 
@@ -524,6 +534,11 @@ input[type="checkbox"]:checked + label span.check-glyph {
 		width: 68%;
 	}
 	#optionsContainer {
+		width: 30%;
+		margin-right: 0;
+		padding-right: 0;
+	}
+	#directionsWrapper {
 		width: 30%;
 		margin-right: 0;
 		padding-right: 0;
