@@ -259,45 +259,7 @@ def forgot_password():
 	
 	return render_template("forgot_password.html", form=form)
 
-# @app.route("/recover_password", methods=["POST"])
-# def recover_password():
-# 	""" Gets user email from forgot password page, and creates a unique token 
-# 	for that user, sending it to them via email as part of a unique link """
 
-# 	# get user email from form
-# 	user_email = request.form.get("recoveryEmail")
-# 	print "***** user input", user_email
-
-# 	# check if user email exists
-# 	user = model.db.session.query(model.User).filter_by(email=user_email).first()
-
-# 	if not user:
-# 		flash("No user found with that email address.")
-# 		return redirect("/forgot_password")
-
-# 	# Create reset password email
-# 	subject = "Password reset requested"
-# 	token = ts.dumps(user.email, salt="recover-key")
-
-# 	recover_url = url_for(
-# 		"reset_with_token",
-# 		token=token,
-# 		_external=True)
-
-# 	html = render_template(
-# 		"emails/recover_password.html",
-# 		recover_url=recover_url)
-
-# 	# Create email message to send
-# 	msg = Message(subject,
-# 				sender="dbyasso@gmail.com",
-# 				recipients=[user.email])
-# 	msg.html = html
-
-# 	mail.send(msg)
-# 	flash("Password reset instructions sent to your email address.")
-
-# 	return redirect("/forgot_password")
 
 ##################
 # RESET PASSWORD #
