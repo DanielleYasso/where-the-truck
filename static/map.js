@@ -116,7 +116,7 @@ $(document).ready(function() {
 
 		if ($("#attractionOptions").hasClass("fullWidth")) {
 			$("#attractionOptions").removeClass("fullWidth");
-			$("#optionsContainer").removeClass("fullWidth")
+			$("#optionsContainer").removeClass("fullWidthWrapper")
 									.removeClass("noPadding");
 			$("#foodTrucks").removeClass("halfWidth");
 			$("#displayOptions").removeClass("halfWidth");
@@ -975,7 +975,7 @@ function getDirections(toLat,toLng) {
 			}
 			if (!$("#attractionOptions").hasClass("fullWidth")) {
 				$("#attractionOptions").addClass("fullWidth");
-				$("#optionsContainer").addClass("fullWidth")
+				$("#optionsContainer").addClass("fullWidthWrapper")
 										.addClass("noPadding");
 				$("#foodTrucks").addClass("halfWidth");
 				$("#displayOptions").addClass("halfWidth");

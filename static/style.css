@@ -309,53 +309,6 @@ button.btn-arrow.disabled {
 }
 
 
-/****************************
-
-		SPECIAL CLASSES
-
-****************************/
-
-.hidden {
-	display: none;
-	height: 0;
-	padding: 0;
-	margin: 0;
-}
-
-
-
-.panel-list{
-	list-style-type: none;
-	padding-left: 0;
-}
-
-.modal-header {
-	background-color: #7BAF7E;
-	border-top-left-radius: 5px;
-	border-top-right-radius: 5px;
-	-webkit-border-top-left-radius: 5px;
-	-webkit-border-top-right-radius: 5px;
-	color: white;
-}
-
-.fullWidth {
-	width: 100%!important;
-}
-
-.noPadding {
-	padding-left: 0!important;
-}
-
-.halfWidth {
-	width: 48%;
-	margin-left: 0;
-	margin-right: 0;
-	padding-left: 25px;
-}
-
-
-
-
 
 /***********************
 
@@ -470,6 +423,53 @@ input[type="checkbox"]:checked + label span.check-glyph {
 }
 
 
+/****************************
+
+		SPECIAL CLASSES
+
+****************************/
+
+.hidden {
+	display: none;
+	height: 0;
+	padding: 0;
+	margin: 0;
+}
+
+
+
+.panel-list{
+	list-style-type: none;
+	padding-left: 0;
+}
+
+.modal-header {
+	background-color: #7BAF7E;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	-webkit-border-top-left-radius: 5px;
+	-webkit-border-top-right-radius: 5px;
+	color: white;
+}
+
+.fullWidth, .fullWidthWrapper {
+	width: 100%!important;
+	float: none!important;
+	display: inline-block!important;
+}
+
+.noPadding {
+	padding-left: 0!important;
+	margin-top: 15px!important;
+}
+
+.halfWidth {
+	width: 48%;
+	margin-left: 0;
+	margin-right: 0;
+}
+
+
 
 
 /****************************
@@ -506,7 +506,6 @@ input[type="checkbox"]:checked + label span.check-glyph {
 	}
 	#displayOptions {
 		width: 265px;
-		/*float: right;*/
 	}
 	#savePreferences {
 	float: right;
@@ -540,6 +539,12 @@ input[type="checkbox"]:checked + label span.check-glyph {
 	}
 }
 
+@media all and (min-width: 992px) {
+	.fullWidthWrapper {
+		width: 60%!important;
+	}
+}
+
 @media all and (min-width: 1200px) {
 	#mapContainer {
 		width: 68%;
@@ -554,7 +559,12 @@ input[type="checkbox"]:checked + label span.check-glyph {
 		margin-right: 0;
 		padding-right: 0;
 	}
+	.fullWidthWrapper {
+		width: 68%!important;
+	}
+	
 }
+
 
 
 
