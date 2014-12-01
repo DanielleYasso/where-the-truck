@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block body %}
+
+	<h2>User settings</h2>
+
+	<h3>Reset your password</h3>
+	<form action="{{ url_for('user_settings') }}" method="POST">
+		<div class="passwordFormLabel">{{ form.current_password.label }}:</div> {{ form.current_password(placeholder="Current password") }}<br>
+	    <div class="passwordFormLabel">{{ form.new_password.label }}:</div> {{ form.new_password(placeholder="New password") }}<br>
+	    <div class="passwordFormLabel">{{ form.confirm.label }}:</div> {{ form.confirm(placeholder="Confirm new password") }}<br>
+	    {{ form.csrf_token }}
+	    <input type="submit" class="btn my-btn" value="Reset my password" />
+	</form>
+
+	{% with messages = get_flashed_messages() %}
+	{% if messages %}
+	{% for message in messages %}
+	<ul class="flashes">
+		<li>{{message}}</li>
+	</ul>
+	{% endfor %}
+	{% endif %}
+	{% endwith %}
+
+{% endblock %}

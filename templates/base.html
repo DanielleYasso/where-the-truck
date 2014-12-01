@@ -38,7 +38,11 @@
 		<div class="navbar-collapse collapse" id="collapsedNav">
 			<ul class="nav navbar-nav navbar-right">
 				{% if session.get("user_id", False) %}
-					<li class="btn navbar-btn disabled">{{ g.user.username }}</li>
+					<li>
+						<form action="/user_settings">
+							<button type="submit" id="userSettings" class="btn navbar-btn btn-link">{{ g.user.username }}</button>
+						</form>
+					</li>
 					<li style="display: inline-block">
 						<form action="/logout">
 							<button type="submit" id="logoutButton" class="btn navbar-btn btn-link">Logout</button>

@@ -11,9 +11,10 @@ import rauth
 import twilio.twiml
 
 import model
-from forms import PasswordForm
+from forms import PasswordForm, PasswordFormSettings
 
-from flask.ext.login import LoginManager, login_user, logout_user, current_user
+from flask.ext.login import LoginManager, login_required
+from flask.ext.login import login_user, logout_user, current_user
 from itsdangerous import URLSafeTimedSerializer
 
 
@@ -296,6 +297,39 @@ def reset_with_token(token):
 		return render_template("/reset_with_token.html", form=form, token=token)
 
 
+
+#################
+# USER SETTINGS #
+#################
+
+@app.route("/user_settings", methods=["GET", "POST"])
+@login_required
+def user_settings():
+	""" Renders user settings page, and allows user to reset their password, and 
+	 encrypts their new password. """
+
+	#get form data
+	form = PasswordFormSettings()
+	if form.validate_on_submit():
+		# user = model.User.query.filter_by(email=email).first_or_404()
+
+		current_password = form.current_password.data
+
+		if not pbkdf2_sha256.verify(current_password, g.user.password):
+			flash("Incorrect current password.")
+			return render_template("/user_settings.html", form=form)
+
+		new_password = form.new_password.data
+
+		# securely store new password
+		password_hash = pbkdf2_sha256.encrypt(new_password, rounds=200000, salt_size=16)
+		g.user.password = password_hash
+
+		model.db.session.commit()
+
+		return redirect("/")
+	else:
+		return render_template("/user_settings.html", form=form)
 
 
 ###############

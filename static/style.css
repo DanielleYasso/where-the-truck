@@ -171,6 +171,8 @@ ul.nav li {
 
 
 
+
+
 .navbar-toggle {
 	border: none!important;
 }
@@ -274,7 +276,17 @@ ul.nav li {
 }
 
 
+/****************************
 
+		RESET FORM
+
+****************************/
+
+
+.passwordFormLabel {
+	width: 165px;
+	display: inline-block;
+}
 
 
 
