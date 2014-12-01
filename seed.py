@@ -13,7 +13,8 @@ def add_users():
 		
 		email = str(i) + "@danielleyasso.com"
 
-		user = model.User(username=str(i), email=email, password=password_hash)
+		user = model.User(username=str(i), email=email, password=password_hash,
+							preferences={})
 		print "User name %s, email %s, password %s" % (user.username,
 										user.email,
 										user.password)
