@@ -59,7 +59,7 @@
 					<span id="span_{{attraction.id}}">
 
 						<!-- If user is signed in and has saved preferences -->
-						{% if session.get("user_id", False) and g.user.preferences != {}%}
+						{% if session.get("user_id", False) and (g.user.preferences != {} and g.user.preferences != None) %}
 
 							<!-- user has checked this attraction -->
 							{% if g.user.preferences[attraction.id] %}

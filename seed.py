@@ -1,12 +1,19 @@
 import model
 import random
 from datetime import datetime
+from passlib.hash import pbkdf2_sha256
+
 
 def add_users():
 	""" Seed the users table with fake users """
 	# add 20 fake users to the database
 	for i in range(7, 28):
-		user = model.User(username=str(i), email=str(i), password=str(i))
+		# securely store password
+		password_hash = pbkdf2_sha256.encrypt(str(i), rounds=200000, salt_size=16)
+		
+		email = str(i) + "@danielleyasso.com"
+
+		user = model.User(username=str(i), email=email, password=password_hash)
 		print "User name %s, email %s, password %s" % (user.username,
 										user.email,
 										user.password)
@@ -43,7 +50,7 @@ def add_checkins():
 
 			print "up limit %s and votes %s. down %s votes %s" % (limit_up,
 								random_upvotes, limit_down, random_downvotes)
-			
+
 			checkin = model.Checkin(attraction_id=1,
 								user_id=i,
 								lat=37.8026431,
@@ -58,8 +65,8 @@ def add_checkins():
 			model.db.session.commit()
 
 def main():
-	# add_checkins()
-	# add_users()
+	add_checkins()
+	add_users()
 
 
 
