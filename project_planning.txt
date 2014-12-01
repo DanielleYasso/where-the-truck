@@ -116,6 +116,8 @@ Advanced User Features:
 [X]	- Remember a user's login
 [X]	- Let a user reset their password if they forgot it
 [X]	- Confirm user emails
+[X] - User settings page
+[X]		- Reset password
 [X]	- Allow a user to create a new attraction by emailing me to add it
 NA		- Adding it themselves => bad idea: trolling, or could have one 
 		  attraction with several different names…
@@ -141,12 +143,10 @@ Geonames
 ********** POSSIBLE FUTURE FEATURES FOR CONSIDERATION **********
 
 Foursquare API
-	- Allow a user to checkin to foursquare for that attraction/location
+	- Allow a user to checkin to foursquare for that attraction
 
 User features:
-	- User settings page
-		- show them thier stats
-		- Let a user change their password in user settings
+	- Show them thier stats on their user settings page
 	- Show "near me"
 
 Advanced Checkin features:
