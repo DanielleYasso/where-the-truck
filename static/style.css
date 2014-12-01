@@ -338,6 +338,21 @@ button.btn-arrow.disabled {
 	color: white;
 }
 
+.fullWidth {
+	width: 100%!important;
+}
+
+.noPadding {
+	padding-left: 0!important;
+}
+
+.halfWidth {
+	width: 48%;
+	margin-left: 0;
+	margin-right: 0;
+	padding-left: 25px;
+}
+
 
 
 

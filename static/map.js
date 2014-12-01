@@ -114,8 +114,12 @@ $(document).ready(function() {
 			$("#directionsWrapper").addClass("hidden");
 		}
 
-		if ($("#optionsContainer").hasClass("hidden")) {
-			$("#optionsContainer").removeClass("hidden");
+		if ($("#attractionOptions").hasClass("fullWidth")) {
+			$("#attractionOptions").removeClass("fullWidth");
+			$("#optionsContainer").removeClass("fullWidth")
+									.removeClass("noPadding");
+			$("#foodTrucks").removeClass("halfWidth");
+			$("#displayOptions").removeClass("halfWidth");
 		}
 
 		// reset startMarkerArray (should hold no markers when no directions present)
@@ -969,8 +973,12 @@ function getDirections(toLat,toLng) {
 			if ($("#directionsWrapper").hasClass("hidden")) {
 				$("#directionsWrapper").removeClass("hidden");
 			}
-			if (!$("#optionsContainer").hasClass("hidden")) {
-				$("#optionsContainer").addClass("hidden");
+			if (!$("#attractionOptions").hasClass("fullWidth")) {
+				$("#attractionOptions").addClass("fullWidth");
+				$("#optionsContainer").addClass("fullWidth")
+										.addClass("noPadding");
+				$("#foodTrucks").addClass("halfWidth");
+				$("#displayOptions").addClass("halfWidth");
 			}
 			
 		}, function() {
