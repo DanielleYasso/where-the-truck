@@ -786,12 +786,12 @@ def get_votes(checkin_id):
 	# is a user signed in?
 	if g.user.is_authenticated():
 		votes_data.append(True) # [2], user is signed in
-		print votes_data
 
 		if checkin.user_id == g.user.id:
 			votes_data.append(True) # [3], this is the user's own checkin
 		else:
 			votes_data.append(False) # [3], not this user's checkin
+
 
 			# get user vote (if it exists)
 			if checkin.users_who_rated != None:
@@ -801,6 +801,8 @@ def get_votes(checkin_id):
 					vote_type = checkin.users_who_rated[g.user.id]
 
 					votes_data.append(vote_type) # [4]
+				else:
+					votes_data.append(False) # [4] placeholder vote_type
 			else:
 				votes_data.append(False) # [4], placeholder for vote_type
 

@@ -66,12 +66,11 @@ def add_checkins():
 			model.db.session.commit()
 
 def main():
-	add_checkins()
-	add_users()
+	# add_checkins()
+	# add_users()
 
 
 
 if __name__ == "__main__":
-	# s= model.db.connect()
 	main()
 
