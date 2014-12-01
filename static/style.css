@@ -594,12 +594,9 @@ input[type="checkbox"]:checked + label span.check-glyph {
 
 }
 
-@media all and (max-width: 400px) {
+@media all and (max-width: 381px) {
 	#checkinButton {
 		margin-top: 15px;
-	}
-	#checkinInstructions {
-		text-align: justify;
 	}
 }
 
