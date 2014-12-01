@@ -349,6 +349,8 @@ function setMarkerData(marker, markerObject) {
 ///////////////////////////////////////////
 
 function getIconTypeForTimeout(timeout, iconType) {
+
+	console.log(timeout);
 	if (timeout == "old") {
 		if (iconType == "food_truck") {
 			icon = "static/truck6.png";

@@ -529,9 +529,6 @@ def getTimeout(this):
 	# older than a day?
 	if time_diff.days >= 1:
 		timeout = "old"
-	# older than 6 hours?
-	elif time_diff.seconds >= 21600:
-		timeout = "six_hours"
 	# older than 3 hours?
 	elif time_diff.seconds >= 10800:
 		timeout = "three_hours"
