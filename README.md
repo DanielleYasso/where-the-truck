@@ -5,6 +5,12 @@ Where The Truck? helps San Franciscans find the food trucks they love.
 
 A community powered application, Where The Truck? allows users to update the current location of food trucks in the city using geolocation data taken from their browsers or smartphones.  Users can securely login, vote on whether food trucks are where other users say they are, update a truck’s location, see its Yelp reviews, and get directions to it.  Machine learning algorithms filter out updates by users who gain a reputation for inaccuracy based on community votes—an option users can toggle off in their preferences.  Where The Truck? also emphasizes secure authentication, using password encryption and resetting.
 
+###Contents
+- [Details](#details)
+- [Technologies & Stack](#technologies-and-stack)
+
+
+
 Details
 ----------------
 
