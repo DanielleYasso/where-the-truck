@@ -1030,10 +1030,7 @@ function initialize() {
 	if (useragent.indexOf('iPhone') != -1 || useragent.indexOf('Android') != -1 ) {
 		mapdiv.style.width = '100%';
 		mapdiv.style.height = '85%';
-	} else {
-		// mapdiv.style.width = '100%';
-		// mapdiv.style.height = '400px';
-	}
+	} 
 
 	// create the map object
 	var startLatLng = new google.maps.LatLng(37.7829292,-122.4324726);

@@ -16,7 +16,6 @@ body {
 ********************/
 
 .updateLocationText {
-	/*display: inline-block;*/
 	width: 60%;
 	float: right;
 	margin: 0;
@@ -404,12 +403,9 @@ input[type="checkbox"] {
 
 input[type="checkbox"] + label {
 	display: inline-block;
-	/*width: 15px;*/
 	padding: 0;
 	margin-right: 5px!important;
-	/*margin-left: -10px;*/
-	/*vertical-align: middle;*/
-	/*cursor: pointer;*/
+	
 }
 
 input[type="checkbox"] + label span.unchecked {
@@ -492,6 +488,9 @@ input[type="checkbox"]:checked + label span.check-glyph {
 
 ****************************/
 
+
+/* max widths */
+
 @media all and (max-width: 991px) {
 	.updateLocationText {
 		width: 50%;
@@ -555,7 +554,6 @@ input[type="checkbox"]:checked + label span.check-glyph {
 		width: 100%;
 	}
 	
-
 }
 
 @media all and (max-width: 505px) {
@@ -565,13 +563,28 @@ input[type="checkbox"]:checked + label span.check-glyph {
 
 }
 
-@media all and (max-width: 381px) {
+@media all and (max-width: 430px) {
 	#checkinButton {
 		margin-top: 15px;
 	}
+	#checkinInstructions {
+		text-align: justify;
+	}
 }
 
+@media all and (max-width: 361px) {
+	#seeAFoodTruck {
+		font-size: 22px;
+	}
+}
 
+/* min widths */
+
+@media all and (min-width: 768px) {
+	#checkinBox {
+		padding-bottom: 15px;
+	}
+}
 
 @media all and (min-width: 992px) {
 	.fullWidthWrapper {
