@@ -10,6 +10,7 @@ The map:
 
 Users can:
 	- Sign in/sign up (create an account)
+	- Reset their password
 	- Checkin the location of an attraction
 	- See recent checkins made by other users
 	- Select which things they want to see on the map 
