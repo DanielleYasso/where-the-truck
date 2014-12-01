@@ -1,11 +1,36 @@
 {% extends "base.html" %}
 {% block body %}
 
+	<h2>Reset password</h2>
+
 	<form action="{{ url_for('reset_with_token', token=token) }}" method="POST">
-	    {{ form.password.label }}: {{ form.password }}<br>
-	    {{ form.confirm.label }}: {{ form.confirm }}<br>
+	    <div class="passwordFormLabel">
+	    	{{ form.password.label }}: 
+    	</div>
+    	{{ form.password(placeholder="New password") }}
+    	
+    	{% if form.password.errors %}
+        	<ul class="errors">{% for error in form.password.errors %}
+        		<li>{{ error }}</li>{% endfor %}
+        	</ul>
+    	{% endif %}<br>
+
+	    <div class="passwordFormLabel">
+	    	{{ form.confirm.label }}: 
+    	</div>
+    	{{ form.confirm(placeholder="Confirm new password") }}
+	    
+	    {% if form.confirm.errors %}
+        	<ul class="errors">{% for error in form.confirm.errors %}
+        		<li>{{ error }}</li>{% endfor %}
+        	</ul>
+    	{% endif %}<br>
+
 	    {{ form.csrf_token }}
-	    <input type="submit" value="Reset my password" />
+	    <div class="resetPassword">
+		    <input type="submit" class="btn my-btn" value="Reset my password" />
+		    <a href="/" class="btn btn-default">Cancel</a>
+		</div>
 	</form>
 
 {% endblock %}
