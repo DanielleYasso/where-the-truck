@@ -1,51 +1,51 @@
 {% extends "base.html" %}
 {% block body %}
 
-	<h2>User settings</h2>
+    <h2>User settings</h2>
 
-	<h3>Reset your password</h3>
-	<form action="{{ url_for('user_settings') }}" method="POST">
+    <h3>Reset your password</h3>
+    <form action="{{ url_for('user_settings') }}" method="POST">
 
-		<div class="passwordFormLabel">{{ form.current_password.label }}:</div> 
-		{{ form.current_password(placeholder="Current password") }} 
-		{% if form.current_password.errors %}
-        	<ul class="errors">{% for error in form.current_password.errors %}
-        		<li>{{ error }}</li>{% endfor %}
-        	</ul>
-    	{% endif %}<br>
+        <div class="passwordFormLabel">{{ form.current_password.label }}:</div> 
+        {{ form.current_password(placeholder="Current password") }} 
+        {% if form.current_password.errors %}
+            <ul class="errors">{% for error in form.current_password.errors %}
+                <li>{{ error }}</li>{% endfor %}
+            </ul>
+        {% endif %}<br>
 
-	    <div class="passwordFormLabel">{{ form.new_password.label }}:</div> 
-	    {{ form.new_password(placeholder="New password") }} 
-		{% if form.new_password.errors %}
-        	<ul class="errors">{% for error in form.new_password.errors %}
-        		<li>{{ error }}</li>{% endfor %}
-        	</ul>
-    	{% endif %}<br>
+        <div class="passwordFormLabel">{{ form.new_password.label }}:</div> 
+        {{ form.new_password(placeholder="New password") }} 
+        {% if form.new_password.errors %}
+            <ul class="errors">{% for error in form.new_password.errors %}
+                <li>{{ error }}</li>{% endfor %}
+            </ul>
+        {% endif %}<br>
 
-	    <div class="passwordFormLabel">{{ form.confirm.label }}:</div> 
-	    {{ form.confirm(placeholder="Confirm new password") }} 
-		{% if form.confirm.errors %}
-        	<ul class="errors">{% for error in form.confirm.errors %}
-        		<li>{{ error }}</li>{% endfor %}
-        	</ul>
-    	{% endif %}<br>
+        <div class="passwordFormLabel">{{ form.confirm.label }}:</div> 
+        {{ form.confirm(placeholder="Confirm new password") }} 
+        {% if form.confirm.errors %}
+            <ul class="errors">{% for error in form.confirm.errors %}
+                <li>{{ error }}</li>{% endfor %}
+            </ul>
+        {% endif %}<br>
 
-	    {{ form.csrf_token }}
-	    <div class="resetPassword">
-		    <input type="submit" class="btn my-btn"  value="Reset my password">
-		    <a href="/" class="btn btn-default">Cancel</a>
-		</div>
-	</form>
+        {{ form.csrf_token }}
+        <div class="resetPassword">
+            <input type="submit" class="btn my-btn"  value="Reset my password">
+            <a href="/" class="btn btn-default">Cancel</a>
+        </div>
+    </form>
 
 
-	{% with messages = get_flashed_messages() %}
-	{% if messages %}
-	{% for message in messages %}
-	<ul class="flashes">
-		<li>{{message}}</li>
-	</ul>
-	{% endfor %}
-	{% endif %}
-	{% endwith %}
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    {% for message in messages %}
+    <ul class="flashes">
+        <li>{{message}}</li>
+    </ul>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
 
 {% endblock %}

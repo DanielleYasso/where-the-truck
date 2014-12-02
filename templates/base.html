@@ -2,22 +2,22 @@
 
 <html lang="en">
 <head>
-	<title>where the truck?</title>
+    <title>where the truck?</title>
 
-	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
 
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
 
-	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
-	<link href='http://fonts.googleapis.com/css?family=Gloria+Hallelujah' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Gloria+Hallelujah' rel='stylesheet' type='text/css'>
 
 
-	<meta name="viewport" content="width=device=width, initial-scale=1.0, user-scalable=no" />
+    <meta name="viewport" content="width=device=width, initial-scale=1.0, user-scalable=no" />
 
-	<!-- Google Maps -->
-	<script src="https://maps.googleapis.com/maps/api/js?key={{API_KEY}}"></script>
+    <!-- Google Maps -->
+    <script src="https://maps.googleapis.com/maps/api/js?key={{API_KEY}}"></script>
 
-	
+    
 
 </head>
 <body>
@@ -25,272 +25,272 @@
 <!-- NAVIGATION -->
 
 <nav class="navbar navbar-default navbar-static-top" role="navigation">
-	<div class="container">
-		<div class="navbar-header">
-			<a class="navbar-brand" href="/">where the truck?</a>
-			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#collapsedNav">
-		        <span class="sr-only">Toggle navigation</span>
-		        <span class="icon-bar"></span>
-		        <span class="icon-bar"></span>
-		        <span class="icon-bar"></span>
-	      </button>
-		</div>
-		<div class="navbar-collapse collapse" id="collapsedNav">
-			<ul class="nav navbar-nav navbar-right">
-				{% if session.get("user_id", False) %}
-					<li>
-						<form action="/user_settings">
-							<button type="submit" id="userSettings" class="btn navbar-btn btn-link">{{ g.user.username }}</button>
-						</form>
-					</li>
-					<li style="display: inline-block">
-						<form action="/logout">
-							<button type="submit" id="logoutButton" class="btn navbar-btn btn-link">Logout</button>
-						</form>
-					</li>
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/">where the truck?</a>
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#collapsedNav">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+          </button>
+        </div>
+        <div class="navbar-collapse collapse" id="collapsedNav">
+            <ul class="nav navbar-nav navbar-right">
+                {% if session.get("user_id", False) %}
+                    <li>
+                        <form action="/user_settings">
+                            <button type="submit" id="userSettings" class="btn navbar-btn btn-link">{{ g.user.username }}</button>
+                        </form>
+                    </li>
+                    <li style="display: inline-block">
+                        <form action="/logout">
+                            <button type="submit" id="logoutButton" class="btn navbar-btn btn-link">Logout</button>
+                        </form>
+                    </li>
 
-				{% else %}
-					<li id="loginOpenButton" class="btn navbar-btn btn-link">Login</li>
-					<li id="signupOpenButton" class="btn navbar-btn btn-link">Signup</li>
-				{% endif %}
-				<!-- Link to toggle help modal - coded at bottom -->
-				<li id="helpButton" type="button" class="btn navbar-btn btn-link" data-toggle="modal" data-target="#helpModal">?</li>
-			</ul>
-		</div> <!-- end navbar collapse -->
-	</div> <!-- end container -->
+                {% else %}
+                    <li id="loginOpenButton" class="btn navbar-btn btn-link">Login</li>
+                    <li id="signupOpenButton" class="btn navbar-btn btn-link">Signup</li>
+                {% endif %}
+                <!-- Link to toggle help modal - coded at bottom -->
+                <li id="helpButton" type="button" class="btn navbar-btn btn-link" data-toggle="modal" data-target="#helpModal">?</li>
+            </ul>
+        </div> <!-- end navbar collapse -->
+    </div> <!-- end container -->
 </nav>
 
 <!-- END NAVIGATION -->
 
 <!-- LIGHT BOX CONTENT -->
 <div id="loginFormDiv">
-	<div class="closeButton">
-		<span class="h5">Login</span>
-		<button class="close lightBoxClose"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-	</div>
-	<form id="loginForm" name="loginForm">
-		<div>
-			<div class="fieldElement"><input type="email" id="loginEmail" name="email" placeholder="email"></div>
-			<span class="errorField hidden" id="emailEF">*</span>
-		</div>
-		<div>
-			<div class="fieldElement"><input type="password" id="loginPassword" name="password" placeholder="password"></div>
-			<span class="errorField hidden" id="passwordEF">*</span>
-		</div>
+    <div class="closeButton">
+        <span class="h5">Login</span>
+        <button class="close lightBoxClose"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+    </div>
+    <form id="loginForm" name="loginForm">
+        <div>
+            <div class="fieldElement"><input type="email" id="loginEmail" name="email" placeholder="email"></div>
+            <span class="errorField hidden" id="emailEF">*</span>
+        </div>
+        <div>
+            <div class="fieldElement"><input type="password" id="loginPassword" name="password" placeholder="password"></div>
+            <span class="errorField hidden" id="passwordEF">*</span>
+        </div>
 
-		
-		<button id="loginButton" class="btn my-btn">Login</button>
-		<div class="rememberMe"><input type="checkbox" id="rememberMeLogin" name="rememberMeLogin"> Remember me</div>
+        
+        <button id="loginButton" class="btn my-btn">Login</button>
+        <div class="rememberMe"><input type="checkbox" id="rememberMeLogin" name="rememberMeLogin"> Remember me</div>
 
-		<div class="forgotPassword"><a href="/forgot_password" class="linkOnWhite">Forgot password?</a></div>
-	
-				
+        <div class="forgotPassword"><a href="/forgot_password" class="linkOnWhite">Forgot password?</a></div>
+    
+                
 
-		<div id="loginErrorMessage"></div>
-	</form>
+        <div id="loginErrorMessage"></div>
+    </form>
 </div>
 
 <div id="signupFormDiv">
-	<div class="closeButton">
-		<span class="h5">Signup</span>
-		<button class="close lightBoxClose"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-	</div>
-	<form id="signupForm" name="signupForm">
-		<div>
-			<div class="fieldElement"><input type="text" id="username" name="username" placeholder="username"></div>
-			<span class="errorField hidden" id="usernameEF">*</span>
-		</div>
-		<div>
-			<div class="fieldElement"><input type="email" id="signupEmail" name="email" placeholder="email"></div>
-			<span class="errorField hidden" id="signupEmailEF">*</span>
-		</div>
-		<div>
-			<div class="fieldElement"><input type="password" id="signupPassword" name="password" placeholder="password"></div>
-			<span class="errorField hidden" id="signupPasswordEF">*</span>
-		</div>
-		<div>
-			<div class="fieldElement"><input type="password" id="passwordConfirm" name="passwordConfirm" placeholder="retype password"></div>
-			<span class="errorField hidden" id="passwordConfirmEF">*</span>
-		</div>
+    <div class="closeButton">
+        <span class="h5">Signup</span>
+        <button class="close lightBoxClose"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+    </div>
+    <form id="signupForm" name="signupForm">
+        <div>
+            <div class="fieldElement"><input type="text" id="username" name="username" placeholder="username"></div>
+            <span class="errorField hidden" id="usernameEF">*</span>
+        </div>
+        <div>
+            <div class="fieldElement"><input type="email" id="signupEmail" name="email" placeholder="email"></div>
+            <span class="errorField hidden" id="signupEmailEF">*</span>
+        </div>
+        <div>
+            <div class="fieldElement"><input type="password" id="signupPassword" name="password" placeholder="password"></div>
+            <span class="errorField hidden" id="signupPasswordEF">*</span>
+        </div>
+        <div>
+            <div class="fieldElement"><input type="password" id="passwordConfirm" name="passwordConfirm" placeholder="retype password"></div>
+            <span class="errorField hidden" id="passwordConfirmEF">*</span>
+        </div>
 
-		
-		<button id="signupButton" class="btn my-btn">Signup</button>
-		<div class="rememberMe"><input type="checkbox" id="rememberMeSignup" name="rememberMeSignup"> Remember me</div>
-	
+        
+        <button id="signupButton" class="btn my-btn">Signup</button>
+        <div class="rememberMe"><input type="checkbox" id="rememberMeSignup" name="rememberMeSignup"> Remember me</div>
+    
 
-		<div id="signupErrorMessage"></div>
-	</form>
+        <div id="signupErrorMessage"></div>
+    </form>
 </div>
 
 <!-- END LIGHTBOX CONTENT -->
 <div class="container">
 
-	{% block body %}
-	{% endblock %}
+    {% block body %}
+    {% endblock %}
 
-	<div id="footer" class="row col-xs-12">
-		<p>&copy; 2014 by Danielle Yasso. All Rights Reserved.</p>
-	</div>
-
-
-
-	<!-- HELP MODAL -->
-	<div class="modal fade" id="helpModal" tabindex="-1" role="dialog" aria-labelledby="helpModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-					<h4 class="modal-title" id="helpModalLabel">What the truck... I need help!</h4>
-				</div>
-				<div class="modal-body">
-
-					<!-- Panels -->
-					<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-						<!-- First panel -->
-						<div class="panel panel-default">
-							<div class="panel-heading" role="tab" id="headingOne">
-								<h4 class="panel-title">
-								<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-								How do I update a truck's location?
-								</a>
-								</h4>
-							</div><!-- /.panel-heading -->
-							<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-								<div class="panel-body">
-									
-									<p>You can update the location of a SF food truck in 2 ways:
-									<ol>
-										<li>To update its location to where you are right now, select the truck name from the drop-down list, and click 'Update Location'</li>
-										<li>Or, just find the truck on the map, and drag its marker to its accurate location on the map</li>
-									</ol>
-									Just remember - food trucks can't swim!</p>
-								</div>
-							</div><!-- /.panel-collapse -->
-						</div><!-- /.panel -->
-
-						<!-- Second panel -->
-						<div class="panel panel-default">
-						    <div class="panel-heading" role="tab" id="headingTwo">
-						    	<h4 class="panel-title">
-							        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-							          Voting on location accuracy with <span class='glyphicon glyphicon-ok-sign help-glyph-up' aria-hidden='true'></span> and <span class='glyphicon glyphicon-remove-sign help-glyph-down' aria-hidden='true'></span>
-							        </a>
-						    	</h4>
-						    </div>
-						    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-						    	<div class="panel-body">
-						        	<p>
-						        		Voting is simple.  
-							        	<br>
-							        	If a truck is where someone says it is, click <span class='glyphicon glyphicon-ok-sign help-glyph-up' aria-hidden='true'></span> to upvote that update. 
-							        	<br>
-							        	If a truck isn't where someone says it is, click <span class='glyphicon glyphicon-remove-sign help-glyph-down' aria-hidden='true'></span> to downvote that update.
-						        	</p>
-						        	<p>
-							        	Updates with too many downvotes won't be shown.  And users who have too many downvoted updates will have their updates automatically hidden, unless their accuracy improves!
-							        </p>
-
-						    	</div>
-						    </div>
-						</div>
-
-						<!-- Third panel -->
-						<div class="panel panel-default">
-						    <div class="panel-heading" role="tab" id="headingTwo">
-						    	<h4 class="panel-title">
-							        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-							          What are the all these truck colors?
-							        </a>
-						    	</h4>
-						    </div>
-						    <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-						    	<div class="panel-body">
-						        	<ul class="panel-list">
-						        		<li>
-						        			<img src="static/truck.png" title="Red truck - new update" alt="Red truck - new update"> New update (updated less than 1 hour ago)
-						        		</li>
-						        		<li>
-						        			<img src="static/truck1.png" title="Somewhat faded red truck, update more than 1 hour old" alt="Somewhat faded red truck, update more than 1 hour old"> Location updated more than 1 hour ago
-						        		</li>
-						        			<img src="static/truck3.png" title="Faded red truck, update more than 2 hour old" alt="Faded red truck, update more than 2 hour old"> Location updated more than 2 hours ago
-						        		<li>
-						        			<img src="static/truck6.png" title="Grey truck, update more than 3 hour old" alt="Grey red truck, update more than 3 hour old"> Location updated more than 3 hour ago
-						        		</li>
-					        		</ul>
-						    	</div>
-						    </div>
-						</div>
-
-						<!-- Fourth panel -->
-						<div class="panel panel-default">
-						    <div class="panel-heading" role="tab" id="headingTwo">
-						    	<h4 class="panel-title">
-							        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-							        	How do I find a certain food truck?
-							        </a>
-						    	</h4>
-						    </div>
-						    <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-						    	<div class="panel-body">
-						        	<p>
-					        			Just click on its name in the "On the map" section.  The truck's icon will bounce, and the map will center on its location.
-					        		</p>
-					        		<p>
-					        			If you can't click on the truck's name, then that truck isn't visible on the map!  Make sure you haven't unchecked its checkbox.
-				        			</p>
-				        			<p>
-					        			Still can't click it? Check the "Show updates older than 1 day" box.  Could be that nobody has updated its location in a while!
-					        		</p>
-						    	</div>
-						    </div>
-						</div>
-
-						<!-- Fifth panel -->
-						<div class="panel panel-default">
-						    <div class="panel-heading" role="tab" id="headingTwo">
-						    	<h4 class="panel-title">
-							        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
-							        	What are the checkboxes for?
-							        </a>
-						    	</h4>
-						    </div>
-						    <div id="collapseFive" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-						    	<div class="panel-body">
-						        	<p>
-					        			The checkboxes let you customize what you see on the map.
-				        			</p>
-				        			<p>
-				        				Don't like a certain food truck? Uncheck it, and you won't see it on the map.
-				        				<br>
-				        				Display Options let you toggle different settings on and off. You can choose to see
-				        				<ul>
-				        					<li>old location updates if there aren't new updates for certain food trucks</li>
-				        					<li>updates that other users have downvoted for inaccuracy</li>
-				        					<li>updates made by users who have earned reputations for inaccurate updates, based on other user votes on their previous updates</li>
-				        					<li>updates made by non-users</li>
-			        					</ul>
-			        					Logged in users can save these settings.  Every time you login, we'll load the map based on your preferences!
-					        		</p>
-					        		<p>
-					        			When you toggle certain display options on and off, you might notice that the truck moves and an older update is shown.  We're doing this on purpose.  If we can, we'll always show you <em>something</em> that fits your settings rather than nothing!
-				        			</p>
-						    	</div>
-						    </div>
-						</div>
+    <div id="footer" class="row col-xs-12">
+        <p>&copy; 2014 by Danielle Yasso. All Rights Reserved.</p>
+    </div>
 
 
 
-					</div><!-- /.panel-group -->
-					<div class="modal-footer">
-						<p>
-							Don't see a food truck you love listed here?
-							<a class="linkOnWhite" href="mailto:dbyasso@gmail.com">Email me</a> and maybe I'll add it!
-						</p>
-				  	</div>
-		  		</div><!-- /.modal-body -->
-			</div><!-- /.modal-content -->
-		</div><!-- /.modal-dialog -->
-	</div><!-- /.modal -->
+    <!-- HELP MODAL -->
+    <div class="modal fade" id="helpModal" tabindex="-1" role="dialog" aria-labelledby="helpModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title" id="helpModalLabel">What the truck... I need help!</h4>
+                </div>
+                <div class="modal-body">
+
+                    <!-- Panels -->
+                    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                        <!-- First panel -->
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="headingOne">
+                                <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                How do I update a truck's location?
+                                </a>
+                                </h4>
+                            </div><!-- /.panel-heading -->
+                            <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                                <div class="panel-body">
+                                    
+                                    <p>You can update the location of a SF food truck in 2 ways:
+                                    <ol>
+                                        <li>To update its location to where you are right now, select the truck name from the drop-down list, and click 'Update Location'</li>
+                                        <li>Or, just find the truck on the map, and drag its marker to its accurate location on the map</li>
+                                    </ol>
+                                    Just remember - food trucks can't swim!</p>
+                                </div>
+                            </div><!-- /.panel-collapse -->
+                        </div><!-- /.panel -->
+
+                        <!-- Second panel -->
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="headingTwo">
+                                <h4 class="panel-title">
+                                    <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                      Voting on location accuracy with <span class='glyphicon glyphicon-ok-sign help-glyph-up' aria-hidden='true'></span> and <span class='glyphicon glyphicon-remove-sign help-glyph-down' aria-hidden='true'></span>
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                                <div class="panel-body">
+                                    <p>
+                                        Voting is simple.  
+                                        <br>
+                                        If a truck is where someone says it is, click <span class='glyphicon glyphicon-ok-sign help-glyph-up' aria-hidden='true'></span> to upvote that update. 
+                                        <br>
+                                        If a truck isn't where someone says it is, click <span class='glyphicon glyphicon-remove-sign help-glyph-down' aria-hidden='true'></span> to downvote that update.
+                                    </p>
+                                    <p>
+                                        Updates with too many downvotes won't be shown.  And users who have too many downvoted updates will have their updates automatically hidden, unless their accuracy improves!
+                                    </p>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Third panel -->
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="headingTwo">
+                                <h4 class="panel-title">
+                                    <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                      What are the all these truck colors?
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                                <div class="panel-body">
+                                    <ul class="panel-list">
+                                        <li>
+                                            <img src="static/truck.png" title="Red truck - new update" alt="Red truck - new update"> New update (updated less than 1 hour ago)
+                                        </li>
+                                        <li>
+                                            <img src="static/truck1.png" title="Somewhat faded red truck, update more than 1 hour old" alt="Somewhat faded red truck, update more than 1 hour old"> Location updated more than 1 hour ago
+                                        </li>
+                                            <img src="static/truck3.png" title="Faded red truck, update more than 2 hour old" alt="Faded red truck, update more than 2 hour old"> Location updated more than 2 hours ago
+                                        <li>
+                                            <img src="static/truck6.png" title="Grey truck, update more than 3 hour old" alt="Grey red truck, update more than 3 hour old"> Location updated more than 3 hour ago
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Fourth panel -->
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="headingTwo">
+                                <h4 class="panel-title">
+                                    <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                        How do I find a certain food truck?
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                                <div class="panel-body">
+                                    <p>
+                                        Just click on its name in the "On the map" section.  The truck's icon will bounce, and the map will center on its location.
+                                    </p>
+                                    <p>
+                                        If you can't click on the truck's name, then that truck isn't visible on the map!  Make sure you haven't unchecked its checkbox.
+                                    </p>
+                                    <p>
+                                        Still can't click it? Check the "Show updates older than 1 day" box.  Could be that nobody has updated its location in a while!
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Fifth panel -->
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="headingTwo">
+                                <h4 class="panel-title">
+                                    <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                                        What are the checkboxes for?
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapseFive" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                                <div class="panel-body">
+                                    <p>
+                                        The checkboxes let you customize what you see on the map.
+                                    </p>
+                                    <p>
+                                        Don't like a certain food truck? Uncheck it, and you won't see it on the map.
+                                        <br>
+                                        Display Options let you toggle different settings on and off. You can choose to see
+                                        <ul>
+                                            <li>old location updates if there aren't new updates for certain food trucks</li>
+                                            <li>updates that other users have downvoted for inaccuracy</li>
+                                            <li>updates made by users who have earned reputations for inaccurate updates, based on other user votes on their previous updates</li>
+                                            <li>updates made by non-users</li>
+                                        </ul>
+                                        Logged in users can save these settings.  Every time you login, we'll load the map based on your preferences!
+                                    </p>
+                                    <p>
+                                        When you toggle certain display options on and off, you might notice that the truck moves and an older update is shown.  We're doing this on purpose.  If we can, we'll always show you <em>something</em> that fits your settings rather than nothing!
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </div><!-- /.panel-group -->
+                    <div class="modal-footer">
+                        <p>
+                            Don't see a food truck you love listed here?
+                            <a class="linkOnWhite" href="mailto:dbyasso@gmail.com">Email me</a> and maybe I'll add it!
+                        </p>
+                    </div>
+                </div><!-- /.modal-body -->
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 
 </div>
 </div>
@@ -298,25 +298,25 @@
 
 
 
-	<!-- JAVASCRIPT -->
+    <!-- JAVASCRIPT -->
 
-	<!-- jQuery -->
-	<script src="static/jquery-1.11.0.min.js"></script>
+    <!-- jQuery -->
+    <script src="static/jquery-1.11.0.min.js"></script>
 
- 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-	<!-- Bootstrap -->
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
 
 
-	<!-- Custom JS files -->
-	<script src="static/login.js"></script>
+    <!-- Custom JS files -->
+    <script src="static/login.js"></script>
 
-	<!-- login lightbox -->
-	<script src="static/jquery.lightbox_me.js"></script>
+    <!-- login lightbox -->
+    <script src="static/jquery.lightbox_me.js"></script>
 
-	{% block scripts %}
-	{% endblock %}
+    {% block scripts %}
+    {% endblock %}
 
 </body>
 </html>
