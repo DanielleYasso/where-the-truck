@@ -33,7 +33,8 @@ class PasswordForm(Form):
 
 class PasswordFormSettings(Form):
 
-    current_password = PasswordField('Current password', validators=[Required()])
+    current_password = PasswordField('Current password', 
+                                    validators=[Required()])
 
     new_password = PasswordField('New password', 
                                 [validators.Required(),
