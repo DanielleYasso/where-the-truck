@@ -9,6 +9,7 @@ A community powered application, Where The Truck? allows users to update the cur
 - [Overview](#overview)
 - [Technologies & Stack](#technologies-and-stack)
 - [Features](#features)
+- [Forking](#forking)
 
 
 Overview
