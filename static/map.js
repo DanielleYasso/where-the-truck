@@ -356,11 +356,6 @@ function getIconTypeForTimeout(timeout, iconType) {
 			icon = "static/truck6.png";
 		}
 	}
-	// else if (timeout == "six_hours") {
-	// 	if (iconType == "food_truck") {
-	// 		icon = "static/truck6.png";
-	// 	}
-	// }
 	else if (timeout == "three_hours") {
 		if (iconType == "food_truck") {
 			icon = "static/truck6.png";
