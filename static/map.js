@@ -800,7 +800,8 @@ function addMarkers(map, markers) {
                         yelp_ratings_count = "<em style='font-size: 8pt;'>" + ratings_count + " reviews on </em>";
 
                         powered_by_yelp = "<a href='" + yelp_url + "' target='_blank'>"
-                                        + "<img style='vertical-align: bottom;' src='https://s3-media1.fl.yelpcdn.com/assets/2/www/img/14f29ad24935/map/miniMapLogo.png'>"
+                                        + "<img style='vertical-align: bottom;' "
+                                        + "src='https://s3-media1.fl.yelpcdn.com/assets/2/www/img/14f29ad24935/map/miniMapLogo.png'>"
                                         + "</a>";
                     }
 
