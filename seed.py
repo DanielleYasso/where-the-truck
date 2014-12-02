@@ -9,22 +9,23 @@ def add_users():
 	# add 20 fake users to the database
 	for i in range(7, 28):
 		# securely store password
-		password_hash = pbkdf2_sha256.encrypt(str(i), rounds=200000, salt_size=16)
+		password_hash = pbkdf2_sha256.encrypt(str(i), 
+												rounds=200000, 
+												salt_size=16)
 		
 		email = str(i) + "@danielleyasso.com"
 
-		user = model.User(username=str(i), email=email, password=password_hash,
+		user = model.User(username=str(i), 
+							email=email, 
+							password=password_hash,
 							preferences={})
-		print "User name %s, email %s, password %s" % (user.username,
-										user.email,
-										user.password)
-		
+
 
 		model.db.session.add(user)
 		model.db.session.commit()
 
+		# set average rating (requires user id, so user must be in DB)
 		user.set_average_rating()
-		print "rating ", user.average_rating
 
 		model.db.session.commit()
 
