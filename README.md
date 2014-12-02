@@ -27,7 +27,7 @@ Overview
 <ul>
 	<li>Sign in/sign out/sign up (create an account)</li>
 	<li>Reset their password</li>
-	<li>Update the location of a food truck</li>
+	<li>Update the location of a food truck by dragging its icon on the map or by clicking Truck Sighted! to update its location to their current geolocation</li>
 	<li>See recent location updates made by other users</li>
 	<li>Select which trucks they want to see on the map </li>
 	<li>Save their preferences</li>
