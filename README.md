@@ -71,7 +71,7 @@ Voting and ratings
 - [X] Machine learning algorithm predicts if a given user's update will be accurate, based on their averaged update ratings, and hides the update if the user's average rating falls below a certain threshold.
 - [X] Show the last good* location update when a specific option is toggled on/off, causing the current update to be hidden. (*made by a logged in user, who has a user rating above a certain threshold)
 
-Encryption with passlib and Flask-Login
+Security with passlib encryption and Flask-Login
 - [X] Encrypt and verify user passwords using hashes and salts.
 - [X] Secure user sessions let users stay logged in.
 - [X] Confirm user accounts via email and allow users to reset passwords using secure email links with unique tokens.
