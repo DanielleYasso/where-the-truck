@@ -1,7 +1,7 @@
-from sqlalchemy.ext.declarative import declarative_base
+# from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import create_engine
-from sqlalchemy import Column, Integer, Float, String, DateTime, PickleType, Boolean
-from sqlalchemy import ForeignKey
+from sqlalchemy import Column, Integer, Float, String, DateTime
+from sqlalchemy import PickleType, Boolean, ForeignKey
 from sqlalchemy.ext.mutable import Mutable
 from sqlalchemy.orm import sessionmaker, relationship, backref, scoped_session
 from datetime import datetime
@@ -48,6 +48,7 @@ class MutableDict(Mutable, dict):
 
 ####################
 # ATTRACTION CLASS #
+####################
 
 class Attraction(db.Model):
 	__tablename__ = "attractions"
@@ -62,12 +63,15 @@ class Attraction(db.Model):
 
 #################
 # CHECKIN CLASS #
+#################
 
 class Checkin(db.Model):
 	__tablename__ = "checkins"
 
 	id = Column(Integer, primary_key = True)
-	attraction_id = Column(Integer, ForeignKey("attractions.id"), nullable = False)
+	attraction_id = Column(Integer, 
+		ForeignKey("attractions.id"), 
+		nullable = False)
 
 	# user_id will change to nullable = False when user data is created (not MVP)
 	user_id = Column(Integer, ForeignKey("users.id"), nullable = True)
@@ -82,10 +86,12 @@ class Checkin(db.Model):
 	upvotes = Column(Integer, default=0, nullable = False)
 	downvotes = Column(Integer, default=0, nullable = False)
 	calculated_rating = Column(Integer, nullable = True)
-	users_who_rated = Column(MutableDict.as_mutable(PickleType), nullable = True)
+	users_who_rated = Column(MutableDict.as_mutable(PickleType), 
+		nullable = True)
 
 	# define relationships
-	attraction = relationship("Attraction", backref=backref("checkins", order_by=id))
+	attraction = relationship("Attraction", 
+		backref=backref("checkins", order_by=id))
 	user = relationship("User", backref=backref("checkins", order_by=id))
 
 	# Find the calculated_rating
@@ -102,16 +108,19 @@ class Checkin(db.Model):
 			n = self.downvotes
 			phat = float(self.downvotes) / n
 
-			self.calculated_rating = -((phat+z*z/(2*n)-z*sqrt((phat*(1-phat)+z*z/(4*n))/n))/(1+z*z/n))
+			self.calculated_rating = (-((phat+z*z/(2*n)-z*sqrt((phat*(1-phat)+
+				z*z/(4*n))/n))/(1+z*z/n)))
 		else:
 			n = self.upvotes + self.downvotes
 			phat = float(self.upvotes) / n
 
-			self.calculated_rating = (phat+z*z/(2*n)-z*sqrt((phat*(1-phat)+z*z/(4*n))/n))/(1+z*z/n)
+			self.calculated_rating = ((phat+z*z/(2*n)-z*sqrt((phat*(1-phat)+
+				z*z/(4*n))/n))/(1+z*z/n))
 
 
 ##############
 # USER CLASS #
+##############
 
 class User(db.Model):
 	__tablename__ = "users"
@@ -130,7 +139,11 @@ class User(db.Model):
 	# define relationship with Role table
 	role = relationship("Role", backref=backref("users", order_by=id))
 
-	# functions for Flask-Login
+
+	#########################
+	# FlASK-LOGIN FUNCTIONS #
+	#########################
+
 	def is_active(self):
 		"""True, as all users are active"""
 		return True
@@ -147,8 +160,14 @@ class User(db.Model):
 		"""False, as anonymous users aren't supported"""
 		return False
 
+	###################
+	# IS USER TRUSTED #
+	###################
+
 	def is_trusted(self):
-		"""Return whether user is 'trusted' based on average_rating and # of checkins"""
+		"""Return whether user is 'trusted' based on average_rating 
+		and # of checkins"""
+
 		# count all existing and non-zero rated checkins
 		count = 0
 		for checkin in self.checkins:
@@ -171,12 +190,20 @@ class User(db.Model):
 		return True
 
 
+	##############################
+	# GET TOKEN FOR SECURE LINKS #
+	##############################
+
 	def get_token(self, expiration=1800):
+		""" Returns a secure token that times out for use with unique links """
+
 		s = Serializer(current_app.config['SECRET_KEY'], expiration)
 		return s.dumps({'user': self.id}.decode('utf-8'))
 
+	######################
+	# GET AVERAGE RATING #
+	######################
 
-	# Get average rating
 	def set_average_rating(self):
 		"""Calculates a user's average_rating"""
 
@@ -184,7 +211,7 @@ class User(db.Model):
 		count = 0
 		# loop through user's check-ins for calculated_ratings
 		for checkin in self.checkins:
-			# is there a calculated_rating?  ** calculated_ratings of 0 are false
+			# is there a calculated_rating? (calculated_ratings of 0 are false)
 			if checkin.calculated_rating:
 				total += checkin.calculated_rating
 				count += 1
@@ -196,6 +223,7 @@ class User(db.Model):
 
 ##############
 # ROLE CLASS #
+##############
 
 class Role(db.Model):
 	__tablename__ = "roles"
@@ -207,6 +235,9 @@ class Role(db.Model):
 # END CLASS DECLARATIONS #
 ##########################
 
+########
+# MAIN #
+########
 
 def main():
 	pass
