@@ -188,7 +188,6 @@ function getGeolocation(attraction_id) {
 function isValidCheckin(attraction_id, lat,lng) {
 
     // check if they are putting it outside of the Bay Area
-    console.log("lat + lng " + lat + " " + lng);
     // top limit = 37.831996427393186
     // right limit = -122.36208379274905
     // bottom limit = 37.6870546150663 (Daly City on map)
@@ -237,7 +236,6 @@ function isValidCheckin(attraction_id, lat,lng) {
             marker = markersArray[i];
             if (marker.get("id") == attraction_id) {
                 latLng = new google.maps.LatLng(marker.get("lat"), marker.get("lng"));
-                console.log(latLng);
                 marker.setPosition(latLng);
             }
         }
@@ -266,7 +264,6 @@ function setCheckin(attraction_id, lat, lng) {
                 if (marker.get("id") == attraction_id) {
                     // marker exists in array, just update position on map
                     latLng = new google.maps.LatLng(lat, lng);
-                    console.log(latLng);
                     var icon = getIconTypeForTimeout("new", marker.get("type"));
 
                     marker.setPosition(latLng);
@@ -299,7 +296,6 @@ function getMarkers(map) {
     $.get(
         "/get_markers",
         function(result) {
-            console.log("getMarkers:" + result);
 
             if (result == "noMarkers") {
                 alert("No checkins to show");
@@ -424,7 +420,6 @@ function setOptionChecks() {
         showOld = $("#showOldCheckins").is(":checked");
         if (marker[using_update]["timeout"] == "old" && !showOld) {
             removeMarker = true; 
-            // hideOld = true;
         }
 
         // attraction is checked for display
@@ -601,7 +596,6 @@ function addMarkers(map, markers) {
     for (var i = 0; i < markers.length; i++) {
         markerObject = markers[i];
         var myLatLng = new google.maps.LatLng(markerObject["current"]["lat"], markerObject["current"]["lng"]);
-        console.log(myLatLng);
 
         var iconType = markerObject["type"];
 
@@ -615,7 +609,6 @@ function addMarkers(map, markers) {
             title: markerObject["name"],
             draggable: true,
             icon: icon
-            // animation: google.maps.Animation.DROP
         });
 
         // set data for markers
