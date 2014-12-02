@@ -14,7 +14,7 @@ A community powered application, Where The Truck? allows users to update the cur
 Overview
 ----------------
 
-Where The Truck? features an interactive map showing the most recently updated location for each food truck.
+Where The Truck? features an interactive map showing the most recently updated location for each food truck in the database.
 
 <h4>The map:</h4>
 <ul>
@@ -68,6 +68,8 @@ Features
 - [X] Confirm user accounts via email and allow users to reset passwords using secure email links with unique tokens.
 - [X] Enable cross origin resource sharing (CORS) by routing insecure API's through the python server.
 - [X] Show the last good* location update when a specific option is toggled on/off, causing the current update to be hidden. (*made by a logged in user, who has a user rating above a certain threshold)
+- [X] Twilio API integration allows users to text the name of a food truck and receive a google maps link to its most recent location.
+- [X] Prevent trolling by limiting location updates to within San Francisco, and preventing location updates in the bay using the Geonames Ocean API.
 
 
 Forking?
