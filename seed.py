@@ -4,6 +4,10 @@ from datetime import datetime
 from passlib.hash import pbkdf2_sha256
 
 
+#############
+# ADD USERS #
+#############
+
 def add_users():
 	""" Seed the users table with fake users """
 	# add 20 fake users to the database
@@ -29,6 +33,11 @@ def add_users():
 
 		model.db.session.commit()
 
+
+
+################
+# ADD CHECKINS #
+################
 
 def add_checkins():
 	""" Seed the checkins table with checkins associated with seed users """
@@ -69,6 +78,10 @@ def add_checkins():
 
 			model.db.session.add(checkin)
 			model.db.session.commit()
+
+########
+# MAIN #
+########
 
 def main():
 	# add_checkins()
