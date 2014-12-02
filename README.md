@@ -86,7 +86,7 @@ Data visualization and interaction
 - [X] Dynamically display aging location updates using timeago.js and different icon images.
 - [X] Show the last good* location update when a specific option is toggled on/off, causing the current update to be hidden. (*made by a logged in user, who has a user rating above a certain threshold)
 - [X] Increase rendering speed when truck icons are updated via dragging, or display options are toggled, by using Javascript to manipulate cached data rather than re-requesting data from the server.
-- [X] Frontend customizes checkbox appearances, interactivity, and site features based on logged in user's data and previous map interactions.
+- [X] Customize checkbox appearances and interactivity, and site features based on logged in user's data and previous map interactions.
 - [X] Foster learned user behavior using Bootstrap's Javascript popovers on voting options for non-users and users who haven't voted yet.
 - [X] Create custom responsive web design (RWD) using CSS3.
 
