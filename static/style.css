@@ -1,82 +1,82 @@
 html, body, .container {
-	height: 100%;
-	margin: 0;
-	padding: 0;
+    height: 100%;
+    margin: 0;
+    padding: 0;
 }
 
 body {
-	background-color: #FAFEFA!important;
-	font-family: "Open Sans", sans-serif!important;
+    background-color: #FAFEFA!important;
+    font-family: "Open Sans", sans-serif!important;
 }
 
 /********************
 
-		LAYOUT
+        LAYOUT
 
 ********************/
 
 .updateLocationText {
-	width: 60%;
-	float: right;
-	margin: 0;
-	padding-left: 10px;
-	vertical-align: middle;
+    width: 60%;
+    float: right;
+    margin: 0;
+    padding-left: 10px;
+    vertical-align: middle;
 }
 
 
 #checkinBox {
-	width: 100%!important;
+    width: 100%!important;
 }
 
 #mapContainer {
-	width: 60%;
-	height: 400px;
-	margin: 0;
-	padding: 0;
-	display: inline-block;
-	float: left;
+    width: 60%;
+    height: 400px;
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+    float: left;
 }
 
 #map-canvas {
-	width: 100%;
-	height: 100%;
+    width: 100%;
+    height: 100%;
 }
 
 #directionsWrapper {
-	width: 40%;
-	float: right;
-	margin: 0;
-	padding: 0 10px;
-	clear: right;
+    width: 40%;
+    float: right;
+    margin: 0;
+    padding: 0 10px;
+    clear: right;
 }
 
 #optionsContainer {
-	width: 40%;
-	float: right;
-	margin: 0;
-	padding: 0 10px;
-	text-align: right;
+    width: 40%;
+    float: right;
+    margin: 0;
+    padding: 0 10px;
+    text-align: right;
 }
 
 #attractionOptions {
-	width: 300px;
-	display: inline-block;	
+    width: 300px;
+    display: inline-block;  
 
-	background-color: #CCFFCF!important;
-	border-radius: 5px;
-	padding: 10px;
-	padding-left: 15px;
-	text-align: left;
+    background-color: #CCFFCF!important;
+    border-radius: 5px;
+    padding: 10px;
+    padding-left: 15px;
+    text-align: left;
 }
 
 .preferences {
-	display: inline-block;
-	vertical-align: top;
+    display: inline-block;
+    vertical-align: top;
 }
 
 #footer {
-	font-size: 8pt;
-	padding-top: 25px;
+    font-size: 8pt;
+    padding-top: 25px;
 }
 
 
@@ -87,85 +87,85 @@ body {
 
 /****************************
 
-			LINKS
+            LINKS
 
 ****************************/
 
 /**********************
-	TRUCKS & PANELS
+    TRUCKS & PANELS
 **********************/
 
 .attractionFocus, .panel-title a {
-	color: #3B623E!important;
-	
+    color: #3B623E!important;
+    
 }
 .attractionFocus:hover, .panel-title a:hover {
-	color: #7BAF7E!important;
-	text-decoration: none!important;
+    color: #7BAF7E!important;
+    text-decoration: none!important;
 }
 
 /***************
-	GENERAL
+    GENERAL
 ***************/
 
 .linkOnWhite {
-	color: #538A56;
+    color: #538A56;
 }
 
 .linkOnWhite:hover {
-	color: #7BAF7E;
-	text-decoration: none;
+    color: #7BAF7E;
+    text-decoration: none;
 }
 
 /***************
-	BUTTONS
+    BUTTONS
 ***************/
 
 #checkinButton, .my-btn {
-	background-color: #623145!important;
-	color: white!important;
+    background-color: #623145!important;
+    color: white!important;
 }
 
 #checkinButton:hover, .my-btn:hover {
-	background-color: #AF7B8F!important;
+    background-color: #AF7B8F!important;
 }
 
 
 
 /****************************
 
-		NAVIGATION BAR
+        NAVIGATION BAR
 
 ****************************/
 
 /********************/
-/*		LINKS		*/
+/*      LINKS       */
 /********************/
 
 ul.nav {
-	list-style-type: none;
-	margin: 0;
+    list-style-type: none;
+    margin: 0;
 }
 
 ul.nav li {
-	padding-left: 5px;
+    padding-left: 5px;
 }
 
 .navbar-btn {
-	margin-left: 5px;
-	margin-right: 5px;
-	padding-left: 10px!important;
-	padding-right: 10px!important;
-	margin: 0!important;
-	color: white!important;
-	display: inline-block!important;
-	line-height: 40px!important;
-	min-height: 40px!important;
+    margin-left: 5px;
+    margin-right: 5px;
+    padding-left: 10px!important;
+    padding-right: 10px!important;
+    margin: 0!important;
+    color: white!important;
+    display: inline-block!important;
+    line-height: 40px!important;
+    min-height: 40px!important;
 }
 
 .navbar-btn:hover {
-	background-color: #623145!important;
-	text-decoration: none!important;
+    background-color: #623145!important;
+    text-decoration: none!important;
 
 }
 
@@ -174,14 +174,14 @@ ul.nav li {
 
 
 .navbar-toggle {
-	border: none!important;
+    border: none!important;
 }
 .icon-bar {
-	background-color: white!important;
+    background-color: white!important;
 }
 
 .navbar-toggle:hover {
-	background-color: #7BAF7E!important;
+    background-color: #7BAF7E!important;
 }
 
 
@@ -191,14 +191,14 @@ ul.nav li {
 /*********************/
 
 .navbar {
-	background-color: #7BAF7E!important;
-	border: none!important;
+    background-color: #7BAF7E!important;
+    border: none!important;
 }
 
-.navbar-brand {		
-	color: white!important;
-	font-family: "Gloria Hallelujah", sans-serif!important;
-	font-size: 20pt!important;
+.navbar-brand {     
+    color: white!important;
+    font-family: "Gloria Hallelujah", sans-serif!important;
+    font-size: 20pt!important;
 }
 
 /*map colors*/
@@ -211,192 +211,192 @@ ul.nav li {
 
 /****************************
 
-	LOGIN AND SIGNUP FORMS
+    LOGIN AND SIGNUP FORMS
 
 ****************************/
 
 #loginFormDiv, #signupFormDiv {
-	display: none;
-	background-color: white;
-	border: 1px solid black;
-	border-radius: 10px;
-	padding: 5px 5px 10px;
+    display: none;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 5px 5px 10px;
 }
 #loginForm, #signupForm {
-	padding: 5px 5px 0;
-	clear: right;
+    padding: 5px 5px 0;
+    clear: right;
 }
 
 #loginForm input, #signupForm input {
-	margin: 0 0 5px;
-	display: block;
+    margin: 0 0 5px;
+    display: block;
 }
 
 
 #rememberMeLogin, #rememberMeSignup {
-	display: inline-block!important;
+    display: inline-block!important;
 }
 .rememberMe {
-	font-size: small;
-	display: inline-block;
+    font-size: small;
+    display: inline-block;
 }
 
 .forgotPassword {
-	font-size: small;
-	padding-top: 5px;
+    font-size: small;
+    padding-top: 5px;
 }
 
 
 .closeButton {
-	 text-align: right;
-	 display: block;
+     text-align: right;
+     display: block;
 }
 
 .fieldElement, .errorField {
-	display: inline-block;
+    display: inline-block;
 }
 
 .errorField {
-	color: red;
-	vertical-align: top;
+    color: red;
+    vertical-align: top;
 }
 
 #signupErrorMessage, #loginErrorMessage {
-	color: red;
-	font-size: small;
-	padding-top: 5px;
+    color: red;
+    font-size: small;
+    padding-top: 5px;
 }
 
 .closeButton {
-	text-align: left;
-	padding-left: 6px;
+    text-align: left;
+    padding-left: 6px;
 }
 .lightBoxClose {
-	padding: 0 5px 5px 0!important;
+    padding: 0 5px 5px 0!important;
 }
 
 
 /****************************
 
-		RESET FORM
+        RESET FORM
 
 ****************************/
 
 
 .passwordFormLabel {
-	width: 165px;
-	display: inline-block;
+    width: 165px;
+    display: inline-block;
 }
 
 .errors, .error {
-	color: red;
-	list-style-type: none;
-	display: inline-block;
+    color: red;
+    list-style-type: none;
+    display: inline-block;
 }
 
 .errors {
-	padding-left: 5px;
+    padding-left: 5px;
 }
 .error {
-	padding-left: 0;
+    padding-left: 0;
 }
 
 
 
 .resetPassword {
-	margin-top: 15px;
+    margin-top: 15px;
 }
 
 
 
 /****************************
 
-		RATING ARROWS
+        RATING ARROWS
 
 ****************************/
 
 .btn-arrow, .form-arrow {
-	padding: 0!important;
-	padding-right: 1px!important;
-	margin: 0!important;
-	border: 0;
-	text-align: right;
+    padding: 0!important;
+    padding-right: 1px!important;
+    margin: 0!important;
+    border: 0;
+    text-align: right;
 }
 
 button.btn-arrow.disabled {
-	color: gray;
+    color: gray;
 }
 
 .btn-link.upvote {
-	
-	color: #00A300;
+    
+    color: #00A300;
 }
 
 .btn-link.upvote:hover {
-	color: #00CC00;
+    color: #00CC00;
 }
 
 .btn-link.downvote {
-	color: #E60000;
+    color: #E60000;
 }
 
 .btn-link.downvote:hover {
-	color: #FF1919;
+    color: #FF1919;
 }
 
 .help-glyph-up {
-	color: #00A300!important;
+    color: #00A300!important;
 }
 
 .help-glyph-down {
-	color: #E60000!important;
+    color: #E60000!important;
 }
 
 
 
 /***********************
 
-	SELECT DROPDOWN
+    SELECT DROPDOWN
 
 ***********************/
 
 
 
 #attraction_id {
-	margin-bottom: 10px;
-	margin-right: 5px;
-	border-radius: 5px;
+    margin-bottom: 10px;
+    margin-right: 5px;
+    border-radius: 5px;
 }
 .styledSelect select {
-	background: transparent;
-	width: 190px;
-	height: 30px;
-	padding: 5px;
-	font-size: 14px;
-	border: 0!important;
-	-webkit-appearance: none;
-	display: inline-block;
+    background: transparent;
+    width: 190px;
+    height: 30px;
+    padding: 5px;
+    font-size: 14px;
+    border: 0!important;
+    -webkit-appearance: none;
+    display: inline-block;
 }
 
 .styledSelect {
-	width: 165px;
-	height: 30px;
-	overflow: hidden;
-	background: url("chevron_down2.png") no-repeat right;
-	border-radius: 5px;
-	border: 1px solid #CCC;
-	display: inline-block;
-	vertical-align: middle;
-	margin-right: 15px;
-	margin-left: 0;
+    width: 165px;
+    height: 30px;
+    overflow: hidden;
+    background: url("chevron_down2.png") no-repeat right;
+    border-radius: 5px;
+    border: 1px solid #CCC;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 15px;
+    margin-left: 0;
 }
 
 .styledSelect:hover {
-		background: url("chevron_down1.png") no-repeat right;
+        background: url("chevron_down1.png") no-repeat right;
 }
 
 #checkinForm {
-	padding-left: 1px!important;
+    padding-left: 1px!important;
 }
 
 
@@ -406,108 +406,108 @@ button.btn-arrow.disabled {
 
 /****************************
 
-	CHECKBOXES & DISPLAY	
+    CHECKBOXES & DISPLAY    
 
 ****************************/
 
 
 #optionsTitle {
-	margin-top: 0;
+    margin-top: 0;
 }
 
 .attractionFocus.btn {
-	padding: 0;
+    padding: 0;
 }
 
 
 
 #checkinForm {
-	padding: 15px;
-	margin-bottom: -10px!important;
+    padding: 15px;
+    margin-bottom: -10px!important;
 }
 
 
 
 input[type="checkbox"] {
-	display: none;
+    display: none;
 }
 
 input[type="checkbox"] + label {
-	display: inline-block;
-	padding: 0;
-	margin-right: 5px!important;
-	
+    display: inline-block;
+    padding: 0;
+    margin-right: 5px!important;
+    
 }
 
 input[type="checkbox"] + label span.unchecked {
-	display: inline-block;
-	width: 14px;
-	height: 14px;
-	vertical-align: middle;
-	cursor: pointer;
-	background-color: white;
-	border-radius: 2px;
-	border: 1px #AEF4B2 solid;
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    vertical-align: middle;
+    cursor: pointer;
+    background-color: white;
+    border-radius: 2px;
+    border: 1px #AEF4B2 solid;
 }
 
 input[type="checkbox"] + label span.check-glyph {
-	display: none;
-	width: 0;
-	height: 0;
+    display: none;
+    width: 0;
+    height: 0;
 }
 
 input[type="checkbox"]:checked + label span.check-glyph {
-	display: inline-block;
-	vertical-align: top;
-	color: #5D9C61;
-	font-size: 9pt!important;
+    display: inline-block;
+    vertical-align: top;
+    color: #5D9C61;
+    font-size: 9pt!important;
 }
 
 
 /****************************
 
-		SPECIAL CLASSES
+        SPECIAL CLASSES
 
 ****************************/
 
 .hidden {
-	display: none;
-	height: 0;
-	padding: 0;
-	margin: 0;
+    display: none;
+    height: 0;
+    padding: 0;
+    margin: 0;
 }
 
 
 
 .panel-list{
-	list-style-type: none;
-	padding-left: 0;
+    list-style-type: none;
+    padding-left: 0;
 }
 
 .modal-header {
-	background-color: #7BAF7E;
-	border-top-left-radius: 5px;
-	border-top-right-radius: 5px;
-	-webkit-border-top-left-radius: 5px;
-	-webkit-border-top-right-radius: 5px;
-	color: white;
+    background-color: #7BAF7E;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    color: white;
 }
 
 .fullWidth, .fullWidthWrapper {
-	width: 100%!important;
-	float: none!important;
-	display: inline-block!important;
+    width: 100%!important;
+    float: none!important;
+    display: inline-block!important;
 }
 
 .noPadding {
-	padding-left: 0!important;
-	margin-top: 15px!important;
+    padding-left: 0!important;
+    margin-top: 15px!important;
 }
 
 .halfWidth {
-	width: 48%;
-	margin-left: 0;
-	margin-right: 0;
+    width: 48%;
+    margin-left: 0;
+    margin-right: 0;
 }
 
 
@@ -515,7 +515,7 @@ input[type="checkbox"]:checked + label span.check-glyph {
 
 /****************************
 
-		MEDIA QUERIES
+        MEDIA QUERIES
 
 ****************************/
 
@@ -523,127 +523,127 @@ input[type="checkbox"]:checked + label span.check-glyph {
 /* max widths */
 
 @media all and (max-width: 991px) {
-	.updateLocationText {
-		width: 50%;
-	}
-	#checkinForm {
-		width: 750px;
-	}
+    .updateLocationText {
+        width: 50%;
+    }
+    #checkinForm {
+        width: 750px;
+    }
 }
 
 @media all and (max-width: 767px) {
-	/* GOOGLE MAPS */
-	#mapContainer {
-		width: 100%;
-	}
+    /* GOOGLE MAPS */
+    #mapContainer {
+        width: 100%;
+    }
 
-	#checkinForm {
-		width: 100%;
-	}
+    #checkinForm {
+        width: 100%;
+    }
 
-	#directionsWrapper {
-		width: 100%;
-		padding: 10px 0;
-		clear: right;
-	}
+    #directionsWrapper {
+        width: 100%;
+        padding: 10px 0;
+        clear: right;
+    }
 
-	.updateLocationText {
-		display: inline-block;
-		width: 100%;
-		padding-bottom: 15px;
-	}
+    .updateLocationText {
+        display: inline-block;
+        width: 100%;
+        padding-bottom: 15px;
+    }
 
-	/* display options checkboxes */
-	#optionsContainer {
-		width: 100%;
-		padding: 10px 0;
-		clear: right;
-	}
-	#attractionOptions {
-		width: 100%;
-	}
-	#foodTrucks {
-		padding-right: 25px;
-		width: 180px;
-	}
-	#displayOptions {
-		width: 265px;
-	}
-	#savePreferences {
-	float: right;
-	}
+    /* display options checkboxes */
+    #optionsContainer {
+        width: 100%;
+        padding: 10px 0;
+        clear: right;
+    }
+    #attractionOptions {
+        width: 100%;
+    }
+    #foodTrucks {
+        padding-right: 25px;
+        width: 180px;
+    }
+    #displayOptions {
+        width: 265px;
+    }
+    #savePreferences {
+    float: right;
+    }
 
-	/* nav */
-	#collapsedNav {
-		text-align: center;
-		padding: 0;
-	}
-	ul.nav li {
-		padding-left: 0;
-	}
-	.navbar-btn.btn-link {
-		width: 100%;
-	}
-	
+    /* nav */
+    #collapsedNav {
+        text-align: center;
+        padding: 0;
+    }
+    ul.nav li {
+        padding-left: 0;
+    }
+    .navbar-btn.btn-link {
+        width: 100%;
+    }
+    
 }
 
 @media all and (max-width: 505px) {
-	#foodTrucks, #displayOptions, #directionsWrapper {
-		width: 100%;
-	}
+    #foodTrucks, #displayOptions, #directionsWrapper {
+        width: 100%;
+    }
 
 }
 
 @media all and (max-width: 381px) {
-	#checkinButton {
-		margin-top: 15px;
-	}
+    #checkinButton {
+        margin-top: 15px;
+    }
 }
 
 @media all and (max-width: 361px) {
-	#seeAFoodTruck {
-		font-size: 22px;
-	}
+    #seeAFoodTruck {
+        font-size: 22px;
+    }
 }
 
 /* min widths */
 
 @media all and (min-width: 768px) {
-	#checkinBox {
-		padding-bottom: 15px;
-	}
+    #checkinBox {
+        padding-bottom: 15px;
+    }
 }
 
 @media all and (min-width: 992px) {
-	.fullWidthWrapper {
-		width: 60%!important;
-	}
+    .fullWidthWrapper {
+        width: 60%!important;
+    }
 }
 
 @media all and (min-width: 1200px) {
-	#mapContainer {
-		width: 68%;
-	}
-	#optionsContainer {
-		width: 30%;
-		margin-right: 0;
-		padding-right: 0;
-	}
-	#directionsWrapper {
-		width: 30%;
-		margin-right: 0;
-		padding-right: 0;
-	}
-	.fullWidthWrapper {
-		width: 68%!important;
-	}
-	#checkinForm {
-		width: 68%;
-	}
-	.updateLocationText {
-		width: 50%;
-	}
-	
+    #mapContainer {
+        width: 68%;
+    }
+    #optionsContainer {
+        width: 30%;
+        margin-right: 0;
+        padding-right: 0;
+    }
+    #directionsWrapper {
+        width: 30%;
+        margin-right: 0;
+        padding-right: 0;
+    }
+    .fullWidthWrapper {
+        width: 68%!important;
+    }
+    #checkinForm {
+        width: 68%;
+    }
+    .updateLocationText {
+        width: 50%;
+    }
+    
 }
 
 
