@@ -66,23 +66,23 @@ Features
 - [X] Store updated location data in a database with associated tables for users, location updates, and food trucks.
 - [X] Flask app routes AJAX requests to the database and manages password reset form validation via Flask-WTForms.
 
-Voting and user ratings
+###Voting and user ratings
 - [X] Calculate an overall rating for each location update using its upvotes and downvotes in a modified Wilson score interval algorithm.
 - [X] Machine learning algorithm predicts if a given user's update will be accurate, based on their averaged update ratings, and hides the update if the user's average rating falls below a certain threshold.
 
 
-Security with passlib encryption and Flask-Login
+###Security with passlib encryption and Flask-Login
 - [X] Encrypt and verify user passwords using hashes and salts.
 - [X] Secure user sessions let users stay logged in.
 - [X] Confirm user accounts via email and allow users to reset passwords using secure email links with unique tokens that timeout.
 
-APIs and Cross Origin Resource Sharing
+###APIs and Cross Origin Resource Sharing
 - [X] Enable cross origin resource sharing (CORS) by routing insecure API's through the python server.
 - [X] Twilio API integration allows users to text the name of a food truck and receive a google maps link to its most recent location.
 - [X] Prevent trolling by limiting location updates to within San Francisco, and preventing location updates in the bay using the Geonames Ocean API.
 
 
-Data visualization and interaction
+###Data visualization and interaction
 - [X] Dynamically display aging location updates using timeago.js and different icon images.
 - [X] Show the last good* location update when a specific option is toggled on/off, causing the current update to be hidden. (*made by a logged in user, who has a user rating above a certain threshold)
 - [X] Increase rendering speed when truck icons are updated via dragging, or display options are toggled, by using Javascript to manipulate cached data rather than re-requesting data from the server.
