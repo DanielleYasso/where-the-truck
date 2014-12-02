@@ -57,15 +57,15 @@ Google Maps Javascript V3, Yelp, Geonames, Twilio.
 
 Features
 -------------------
-[X] Get latitude and longitude from user's browser using HTML5 geolocation.
-[X] Store updated location data in a database with associated tables for users, location updates, and food trucks.
-[X] Calculate an overall update rating for each location update using its upvotes and downvotes in a modified Wilson score interval algorithm.
-[X] Machine learning algorithm predicts if a given user's update will be accurate, based on their averaged update ratings, and hides the update if the user's average rating falls below a certain threshold.
-[X] Encrypt and verify user passwords using hashes and salts.
-[X] Secure user sessions let users stay logged in.
-[X] Confirm user accounts via email and allow users to reset passwords using secure email links with unique tokens.
-[X] Enable cross origin resource sharing (CORS) by routing insecure API's through the python server.
-[X] Show the last good* location update when a specific option is toggled on/off, causing the current update to be hidden. (*made by a logged in user, who has a user rating above a certain threshold)
+- [X] Get latitude and longitude from user's browser using HTML5 geolocation.
+- - [X] Store updated location data in a database with associated tables for users, location updates, and food trucks.
+- [X] Calculate an overall update rating for each location update using its upvotes and downvotes in a modified Wilson score interval algorithm.
+- [X] Machine learning algorithm predicts if a given user's update will be accurate, based on their averaged update ratings, and hides the update if the user's average rating falls below a certain threshold.
+- [X] Encrypt and verify user passwords using hashes and salts.
+- [X] Secure user sessions let users stay logged in.
+- [X] Confirm user accounts via email and allow users to reset passwords using secure email links with unique tokens.
+- [X] Enable cross origin resource sharing (CORS) by routing insecure API's through the python server.
+- [X] Show the last good* location update when a specific option is toggled on/off, causing the current update to be hidden. (*made by a logged in user, who has a user rating above a certain threshold)
 
 
 Forking?
