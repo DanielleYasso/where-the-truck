@@ -8,8 +8,7 @@ from wtforms.validators import Required, EqualTo
 ###################
 
 class ForgotPassword(Form):
-    """ Create form class for f/orgot_password email reset request """
-
+	
 	email = TextField('Your email', validators=[Required()])
 
 
@@ -18,7 +17,6 @@ class ForgotPassword(Form):
 #################################
 
 class PasswordForm(Form):
-    """ Create form class for /reset/<token> to reset password """
 
     password = PasswordField(
         'New password', [
@@ -33,8 +31,6 @@ class PasswordForm(Form):
 ###################################
 
 class PasswordFormSettings(Form):
-    """ Create form class for user settings page, allowing user to set a 
-    new password """
 
 	current_password = PasswordField('Current password', validators=[Required()])
 
