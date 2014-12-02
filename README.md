@@ -61,7 +61,7 @@ Features
 -------------------
 - [X] Get latitude and longitude from user's browser using HTML5 geolocation.
 - - [X] Store updated location data in a database with associated tables for users, location updates, and food trucks.
-- [X] Calculate an overall update rating for each location update using its upvotes and downvotes in a modified Wilson score interval algorithm.
+- [X] Calculate an update rating for each location update using its upvotes and downvotes in a modified Wilson score interval algorithm.
 - [X] Machine learning algorithm predicts if a given user's update will be accurate, based on their averaged update ratings, and hides the update if the user's average rating falls below a certain threshold.
 - [X] Encrypt and verify user passwords using hashes and salts.
 - [X] Secure user sessions let users stay logged in.
@@ -73,3 +73,7 @@ Features
 Forking?
 -----------------------
 You'll need your own API keys for Google Maps, Yelp, and Twilio, and your own username for Geonames.
+
+	pip install -r requirements.txt
+
+	python routing.py
