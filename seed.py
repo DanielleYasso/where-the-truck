@@ -14,15 +14,15 @@ def add_users():
 	for i in range(7, 28):
 		# securely store password
 		password_hash = pbkdf2_sha256.encrypt(str(i), 
-												rounds=200000, 
-												salt_size=16)
+											rounds=200000, 
+											salt_size=16)
 		
 		email = str(i) + "@danielleyasso.com"
 
 		user = model.User(username=str(i), 
-							email=email, 
-							password=password_hash,
-							preferences={})
+						email=email, 
+						password=password_hash,
+						preferences={})
 
 
 		model.db.session.add(user)
