@@ -31,11 +31,11 @@ Where The Truck? features an interactive map showing the most recently updated l
 	<li>Reset their password</li>
 	<li>Update the location of a food truck by dragging its icon on the map or by clicking Truck Sighted! to update its location to their current geolocation</li>
 	<li>See recent location updates made by other users</li>
+	<li>Get directions to food trucks from their current location</li>
 	<li>Select which trucks they want to see on the map </li>
+	<li>Choose to see location updates even if they have bad ratings (or predicted bad ratings)</li>
 	<li>Save their preferences</li>
-	<li>Get distances/times/routes to food trucks</li>
-	<li>Vote on location updates made by other users</li>
-	<li>See location updates even if they have bad ratings (or predicted bad ratings)</li>
+	<li>Vote on the accuracy of location updates made by other users</li>
 	<li>Change their existing vote on another user's update</li>
 </ul>
 
