@@ -40,7 +40,7 @@ Where The Truck? features an interactive map showing the most recently updated l
 	<li>Read the help section ("?") modal to get answers to common questions.</li>
 </ul>
 
-Technologies and stack 
+Technologies and stack
 ------------------------
 
 <h4>Backend:</h4>
