@@ -82,10 +82,10 @@ APIs and Cross Origin Resource Sharing
 - [X] Prevent trolling by limiting location updates to within San Francisco, and preventing location updates in the bay using the Geonames Ocean API.
 
 
-Data visualization
+Data visualization and interaction
+- [X] Dynamically display aging location updates using timeago.js and different icon images.
 - [X] Increase rendering speed when truck icons are updated via dragging, or display options are toggled, by using Javascript to manipulate cached data rather than re-requesting data from the server.
 - [X] Frontend javascript renders customized features based on logged in user's data and previous map interactions.
-- [X] Dynamically display aging location updates using timeago.js and different icon images.
 - [X] Foster learned user behavior using Bootstrap's Javascript popovers on voting options for non-users and users who haven't voted yet.
 - [X] Create custom responsive web design (RWD) using CSS3.
 
