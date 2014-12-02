@@ -32,26 +32,30 @@ def add_users():
 
 def add_checkins():
 	""" Seed the checkins table with checkins associated with seed users """
+
 	# loop for each user to create checkins for them
 	for i in range(7, 28):
+
 		# loop n times to create n checkins for this user
 		for num in range(50):
+
 			# generate a random number of upvotes and downvotes
+			# set certain values to produce a vote of zero, for testing purposes
 			random_zero = [0, 10, 20, 30, 40, 50]
+
+			# upvotes
 			limit_up = random.randint(0, 51)
 			if limit_up in random_zero:
 				random_upvotes = 0
 			else:
 				random_upvotes = random.randint(0,limit_up)
 			
+			# downvotes
 			limit_down = random.randint(0, 51)
 			if limit_down in random_zero:
 				random_downvotes = 0
 			else:
 				random_downvotes = random.randint(0,limit_down)
-
-			print "up limit %s and votes %s. down %s votes %s" % (limit_up,
-								random_upvotes, limit_down, random_downvotes)
 
 			checkin = model.Checkin(attraction_id=1,
 								user_id=i,
