@@ -61,7 +61,7 @@ Google Maps Javascript V3, Yelp, Geonames, Twilio.
 Features
 -------------------
 - [X] Get latitude and longitude from user's browser using HTML5 geolocation.
-- - [X] Store updated location data in a database with associated tables for users, location updates, and food trucks.
+- [X] Store updated location data in a database with associated tables for users, location updates, and food trucks.
 
 - [X] Calculate an overall rating for each location update using its upvotes and downvotes in a modified Wilson score interval algorithm.
 - [X] Machine learning algorithm predicts if a given user's update will be accurate, based on their averaged update ratings, and hides the update if the user's average rating falls below a certain threshold.
