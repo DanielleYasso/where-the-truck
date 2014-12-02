@@ -18,11 +18,11 @@ class ForgotPassword(Form):
 
 class PasswordForm(Form):
 
-    password = PasswordField(
-        'New password', [
-        validators.Required(),
-        validators.EqualTo('confirm', message="Passwords must match")
-		])
+    password = PasswordField('New password', [
+                            validators.Required(),
+                            validators.EqualTo('confirm', 
+                                                message="Passwords must match")
+                            ])
     confirm = PasswordField('Confirm new password', validators=[Required()])
 
 
@@ -34,9 +34,9 @@ class PasswordFormSettings(Form):
 
 	current_password = PasswordField('Current password', validators=[Required()])
 
-	new_password = PasswordField(
-        'New password', [
-        validators.Required(),
-        validators.EqualTo('confirm', message="Passwords must match")
-		])
+	new_password = PasswordField('New password', 
+                                [validators.Required(),
+                                validators.EqualTo('confirm', 
+                                                message="Passwords must match")
+		                        ])
     confirm = PasswordField('Confirm new password', validators=[Required()])
