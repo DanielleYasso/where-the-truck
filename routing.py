@@ -138,73 +138,7 @@ def dump_datetime(value):
 
 
 
-#############
-# API CALLS #
-#############
 
-##########################
-# YELP API FUNCTION CALL #
-##########################
-
-def get_yelp_ratings(business_id):
-    """ Returns yelp ratings and related yelp information for a food truck 
-    with a given business id """
-
-    # OAuth credentials
-    CONSUMER_KEY = os.environ.get('YELP_CONSUMER_KEY')
-    CONSUMER_SECRET = os.environ.get('YELP_CONSUMER_SECRET')
-    TOKEN = os.environ.get('YELP_TOKEN')
-    TOKEN_SECRET = os.environ.get('YELP_TOKEN_SECRET')
-
-    session = rauth.OAuth1Session(
-        consumer_key = CONSUMER_KEY,
-        consumer_secret = CONSUMER_SECRET,
-        access_token = TOKEN,
-        access_token_secret = TOKEN_SECRET)
-
-    url = "http://api.yelp.com/v2/business/{0}".format(business_id)
-    print "**** url", url
-
-    try:
-        request = session.get(url)
-        # transform json api response into dictionary
-        data = request.json()
-    except ValueError:
-        return False
-        
-    session.close()
-
-    return data
-###### END YELP API FUNCTION CALL ######
-
-
-##################################################
-# CORS (CROSS-ORIGIN RESOURCE SHARING) API CALLS #
-##################################################
-
-#####################
-# GEONAMES API CALL #
-#####################
-
-@app.route("/api/geonames")
-def api_geonames():
-    """ For a specific latitude and longitude, calls the geonames ocean api
-    and returns the name of the ocean that coordinate is in, if applicable. """
-
-    lat = request.args.get("lat")
-    lng = request.args.get("lng")
-    username = "username=dbyasso"
-
-    url = "http://api.geonames.org/oceanJSON?lat={0}&lng={1}&{2}".format(
-        lat,lng, username)
-
-    r = requests.get(url)
-
-    response = json.loads(r.text)
-
-    return convert_to_JSON(response)
-
-######## END CORS API CALLS ########
 
 
 
@@ -733,6 +667,10 @@ def checkin():
 # UPDATE VOTES #
 ################
 
+############
+# DOWNVOTE #
+############
+
 @app.route("/downvote/<int:checkin_id>", methods=["POST"])
 def downvote(checkin_id):
     """Gets a user's down vote and updates checkins table record"""
@@ -741,6 +679,10 @@ def downvote(checkin_id):
 
     return update_vote(checkin_id, vote)
 
+##########
+# UPVOTE #
+##########
+
 @app.route("/upvote/<int:checkin_id>", methods=["POST"])
 def upvote(checkin_id):
     """Gets a user's up vote and updates checkins table record"""
@@ -748,6 +690,10 @@ def upvote(checkin_id):
     vote = "up"
 
     return update_vote(checkin_id, vote)
+
+###############
+# UPDATE VOTE #
+###############
 
 def update_vote(checkin_id, vote):
     """Gets a user's up or down vote and updates checkins table record"""
@@ -763,7 +709,6 @@ def update_vote(checkin_id, vote):
     # IF NO RATINGS YET
     if checkin.users_who_rated == None or checkin.users_who_rated == {}:
         checkin.users_who_rated = {}
-        print "users who rated was None or {}"
 
         # add user to dictionary
         checkin.users_who_rated[g.user.id] = vote
@@ -774,7 +719,6 @@ def update_vote(checkin_id, vote):
 
     # IF USER IS ALREADY IN THE CHECKINS DATABASE
     elif g.user.id in checkin.users_who_rated:
-        print "user is already in the database"
 
         # WITH NO RATING, aka 0 (due to deleted rating)
         if checkin.users_who_rated[g.user.id] == 0:
@@ -824,15 +768,16 @@ def update_vote(checkin_id, vote):
             checkin.user.set_average_rating()
             model.db.session.commit()
 
-    
-
     return redirect("/")
+
+
+################
+# REMOVE VOTES #
+################
 
 def remove_votes(checkin, vote):
     """ Decrements either the upvote count or the downvote count in the 
     checkins table for a given checkin object """
-
-    print "in remove votes"
 
     # update database
     if vote == "up":
@@ -845,19 +790,20 @@ def remove_votes(checkin, vote):
     # commit changes to database
     model.db.session.commit()
 
+
+#############
+# ADD VOTES #
+#############
+
 def add_votes(checkin, vote):
     """ Increments either the upvote count or the downvote count in the 
     checkins table for a given checkin object """
 
-    print "in add votes"
-
     # update checkin votes
     if vote == "up":
         checkin.upvotes += 1
-        print "******* upvotes *******", checkin.upvotes
     elif vote == "down":
         checkin.downvotes += 1
-        print "******* downvotes *******", checkin.downvotes
 
     model.db.session.commit()
 
@@ -905,8 +851,46 @@ def get_votes(checkin_id):
     return convert_to_JSON(votes_data)
 
 
+#############
+# API CALLS #
+#############
+
+##########################
+# YELP API FUNCTION CALL #
+##########################
+
+def get_yelp_ratings(business_id):
+    """ Returns yelp ratings and related yelp information for a food truck 
+    with a given business id """
+
+    # OAuth credentials
+    CONSUMER_KEY = os.environ.get('YELP_CONSUMER_KEY')
+    CONSUMER_SECRET = os.environ.get('YELP_CONSUMER_SECRET')
+    TOKEN = os.environ.get('YELP_TOKEN')
+    TOKEN_SECRET = os.environ.get('YELP_TOKEN_SECRET')
+
+    session = rauth.OAuth1Session(
+        consumer_key = CONSUMER_KEY,
+        consumer_secret = CONSUMER_SECRET,
+        access_token = TOKEN,
+        access_token_secret = TOKEN_SECRET)
+
+    url = "http://api.yelp.com/v2/business/{0}".format(business_id)
+    print "**** url", url
+
+    try:
+        request = session.get(url)
+        # transform json api response into dictionary
+        data = request.json()
+    except ValueError:
+        return False
+        
+    session.close()
+
+    return data
+
 ###################
-# TWILIO RESPONSE #
+# TWILIO API CALL #
 ###################
 
 @app.route("/twilio", methods=["GET", "POST"])
@@ -918,6 +902,7 @@ def twilio_response():
     # # Respond to an incoming text message with a static response
     resp = twilio.twiml.Response()
 
+    # URL TO CHANGE UPON DEPLOYMENT AND BASED ON DIFFERENT NGROK TUNNELS
     message = "Find it in San Francisco at https://4d3d4b3a.ngrok.com/"
     new_message = ""
 
@@ -934,7 +919,8 @@ def twilio_response():
             if attraction.checkin_id:
 
                 # get the checkin
-                checkin = model.db.session.query(model.Checkin).get(attraction.checkin_id)
+                checkin = model.db.session.query(model.Checkin)\
+                    .get(attraction.checkin_id)
 
                 # check how old timestamp is
                 time_diff = datetime.now() - checkin.timestamp
@@ -947,6 +933,9 @@ def twilio_response():
                 # older than 3 hours?
                 elif time_diff.seconds >= 10800:
                     time_ago = "more than 3 hours ago"
+                # older than 2 hours?
+                elif time_diff.seconds >= 7200:
+                    time_ago = "more than 2 hours ago"
                 # older than 1 hour?
                 elif time_diff.seconds >= 3600:
                     time_ago = "more than 1 hour ago"
@@ -955,10 +944,11 @@ def twilio_response():
                 else:
                     time_ago = "less than 30 minutes ago"
 
-                new_message = "{0} was last checked in {1}".format(attraction.name,time_ago)
-                new_message += " at http://maps.google.com/maps/place/{0},{1} \n\n".format(checkin.lat,checkin.lng)
-
-                print new_message
+                new_message = "{0} was last checked in {1}"\
+                                .format(attraction.name,time_ago)
+                new_message += " at http://maps.google.com/maps/place/{0},{1}"\
+                                .format(checkin.lat,checkin.lng)
+                new_message += "\n\n"
 
     response_message = new_message + message
 
@@ -966,17 +956,34 @@ def twilio_response():
 
     return str(resp)
 
-# testing for checkins_test.db
-@app.route("/test_for_db")
-def get_attraction_two():
-    """ Test route, to check which database is in use by tests.py """
 
-    attractions = model.db.session.query(model.Attraction).all()
+##################################################
+# CORS (CROSS-ORIGIN RESOURCE SHARING) API CALLS #
+##################################################
 
-    for attraction in attractions:
-        if attraction.id == 2:
-            return attraction.checkin_id
-    return None
+#####################
+# GEONAMES API CALL #
+#####################
+
+@app.route("/api/geonames")
+def api_geonames():
+    """ For a specific latitude and longitude, calls the geonames ocean api
+    and returns the name of the ocean that coordinate is in, if applicable. """
+
+    lat = request.args.get("lat")
+    lng = request.args.get("lng")
+    username = "username=dbyasso"
+
+    url = "http://api.geonames.org/oceanJSON?lat={0}&lng={1}&{2}".format(
+        lat,lng, username)
+
+    r = requests.get(url)
+
+    response = json.loads(r.text)
+
+    return convert_to_JSON(response)
+
+######## END API CALLS ########
 
 
 if __name__=="__main__":
