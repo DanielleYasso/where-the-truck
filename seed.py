@@ -10,19 +10,23 @@ from passlib.hash import pbkdf2_sha256
 
 def add_users():
 	""" Seed the users table with fake users """
+	
 	# add 20 fake users to the database
 	for i in range(7, 28):
+
 		# securely store password
-		password_hash = pbkdf2_sha256.encrypt(str(i), 
-											rounds=200000, 
-											salt_size=16)
+		password_hash = pbkdf2_sha256.encrypt(
+			str(i), 
+			rounds=200000, 
+			salt_size=16)
 		
 		email = str(i) + "@danielleyasso.com"
 
-		user = model.User(username=str(i), 
-						email=email, 
-						password=password_hash,
-						preferences={})
+		user = model.User(
+			username=str(i), 
+			email=email, 
+			password=password_hash,
+			preferences={})
 
 
 		model.db.session.add(user)
@@ -66,13 +70,14 @@ def add_checkins():
 			else:
 				random_downvotes = random.randint(0,limit_down)
 
-			checkin = model.Checkin(attraction_id=1,
-								user_id=i,
-								lat=37.8026431,
-								lng=-122.4134016,
-								timestamp=datetime.now(),
-								upvotes=random_upvotes,
-								downvotes=random_downvotes)
+			checkin = model.Checkin(
+				attraction_id=1,
+				user_id=i,
+				lat=37.8026431,
+				lng=-122.4134016,
+				timestamp=datetime.now(),
+				upvotes=random_upvotes,
+				downvotes=random_downvotes)
 			# calculate this checkin's rating based on upvotes and downvotes
 			checkin.calculate_rating()
 
@@ -86,6 +91,7 @@ def add_checkins():
 def main():
 	# add_checkins()
 	# add_users()
+	pass
 
 
 
