@@ -95,53 +95,6 @@ def home():
     return render_template("index.html", API_KEY=API_KEY, attractions=attractions)
 
 
-##################
-###### JSON ######
-##################
-
-###################
-# CONVERT TO JSON #
-###################
-
-def convert_to_JSON(result):
-    """Convert result object to a JSON web request."""
-    response = make_response(json.dumps(result))
-    response.mimetype = "application/json"
-    return response
-
-
-##########################
-# DUMP DATETIME FOR JSON #
-##########################
-
-def dump_datetime(value):
-    """Deserialize datetime object into string form for JSON processing.
-
-    For example, converting a date and a time:
-
-        >>> import datetime
-        >>> dump_datetime(datetime.datetime(1970, 12, 25, 15, 0, 0))
-        ['1970-12-25', '15:00:00']
-
-    But also should work if given just a date:
-
-        >>> import datetime
-        >>> dump_datetime(datetime.datetime(1970, 12, 25))
-        ['1970-12-25', '00:00:00']
-
-    """
-    if value is None:
-        return None
-    return [value.strftime("%Y-%m-%d"), value.strftime("%H:%M:%S")]
-
-###### END JSON ######
-
-
-
-
-
-
-
 ###############
 # USER LOGOUT #
 ###############
@@ -984,6 +937,48 @@ def api_geonames():
     return convert_to_JSON(response)
 
 ######## END API CALLS ########
+
+
+##################
+###### JSON ######
+##################
+
+###################
+# CONVERT TO JSON #
+###################
+
+def convert_to_JSON(result):
+    """Convert result object to a JSON web request."""
+    response = make_response(json.dumps(result))
+    response.mimetype = "application/json"
+    return response
+
+
+##########################
+# DUMP DATETIME FOR JSON #
+##########################
+
+def dump_datetime(value):
+    """Deserialize datetime object into string form for JSON processing.
+
+    For example, converting a date and a time:
+
+        >>> import datetime
+        >>> dump_datetime(datetime.datetime(1970, 12, 25, 15, 0, 0))
+        ['1970-12-25', '15:00:00']
+
+    But also should work if given just a date:
+
+        >>> import datetime
+        >>> dump_datetime(datetime.datetime(1970, 12, 25))
+        ['1970-12-25', '00:00:00']
+
+    """
+    if value is None:
+        return None
+    return [value.strftime("%Y-%m-%d"), value.strftime("%H:%M:%S")]
+
+###### END JSON ######
 
 
 if __name__=="__main__":
