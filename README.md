@@ -69,7 +69,7 @@ Features
 Voting and user ratings
 - [X] Calculate an overall rating for each location update using its upvotes and downvotes in a modified Wilson score interval algorithm.
 - [X] Machine learning algorithm predicts if a given user's update will be accurate, based on their averaged update ratings, and hides the update if the user's average rating falls below a certain threshold.
-- [X] Show the last good* location update when a specific option is toggled on/off, causing the current update to be hidden. (*made by a logged in user, who has a user rating above a certain threshold)
+
 
 Security with passlib encryption and Flask-Login
 - [X] Encrypt and verify user passwords using hashes and salts.
@@ -84,6 +84,7 @@ APIs and Cross Origin Resource Sharing
 
 Data visualization and interaction
 - [X] Dynamically display aging location updates using timeago.js and different icon images.
+- [X] Show the last good* location update when a specific option is toggled on/off, causing the current update to be hidden. (*made by a logged in user, who has a user rating above a certain threshold)
 - [X] Increase rendering speed when truck icons are updated via dragging, or display options are toggled, by using Javascript to manipulate cached data rather than re-requesting data from the server.
 - [X] Frontend customizes checkbox appearances, interactivity, and site features based on logged in user's data and previous map interactions.
 - [X] Foster learned user behavior using Bootstrap's Javascript popovers on voting options for non-users and users who haven't voted yet.
