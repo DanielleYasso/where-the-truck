@@ -94,7 +94,7 @@ Features
 
 Forking?
 -----------------------
-You'll need your own API keys for Google Maps, Yelp, and Twilio, and your own username for Geonames.
+You'll need your own API keys for Google Maps, Yelp, and Twilio, and your own username for Geonames.  And don't forget to update the email address and mail password for Flask-Mail in app.config!
 
 	pip install -r requirements.txt
 
