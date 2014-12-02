@@ -9,7 +9,7 @@ The map:
 	- Provides routing and times/distances to attraction checkins
 
 Users can:
-	- Sign in/sign up (create an account)
+	- Sign in/sign out/sign up (create an account)
 	- Reset their password
 	- Checkin the location of an attraction
 	- See recent checkins made by other users

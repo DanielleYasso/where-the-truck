@@ -7,8 +7,8 @@ A community powered application, Where The Truck? allows users to update the cur
 
 ###Contents
 - [Details](#overview)
-- [Technologies & Stack](#technologies--stack-)
-
+- [Technologies & Stack](#technologies-and-stack)
+- [Features](#features)
 
 
 Overview
@@ -25,7 +25,7 @@ Overview
 
 <h4>Users can:</h4>
 <ul>
-	<li>Sign in/sign up (create an account)</li>
+	<li>Sign in/sign out/sign up (create an account)</li>
 	<li>Reset their password</li>
 	<li>Update the location of a food truck</li>
 	<li>See recent location updates made by other users</li>
@@ -37,7 +37,7 @@ Overview
 	<li>Change their existing vote on another user's update</li>
 </ul>
 
-Technologies and stack: 
+Technologies and stack 
 ------------------------
 
 <h4>Backend:</h4>
@@ -55,8 +55,18 @@ HTML5, CSS3, Twitter Bootstrap (html/css/js framework), RWD (responsive web desi
 <h4>APIs:</h4>
 Google Maps Javascript V3, Yelp, Geonames, Twilio.
 
-Features checklist:
+Features
 -------------------
+[X] Get latitude and longitude from user's browser using HTML5 geolocation.
+[X] Store updated location data in a database with associated tables for users, location updates, and food trucks.
+[X] Calculate an overall update rating for each location update using its upvotes and downvotes in a modified Wilson score interval algorithm.
+[X] Machine learning algorithm predicts if a given user's update will be accurate, based on their averaged update ratings, and hides the update if the user's average rating falls below a certain threshold.
+[X] Encrypt and verify user passwords using hashes and salts.
+[X] Secure user sessions let users stay logged in.
+[X] Confirm user accounts via email and allow users to reset passwords using secure email links with unique tokens.
+[X] Enable cross origin resource sharing (CORS) by routing insecure API's through the python server.
+[X] Show the last good* location update when a specific option is toggled on/off, causing the current update to be hidden. (*made by a logged in user, who has a user rating above a certain threshold)
+
 
 Forking?
 -----------------------
