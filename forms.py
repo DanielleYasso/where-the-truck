@@ -20,8 +20,9 @@ class PasswordForm(Form):
 
     password = PasswordField('New password', [
                             validators.Required(),
-                            validators.EqualTo('confirm', 
-                                                message="Passwords must match")
+                            validators.EqualTo(
+                                'confirm', 
+                                message="Passwords must match")
                             ])
     confirm = PasswordField('Confirm new password', validators=[Required()])
 
@@ -36,7 +37,8 @@ class PasswordFormSettings(Form):
 
 	new_password = PasswordField('New password', 
                                 [validators.Required(),
-                                validators.EqualTo('confirm', 
-                                                message="Passwords must match")
+                                validators.EqualTo(
+                                    'confirm', 
+                                    message="Passwords must match")
 		                        ])
     confirm = PasswordField('Confirm new password', validators=[Required()])
