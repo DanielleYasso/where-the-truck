@@ -9,16 +9,16 @@ A community powered application, Where The Truck? allows users to update the cur
 - [Overview](#overview)
 - [Technologies & Stack](#technologies-and-stack)
 - [Features](#features)
+- [Screenshots](#screenshots)
 - [Forking](#forking)
-
-
-<img src="screenshots/homepage.png" width="100%">
 
 
 Overview
 ----------------
 
 Where The Truck? features an interactive map showing the most recently updated location for each food truck in the database.
+
+<img src="screenshots/homepage.png" width="100%" alt="homepage" title="homepage">
 
 <h4>The map:</h4>
 <ul>
@@ -93,6 +93,65 @@ Features
 - [X] Customize checkbox appearances and interactivity, and site features based on logged in user's data and previous map interactions.
 - [X] Foster learned user behavior using Bootstrap's Javascript popovers on voting options for non-users and users who haven't voted yet.
 - [X] Create custom responsive web design (RWD) using CSS3.
+
+
+Screenshots
+-----------------------
+
+######Updating a food truck's location using geolocation data - at the click of a button
+<img src="screenshots/updateLocation.png" width="100%" alt="update location" title="update location">
+
+
+#####User actions:
+
+######Login using lightbox_me.js
+<img src="screenshots/loginLightBox.png" width="50%" title="login lightbox" alt="login lightbox" align="center">
+
+######Password recovery via unique url token sent by email
+<img src="screenshots/forgotPassword.png" width="100%" title="forgot password page" alt="forgot password page">
+<img src="screenshots/resetPassword.png" width="60%" title="reset password page" alt="reset password page" align="center">
+
+######User settings: logged in users can reset their passwords
+<img src="screenshots/userSettings.png" width="60%" title="user settings page" alt="user settings page" align="center">
+
+#####Directions
+
+######Selecting travel type from the dropdown
+<img src="screenshots/getDirections.png" width="50%" title="get directions" alt="get directions" align="center">
+
+######Responsively displaying map and written directions
+<img src="screenshots/directions.png" width="100%" title="display directions" alt="display directions">
+<img src="screenshots/directions.png" width="75%" title="responsive directions container" alt="responsive directions container" align="center">
+
+#####Responsive design
+
+######Largest screen
+<img src="screenshots/homepage.png" width="100%" alt="largest screen homepage" title="largest screen homepage">
+
+######Large screen
+<img src="screenshots/responsive1.png" width="100%" alt="large screen homepage" title="large screen homepaage">
+
+######Medium screen
+<img src="screenshots/responsive2.png" width="75%" alt="medium screen homepage" title="medium screen homepage" align="center">
+
+######iPad
+<img src="screenshots/iPad.png" width="75%" alt="iPad homepage" title="iPad homepage" algin="center">
+
+######Mobile
+<img src="screenshots/mobile.png" width="45%" alt="mobile homepage" title="mobile homepage" align="left">
+<img src="screenshots/mobileMenu.png" width="45%" alt="mobile menu" title="mobile menu" align="right">
+
+#####Bootstrap JS elements
+
+######Modal help menu
+<img src="screenshots/helpModal.png" width="100%" alt="help modal" title="help modal">
+
+######Voting popovers telling users how to vote on location accuracy for updates
+Pictured here for a user who is not logged in
+<img src="screenshots/votingPopover.png" width="100%" alt="voting instructions popover" title="voting instruction popovers">
+
+
+
 
 
 
