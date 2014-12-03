@@ -7,7 +7,7 @@ A community powered application, Where The Truck? allows users to update the cur
 
 ###Contents
 <ul>
-	<li>[Overview](#overview)</li>
+	<li><a href="#overview">Overview</a></li>
 	<li>[Technologies & Stack](#technologies-and-stack)</li>
 	<li>[Features](#features)</li>
 	<li>[Screenshots](#screenshots)</li>
