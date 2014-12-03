@@ -10,7 +10,7 @@ A community powered application, Where The Truck? allows users to update the cur
 - [Technologies & Stack](#technologies-and-stack)
 - [Features](#features)
 - [Screenshots](#screenshots)
-  -[User actions](#user-actions)
+  *[User actions](#user-actions)
   -[Directions](#directions)
   -[Responsive design](#responsive-design)
   -[Bootstrap JS elements](#bootstrap-js-elements)
