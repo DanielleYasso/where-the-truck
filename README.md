@@ -46,6 +46,7 @@ Where The Truck? features an interactive map showing the most recently updated l
 	<li>See recent location updates made by other users</li>
 	<li>Get directions to food trucks from their current location</li>
 	<li>Select which trucks they want to see on the map </li>
+	<li>Click on truck names to center the map on that truck's (bounce animated) icon</li>
 	<li>Choose to see location updates even if they have bad ratings (or predicted bad ratings)</li>
 	<li>Save their preferences</li>
 	<li>Vote on the accuracy of location updates made by other users</li>
