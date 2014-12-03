@@ -12,6 +12,9 @@ A community powered application, Where The Truck? allows users to update the cur
 - [Forking](#forking)
 
 
+<img src="screenshots/homepage.png" width="100%">
+
+
 Overview
 ----------------
 
