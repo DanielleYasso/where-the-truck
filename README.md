@@ -102,28 +102,38 @@ Screenshots
 <img src="screenshots/updateLocation.png" width="100%" alt="update location" title="update location">
 
 
-#####User actions:
+####User actions:
 
 ######Login using lightbox_me.js
-<img src="screenshots/loginLightBox.png" width="50%" title="login lightbox" alt="login lightbox" align="center">
+<p align="center">
+	<img src="screenshots/loginLightBox.png" width="50%" title="login lightbox" alt="login lightbox">
+</p>
 
 ######Password recovery via unique url token sent by email
 <img src="screenshots/forgotPassword.png" width="100%" title="forgot password page" alt="forgot password page">
-<img src="screenshots/resetPassword.png" width="60%" title="reset password page" alt="reset password page" align="center">
+<p align="center">
+	<img src="screenshots/resetPassword.png" width="60%" title="reset password page" alt="reset password page">
+</p>
 
 ######User settings: logged in users can reset their passwords
-<img src="screenshots/userSettings.png" width="60%" title="user settings page" alt="user settings page" align="center">
+<p align="center">
+	<img src="screenshots/userSettings.png" width="60%" title="user settings page" alt="user settings page">
+</p>
 
-#####Directions
+####Directions
 
 ######Selecting travel type from the dropdown
-<img src="screenshots/getDirections.png" width="50%" title="get directions" alt="get directions" align="center">
+<p align="center">
+	<img src="screenshots/getDirections.png" width="50%" title="get directions" alt="get directions">
+</p>
 
 ######Responsively displaying map and written directions
 <img src="screenshots/directions.png" width="100%" title="display directions" alt="display directions">
-<img src="screenshots/directions.png" width="75%" title="responsive directions container" alt="responsive directions container" align="center">
+<p align="center">
+	<img src="screenshots/directions.png" width="75%" title="responsive directions container" alt="responsive directions container">
+</p>
 
-#####Responsive design
+####Responsive design
 
 ######Largest screen
 <img src="screenshots/homepage.png" width="100%" alt="largest screen homepage" title="largest screen homepage">
@@ -132,16 +142,20 @@ Screenshots
 <img src="screenshots/responsive1.png" width="100%" alt="large screen homepage" title="large screen homepaage">
 
 ######Medium screen
-<img src="screenshots/responsive2.png" width="75%" alt="medium screen homepage" title="medium screen homepage" align="center">
+<p align="center">
+	<img src="screenshots/responsive2.png" width="75%" alt="medium screen homepage" title="medium screen homepage">
+</p>
 
 ######iPad
-<img src="screenshots/iPad.png" width="75%" alt="iPad homepage" title="iPad homepage" algin="center">
+<p align="center">
+	<img src="screenshots/iPad.png" width="75%" alt="iPad homepage" title="iPad homepage">
+</p>
 
 ######Mobile
-<img src="screenshots/mobile.png" width="45%" alt="mobile homepage" title="mobile homepage" align="left">
-<img src="screenshots/mobileMenu.png" width="45%" alt="mobile menu" title="mobile menu" align="right">
+<img src="screenshots/mobile.png" width="45%" alt="mobile homepage" title="mobile homepage">
+<img src="screenshots/mobileMenu.png" width="45%" alt="mobile menu" title="mobile menu">
 
-#####Bootstrap JS elements
+####Bootstrap JS elements
 
 ######Modal help menu
 <img src="screenshots/helpModal.png" width="100%" alt="help modal" title="help modal">
@@ -149,10 +163,6 @@ Screenshots
 ######Voting popovers telling users how to vote on location accuracy for updates
 Pictured here for a user who is not logged in
 <img src="screenshots/votingPopover.png" width="100%" alt="voting instructions popover" title="voting instruction popovers">
-
-
-
-
 
 
 Forking?
