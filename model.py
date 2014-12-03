@@ -1,4 +1,3 @@
-# from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import create_engine
 from sqlalchemy import Column, Integer, Float, String, DateTime
 from sqlalchemy import PickleType, Boolean, ForeignKey
@@ -183,7 +182,6 @@ class User(db.Model):
             # if user has more than 10 rated checkins, and
             # if user's average rating is below 0.15 (SUBJECT TO CHANGE)
             if count >= 10 and self.average_rating < 0.15:
-                print "**** untrusted user"
                 return False
             
         return True
