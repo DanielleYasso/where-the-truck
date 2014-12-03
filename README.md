@@ -130,7 +130,7 @@ Screenshots
 ######Responsively displaying map and written directions
 <img src="screenshots/directions.png" width="100%" title="display directions" alt="display directions">
 <p align="center">
-	<img src="screenshots/directions.png" width="75%" title="responsive directions container" alt="responsive directions container">
+	<img src="screenshots/responsiveDirections.png" width="75%" title="responsive directions container" alt="responsive directions container">
 </p>
 
 ####Responsive design
@@ -162,7 +162,9 @@ Screenshots
 
 ######Voting popovers telling users how to vote on location accuracy for updates
 Pictured here for a user who is not logged in
-<img src="screenshots/votingPopover.png" width="100%" alt="voting instructions popover" title="voting instruction popovers">
+<p align="center">
+	<img src="screenshots/votingPopover.png" width="50%" alt="voting instructions popover" title="voting instruction popovers">
+</p>
 
 
 Forking?
