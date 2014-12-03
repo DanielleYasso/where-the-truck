@@ -58,7 +58,7 @@ Technologies and stack
 ------------------------
 
 <h4>Backend:</h4>
-Python, Flask, Jinja, SQLAlchemy, sqlite, passlib (encryption & verification).<br>
+Python, Flask, SQLAlchemy, sqlite, passlib (encryption & verification).<br>
 Flask extensions: Flask-Mail, Flask-Login, Flask-WTForms, Flask-CORS, 
 Flask-SQLAlchemy.<br>
 Machine learning: rating location checkins and using those ratings to rate 
@@ -66,7 +66,7 @@ users and predict the accuracy of their future checkins.<br>
 Testing: doc string and unit tests.
 
 <h4>Frontend:</h4>
-JavaScript, jQuery, AJAX, jQuery plugins (lightbox_me, timeago).<br>
+JavaScript, jQuery, AJAX, Jinja, jQuery plugins (lightbox_me, timeago).<br>
 HTML5, CSS3, Twitter Bootstrap (html/css/js framework), RWD (responsive web design).
 
 <h4>APIs:</h4>
