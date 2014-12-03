@@ -8,16 +8,16 @@ A community powered application, Where The Truck? allows users to update the cur
 ###Contents
 <ul>
 	<li><a href="#overview">Overview</a></li>
-	<li>[Technologies & Stack](#technologies-and-stack)</li>
-	<li>[Features](#features)</li>
-	<li>[Screenshots](#screenshots)</li>
+	<li><a href="#technologies-and-stack">Technologies & Stack</a></li>
+	<li><a href="#features">Features</a></li>
+	<li><a href="#screenshots">Screenshots</a></li>
 	<ul>
-		<li>[User actions](#user-actions)</li>
-		<li>[Directions](#directions)</li>
-		<li>[Responsive design](#responsive-design)</li>
-		<li>[Bootstrap JS elements](#bootstrap-js-elements)</li>
+		<li><a href="#user-actions">User actions</a></li>
+		<li><a href="#directions">Directions</a></li>
+		<li><a href="#responsive-design">Responsive design</a></li>
+		<li><a href="#bootstrap-js-elements">Bootstrap JS elements</a></li>
 	</ul>
-<li>[Forking](#forking)</li>
+<li><a href="#forking">Forking</a></li>
 </ul>
 
 
