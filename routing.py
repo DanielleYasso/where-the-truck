@@ -32,7 +32,7 @@ app.config.update(dict(
 	MAIL_SERVER = 'smtp.gmail.com',
 	MAIL_PORT = 465,
 	MAIL_USE_SSL = True,
-	MAIL_USERNAME= 'dbyasso@gmail.com',
+	MAIL_USERNAME= 'wherethetruck@gmail.com',
 	MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
 	))
 
@@ -49,8 +49,7 @@ ts = URLSafeTimedSerializer(app.config['SECRET_KEY'])
 # google maps api key
 API_KEY = os.environ.get('GOOGLE_API_KEY')
 
-# heroku
-PORT = int(os.environ.get("PORT", 5000))
+
 
 # Set up Flask-Login LoginManager
 login_manager = LoginManager()
@@ -982,5 +981,10 @@ def dump_datetime(value):
 
 if __name__=="__main__":
 	import doctest
+
+	# heroku
+	PORT = int(os.environ.get("PORT", 5000))
+	DEBUG = "NO_DEBUG" not in os.environ
+
 	if doctest.testmod().failed == 0:
-		app.run(debug=True, host="0.0.0.0", port=PORT)
+		app.run(debug=DEBUG, host="0.0.0.0", port=PORT)
