@@ -16,6 +16,7 @@ httplib2==0.9
 itsdangerous==0.24
 oauth2==1.0.0
 passlib==1.6.2
+psycopg2==2.5.4
 rauth==0.7.0
 requests==2.4.3
 six==1.8.0
