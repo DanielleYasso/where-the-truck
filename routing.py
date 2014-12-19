@@ -37,7 +37,7 @@ app.config.update(dict(
 	))
 
 # secret key for session
-SECRET_KEY = os.environ.get('SECRET_KEY', 'forking_placeholder')
+SECRET_KEY = os.environ.get('FLASK_SECRET_KEY', 'forking_placeholder')
 app.secret_key = SECRET_KEY
 
 # update Flask-Mail instance with new app config settings
@@ -47,7 +47,10 @@ mail = Mail(app)
 ts = URLSafeTimedSerializer(app.config['SECRET_KEY'])
 
 # google maps api key
-API_KEY = os.environ.get('API_KEY')
+API_KEY = os.environ.get('GOOGLE_API_KEY')
+
+# heroku
+PORT = int(os.environ.get("PORT", 5000))
 
 # Set up Flask-Login LoginManager
 login_manager = LoginManager()
@@ -980,4 +983,4 @@ def dump_datetime(value):
 if __name__=="__main__":
 	import doctest
 	if doctest.testmod().failed == 0:
-		app.run(debug=True)
+		app.run(debug=True, host="0.0.0.0", port=PORT)
