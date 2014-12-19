@@ -19,15 +19,15 @@ from flask.ext.login import login_user, logout_user, current_user
 from itsdangerous import URLSafeTimedSerializer
 
 
-# Create Flask app
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///checkins.db'
+# Create database connection
+DATABASE_URL = os.environ.get("DATABASE_URL", "postgresql:///danielleyasso")
+app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
 
 # Cross-origin resource sharing
 cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 # update app config with mail data for Flask-Mail
 app.config.update(dict(
-	DEBUG=True,
 	# Email settings
 	MAIL_SERVER = 'smtp.gmail.com',
 	MAIL_PORT = 465,
