@@ -11,7 +11,7 @@ from flask.ext.sqlalchemy import SQLAlchemy
 
 
 ## Create database connection object
-from routing import app
+from flaskapp import app
 db = SQLAlchemy(app)
 
 

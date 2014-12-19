@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, request
+from flask import render_template, redirect, request
 from flask import session, g, make_response, flash, url_for
 from flask_mail import Mail, Message
 from flask.ext.cors import CORS, cross_origin
@@ -10,6 +10,7 @@ from datetime import datetime
 import rauth
 import twilio.twiml
 
+from flaskapp import app
 import model
 from forms import PasswordForm, PasswordFormSettings, ForgotPassword
 
@@ -21,7 +22,7 @@ from itsdangerous import URLSafeTimedSerializer
 
 
 # Create Flask app
-app = Flask(__name__)
+# app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///checkins.db'
 
 # Cross-origin resource sharing
