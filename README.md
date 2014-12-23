@@ -21,6 +21,7 @@ Test it out <a href="http://www.wherethetruck.co/" target="_blank">here</a>.
 		<li><a href="#bootstrap-js-elements">Bootstrap JS elements</a></li>
 	</ul>
 <li><a href="#forking">Forking</a></li>
+<li><a href="#about-me">About me</a></li>
 </ul>
 
 
@@ -135,7 +136,7 @@ Besides centering the map on the user's location from the get-go (as long as the
 Currently, the page must be refreshed to show updated food truck locations.  This should be updated to happen in real-time with server-sent events.
 
 #####SSL Certificate
-This app needs to be run on https for security purposes, but is currently deployed on http://www.wherethetruck.co, pending approval of a certificate.  See it's <a href="https://dbyasso-wherethetruck.herokuapp.com/">herokuapp.com</a> page for the secure version.
+This app needs to be run on https for security purposes, but is currently deployed on http://www.wherethetruck.co, pending approval of a certificate.  See it's <a href="https://dbyasso-wherethetruck.herokuapp.com/" target="_blank">herokuapp.com</a> page for the secure version.
 
 Screenshots
 -----------------------
@@ -216,3 +217,9 @@ You'll need your own API keys for Google Maps, Yelp, and Twilio, and your own us
 	pip install -r requirements.txt
 
 	python routing.py
+
+
+About me
+-----------------------
+
+Check out my <a href="https://www.linkedin.com/in/danielleyasso" target="_blank">LinkedIn</a> profile for more information on my experience, education, and projects.  See some of my starred GitHub projects for other examples of my code.
