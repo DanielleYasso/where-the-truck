@@ -148,15 +148,15 @@ In any login system, security is important.  I wanted to ensure that user passwo
 
 I chose Flask-Login to manage secure user sessions and session cookies to afford users the option of clicking "Remember me" when they login.  This Flask extension is well-known, well-documented, reliable, and offers exactly what I needed to implement that feature.  
 
-Any real user system allows users to reset their passwords when they forgot them.  To implement this, I needed to be able to send users emails, for which I chose Flask-Mail, an easy-to-use Flask extension that fit my project needs.  I exlored Flask-Security, a robust extension that builds off of Flask-Login and many other Flask extensions and libraries, but found it was not well-documented, bulky, and not the right choice for the task.  I ended up choosing to use the URLSafeTimedSerializer from itsdangerous to generate unique tokens that timeout to allow users to safely reset their passwords.
+Any real user system allows users to reset their passwords when they forget them.  To implement this, I needed to be able to send users emails, for which I chose Flask-Mail, an easy-to-use Flask extension that fit my project needs.  I exlored Flask-Security, a robust extension that builds off of Flask-Login and many other Flask extensions and libraries, but found it was not well-documented, bulky, and not the right choice for the task.  I ended up choosing to use the URLSafeTimedSerializer from itsdangerous to generate unique tokens that timeout to allow users to safely reset their passwords.
 
 #####Flask-WTForms
-Partway through the project, I discovered Flask-WTForms, a Flask extension that offers form creation and validation.  I switched to this method for all future forms on the site (password resets and the like) because of its simple and effect form management.
+Partway through the project, I discovered Flask-WTForms, a Flask extension that offers form creation and validation.  I switched to this method for all future forms on the site (password resets and the like) because of its simple and effective form management.
 
 #####Machine learning algorithms
 I found <a href="https://possiblywrong.wordpress.com/2011/06/05/reddits-comment-ranking-algorithm/" target="_blank">this article</a> useful when trying to determine the best way to rate updates and users.  Many systems just directly compare upvotes to downvotes, which is flawed.  5 upvotes to 4 downvotes may have the same ratio as 50 upvotes to 40 downvotes, but they are not the same, and shouldn't be treated as such by any system.  The latter has 10 upvotes more, versus just 1, and has many more votes in general.  The Wilson Score Interval accounts for these differences by normalizing the ratio on a 0 to 1 scale.  In this case, 50 upvotes to 40 downvotes will have a higher value than 5 upvotes to 4 downvotes.
 
-However, the suggested algorithm at the end of the article would cause issues for updates with only downvotes.  Since I average all the calculated Wilson Score Intervals from all of a user's updates, having some with values of -5 (for 5 downvotes and 0 upvotes) would negatively impact the system.  As such, I modified the algorithm to instead create a normaled value on a scale of 0 to -1 for updates with only downvotes.
+However, the suggested algorithm at the end of the article would cause issues for updates with only downvotes.  Since I average all the calculated Wilson Score Intervals from all of a user's updates, having some with values of -5 (for 5 downvotes and 0 upvotes) would negatively impact the system.  As such, I modified the algorithm to instead create a normalized value on a scale of 0 to -1 for updates with only downvotes.
 
 Screenshots
 -----------------------
