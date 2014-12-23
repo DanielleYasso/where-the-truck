@@ -144,7 +144,7 @@ Technical choices
 -----------------------
 
 #####Security
-In any login system, security is important.  I wanted to ensure that user passwords couldn't be stolen, especially considering that most people re-use their passwords all over the place (despite warnings against such a practice).  Passlib offers a simple but effective encryption and verification system, requiring only 3 lines of code: the import line, the encryption line, and the verification line.  
+In any login system, security is important.  I wanted to ensure that user passwords couldn't be stolen, especially considering that most people re-use their passwords all over the place (despite warnings against such a practice).  Passlib offers a simple but effective encryption and verification system using hashes and salts, requiring only 3 lines of code: the import line, the encryption line, and the verification line.  
 
 I chose Flask-Login to manage secure user sessions and session cookies to afford users the option of clicking "Remember me" when they login.  This Flask extension is well-known, well-documented, reliable, and offers exactly what I needed to implement that feature.  
 
