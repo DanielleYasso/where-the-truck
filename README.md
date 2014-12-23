@@ -13,6 +13,7 @@ Test it out <a href="http://www.wherethetruck.co/" target="_blank">here</a>.
 	<li><a href="#technologies-and-stack">Technologies & Stack</a></li>
 	<li><a href="#features">Features</a></li>
 	<li><a href="#future-plans">Future plans</a></li>
+	<li><a href="#technical-choices">Technical choices</a></li>
 	<li><a href="#screenshots">Screenshots</a></li>
 	<ul>
 		<li><a href="#user-actions">User actions</a></li>
