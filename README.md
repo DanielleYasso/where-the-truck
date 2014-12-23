@@ -5,6 +5,8 @@ Where The Truck? helps San Franciscans find the food trucks they love.
 
 A community powered application, Where The Truck? allows users to update the current location of food trucks in the city using geolocation data taken from their browsers or smartphones.  Users can securely login, vote on whether food trucks are where other users say they are, update a truck’s location, see its Yelp reviews, and get directions to it.  Machine learning algorithms filter out updates by users who gain a reputation for inaccuracy based on community votes—an option users can toggle off in their preferences.  Where The Truck? also emphasizes secure authentication, using password encryption and resetting.
 
+Check it out <a href="http://www.wherethetruck.co/" target="_blank">here</a>.
+
 ###Contents
 <ul>
 	<li><a href="#overview">Overview</a></li>
@@ -104,6 +106,32 @@ Features
 - [X] Foster learned user behavior using Bootstrap's Javascript popovers on voting options for non-users and users who haven't voted yet.
 - [X] Create custom responsive web design (RWD) using CSS3.
 
+
+Future plans
+-----------------------
+#####Adding more food trucks
+Currently, there are only 6 trucks available to choose from.  I limited the number of food trucks I was working with for development purposes, but to be a useful product, I will need to add all the food trucks in San Francisco.
+
+#####Accounting for multiple food trucks with the same name
+Some companies have multiple food trucks, meaning there could be two Curry Up Now trucks on the map at any given time.  I plan to use geofencing to assign location updates within a given region to that region's designated truck.
+
+#####Advanced user rating system
+The machine learning algorithms used to determine whether a user is considered trusted and reliable rely on the voting system (upvotes and downvotes).  These votes only affect a user's given rating for the first hour after the user made that update (in order to prevent downvotes on older updates from hurting a user's rating).  But what happens if users are more inclined to click "Truck Sighted!" than to verify a truck's position with an upvote?  Depending on user behavior, it may make sense to implement a system in which location updates made within X radius and within X time of a given update count towards the previous update's upvotes, thus improving that update's user's rating.
+
+#####Adjusting bad rating thresholds
+Based on user interaction, the numbers chosen for determining a bad update or an untrusted user may need to be altered to be more or less forgiving.  Currently, the "bad update" threshold is set low for demo purposes.
+
+#####Additional security
+To prevent brute-force hacking attempts, I will add an increasing time delay after multiple failed login attempts.  I will also specify password length requirements.
+
+#####User stats
+Allow users to see their stats on their user pages, e.g. how many updates they have made, what's their user rating, etc.  
+
+#####"Near me"
+Besides centering the map on the user's location from the get-go (as long as they are within San Francisco), I may add a "Near me" functionality to refocus the map on the user's current location, and list the food trucks closest to them.
+
+#####Real time updates
+Currently, the page must be refreshed to show updated food truck locations.  This should be updated to happen in real-time with server-sent events.
 
 Screenshots
 -----------------------
