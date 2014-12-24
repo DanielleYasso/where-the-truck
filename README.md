@@ -153,10 +153,32 @@ Any real user system allows users to reset their passwords when they forget them
 #####Flask-WTForms
 Partway through the project, I discovered Flask-WTForms, a Flask extension that offers form creation and validation.  I switched to this method for all future forms on the site (password resets and the like) because of its simple and effective form management.
 
-#####Machine learning algorithms
+#####Machine learning algorithm
 I found <a href="https://possiblywrong.wordpress.com/2011/06/05/reddits-comment-ranking-algorithm/" target="_blank">this article</a> useful when trying to determine the best way to rate updates and users.  Many systems just directly compare upvotes to downvotes, which is flawed.  5 upvotes to 4 downvotes may have the same ratio as 50 upvotes to 40 downvotes, but they are not the same, and shouldn't be treated as such by any system.  The latter has 10 upvotes more, versus just 1, and has many more votes in general.  The Wilson Score Interval accounts for these differences by normalizing the ratio on a 0 to 1 scale.  In this case, 50 upvotes to 40 downvotes will have a higher value than 5 upvotes to 4 downvotes.
 
 However, the suggested algorithm at the end of the article would cause issues for updates with only downvotes.  Since I average all the calculated Wilson Score Intervals from all of a user's updates, having some with values of -5 (for 5 downvotes and 0 upvotes) would negatively impact the system.  As such, I modified the algorithm to instead create a normalized value on a scale of 0 to -1 for updates with only downvotes.
+
+Only upvotes and downvotes made within an hour of an update count towards that updates calculated Wilson Score Interval.  This is to prevent downvoted aging updates, which may have been accurate within the first hour, but are no longer accurate 3 hours later, from damaging a user's rating (which is based on the averages of all their updates Wilson Score Intervals).
+
+#####Manipulating cached data
+At first, every time a user toggled a food truck's visibility on or off, adjusted other display options, or updated the location of a particular food truck, I regenerated the entire map and requested all the food truck location data from my database again.  This was extremely slow, and caused the page to hang at times.  To speed things up and prevent errors, I changed the code so that it now simply manipulates cached data for the food trucks, and doesn't need to reload the database info for each.  When a user toggles a display option, everything that happens occurs on the frontend; there are no AJAX requests to the server.
+
+#####Data visualization
+Originally, if a food truck's most recent update had a bad rating, and the checkbox to "Show updates with bad ratings" was NOT selected, no location marker for that food truck would show.  This was a bad user experience, in my opinion.  I decided to store, along with the most recent location update, the last "good" locaiton update (good meaning it fit specific criteria: it was made by a user, the user was in good standing - aka "trusted", and the update itself did not have a bad rating).  Now, when the most recent update has a bad rating or is made by an untrusted user and those display options are toggled to not show it, the food truck's last good location is shown.  This way, users can always see a location for each truck.
+
+#####Custom CSS
+Using CSS3, I customized the checkboxes and select dropdowns.  I didn't like their default appearances, and wanted to change their colors and styles to better match that of the website.
+
+I used Bootstrap for certain things, like button shapes and the nav bar, but found its responsive elements restrictive.  Because of this, I custom coded all the responsive design seen on the site (with the exception of the nav bar).
+
+#####Code structure
+When I decided to use Flask-Login for secure user sessions, I had to switch from SQLAlchemy to Flask-SQLAlchemy.  I had to add this line "db = SQLAlchemy(app)" to my model.py file, which meant I needed access to my Flask app, which I implement in my python server routing.py file.  To prevent a circular import, with model importing app from routing, and routing importing model, I separated the Flask app creation into its own separate file, flaskapp.py.
+
+All my routes are in one file, routing.py, and my table class methods and definitions are in a separate model.py file.  I try to keep similar functions grouped, and put all API related routes at the bottom of routing.py.
+
+For JavaScript, I separated all the JS needed to manipulate the map and food truck data from the user signup and login JavaScript code.  This code doesn't need to interact, so it made sense to fully separate the two.
+
+On the frontend, rather than recode my nav bar for every web page, I used Jinja templates to simplify the process by extending from a base.html file that contains the nav bar.
 
 Screenshots
 -----------------------
